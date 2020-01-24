@@ -30,6 +30,8 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import SignInForm from "../signInForm/signInForm.component";
 import TodosPage from "../../pages/todosPage/todosPage.component";
 import TodosForm from "../todosForm/todosForm.component";
+import InfoIcon from "@material-ui/icons/Info";
+import MyTodoList from "./../myTodoList/myTodoList.component";
 
 const Header = props => {
   const [user, setUser] = useState(true);
@@ -100,6 +102,12 @@ const Header = props => {
             <SettingsIcon />
           </ListItemIcon>
           <ListItemText primary="Setting" />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <InfoIcon />
+          </ListItemIcon>
+          <ListItemText primary="About Us" />
         </ListItem>
         <ListItem button>
           <ListItemIcon>
@@ -174,6 +182,7 @@ const Header = props => {
           <Switch>
             <Route exact path="/todos" component={TodosPage} />
             <Route exact path="/todos/createTodos" component={TodosForm} />
+            <Route exact path="/todos/myTodos" component={MyTodoList} />
             <Route exact path="/start" component={StartPage} />
           </Switch>
         </Paper>

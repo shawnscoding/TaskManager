@@ -19,13 +19,7 @@ const categories = [
   "TheRest"
 ];
 
-const TodosFormFirst = ({
-  classes,
-  getStepContent,
-  activeStep,
-  form,
-  onChange
-}) => {
+const TodosFormFirst = ({ classes, form, onChange }) => {
   return (
     <React.Fragment>
       <TextField
@@ -34,13 +28,14 @@ const TodosFormFirst = ({
         type="text"
         value={form.title}
         label="Title"
-        margin="normal"
         onChange={onChange("title")}
         fullWidth
         className={classes.formControl}
       />
       <FormControl fullWidth variant="outlined" className={classes.formControl}>
-        <InputLabel id="category">What is it about?</InputLabel>
+        <InputLabel htmlFor="category" id="category">
+          What is it about?
+        </InputLabel>
         <Select
           labelId="category"
           id="category"
@@ -60,11 +55,10 @@ const TodosFormFirst = ({
         type="text"
         value={form.discription}
         label="Description"
-        margin="normal"
         onChange={onChange("discription")}
         fullWidth
         multiline
-        row="3"
+        rows="3"
         className={classes.formControl}
       />
     </React.Fragment>

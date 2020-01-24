@@ -72,7 +72,7 @@ const TodosPage = ({ history }) => {
           <Card className={classes.card}>
             <CardContent>
               <Typography variant="h5" color="textSecondary" gutterBottom>
-                Create new To Do!
+                Check my to do list
               </Typography>
               <Typography variant="body2" component="p">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sunt
@@ -91,8 +91,13 @@ const TodosPage = ({ history }) => {
             </CardContent>
             <Box width="100%">
               <Box display="flex" justifyContent="flex-end">
-                <Button size="large" variant="contained" color="primary">
-                  check my todo
+                <Button
+                  onClick={() => history.push("/todos/myTodos")}
+                  size="large"
+                  variant="contained"
+                  color="primary"
+                >
+                  view my todos
                 </Button>
               </Box>
             </Box>

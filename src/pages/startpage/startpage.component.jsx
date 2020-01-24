@@ -1,56 +1,65 @@
 import React, { useRef, useEffect } from "react";
-import Box from "@material-ui/core/Box";
-import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { Box, Grid, Typography, Button } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(20)
+    padding: theme.spacing(5)
   }
 }));
 
-const StartPage = () => {
+const StartPage = ({ history }) => {
   const classes = useStyles();
-  const inputEl = useRef(null);
-  const BoxEl = useRef(null);
-  // const onButtonClick = () => {
-  //   // `current` points to the mounted text input element
-  //   console.log(inputEl.current);
-  //   console.log(inputEl);
-  //   inputEl.current.focus();
-  // };
-  useEffect(() => {
-    console.log(inputEl.current.offsetWidth);
-    console.log(BoxEl.current.offsetWidth);
-  });
-
-  console.log(inputEl);
   return (
-    <div>
-      <Typography variant="h1">hhh</Typography>
-      <Box ref={BoxEl} width="100%">
-        <input ref={inputEl} type="text" />
-        {/* <button onClick={onButtonClick}>Focus the input</button> */}
-        <Box width={1 / 4} p={1} my={0.5}>
-          Width 1/4
-        </Box>
-        <Box
-          fontWeight="fontWeightBold"
-          width={300}
-          className={classes.root}
-          bgcolor="grey.300"
-          my={0.5}
-        >
-          Width 300
-        </Box>
-        <Box width="75%" bgcolor="grey.300" p={1} my={0.5}>
-          Width 75%
-        </Box>
-        <Box width={1} bgcolor="grey.300" p={1} my={0.5}>
-          Width 1
-        </Box>
-      </Box>
-    </div>
+    <React.Fragment>
+      <Grid
+        className={classes.root}
+        contianer
+        direction="column"
+        justify="flex-start"
+        alignItems="flex-start"
+      >
+        <Grid item>
+          <Typography component="h1" variant="h2">
+            Welcome to My Motivator
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant="h5">
+            we can help you acheive your daily goals and enhance your
+            productivity
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant="h5">
+            We have helped a lot of people around the world
+          </Typography>
+          <Typography variant="h5">check out the review!</Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant="h5">
+            we can help you acheive your daily goals and enhance your
+            productivity
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant="h5">sign in now!</Typography>
+          <Button>sign in</Button>
+        </Grid>
+        <Grid item>
+          <Typography variant="h5">
+            haven't signed up yet? sign up now!
+          </Typography>
+          <Button>sign up</Button>
+        </Grid>
+        <Grid item>
+          <Typography variant="h5">
+            wonder how it works? visit about us page
+          </Typography>
+          <Button>About Us</Button>
+        </Grid>
+      </Grid>
+    </React.Fragment>
   );
 };
 

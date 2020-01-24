@@ -47,7 +47,7 @@ const getStepContent = stepIndex => {
     case 1:
       return "when you plan to do?";
     case 2:
-      return "make sure you are going to do it!";
+      return "We are so proud of you for this challenge! now make sure you are going to do this!";
     default:
       return "Unknown stepIndex";
   }
@@ -55,11 +55,15 @@ const getStepContent = stepIndex => {
 
 const TodosForm = ({ history }) => {
   const [activeStep, setActiveStep] = React.useState(0);
+  const [date, setDate] = React.useState(new Date("2020-02-18T00:00:00"));
   const [form, setForm] = React.useState({
     title: "",
     discription: "",
-    importance: 4,
-    category: ""
+    category: "",
+    hours: "",
+    minutes: "",
+    importance: 3,
+    reward: ""
   });
 
   const classes = useStyles();
@@ -74,12 +78,29 @@ const TodosForm = ({ history }) => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
 
+  const handleDateChange = date => {
+    setDate(date);
+  };
+
+  const handleRatingChange = (e, value) => {
+    setForm({
+      ...form,
+      importance: value
+    });
+    console.log(form);
+  };
+
   const handleChange = name => ({ target: { value } }) => {
     setForm({
       ...form,
       [name]: value
     });
     console.log(form);
+  };
+
+  const handleSubmit = form => {
+    const test = console.log("submitted", form);
+    history.push("/start");
   };
 
   return (
@@ -94,7 +115,7 @@ const TodosForm = ({ history }) => {
         </Stepper>
       </Grid>
       {activeStep === steps.length ? (
-        (() => history.push("/start"))()
+        handleSubmit(form)
       ) : (
         <Grid className={classes.items} item>
           <Typography color="primary" variant="h4">
@@ -108,9 +129,20 @@ const TodosForm = ({ history }) => {
                 classes={classes}
               />
             ) : activeStep === 1 ? (
-              <TodosFormSecond />
+              <TodosFormSecond
+                date={date}
+                form={form}
+                onHourChange={handleChange}
+                classes={classes}
+                onDateAndTimeChange={handleDateChange}
+              />
             ) : activeStep === 2 ? (
-              <TodosFormLast />
+              <TodosFormLast
+                onChange={handleChange}
+                classes={classes}
+                form={form}
+                onRatingChange={handleRatingChange}
+              />
             ) : null}
           </form>
 
@@ -131,25 +163,5 @@ const TodosForm = ({ history }) => {
     </Grid>
   );
 };
-
-{
-  /* <Box component="fieldset" mb={3} borderColor="transparent">
-                      <Typography varient="h5" component="legend">
-                        how important is it?
-                      </Typography>
-                      <Rating
-                        name="simple-controlled"
-                        value={form.importance}
-                        onChange={handleRatingChange}
-                      />
-                    </Box> */
-  // const handleRatingChange = ({ target: { value } }) => {
-  //   setForm({
-  //     ...form,
-  //     importance: Number(value)
-  //   })import TodosFormSecond from './todosFormSteps/todosFormSecond.component';
-  //   console.log(form);
-  // };
-}
 
 export default TodosForm;

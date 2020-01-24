@@ -66,3 +66,17 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### Building Process
+
+1. Installed New React App using Node JS.
+
+2. I used material UI library to style my app and to easily perform responsive design.
+
+### Challenges that I faced
+
+1. using a style library and completely understanding how it works took me some time to get used to since I am not very familiar with styling an app with style library.
+   but defenitely worth it. I learned many new concepts and after all, it helped me to style my app quickly and effortlessly.
+
+2. it took me some time to get used to my the grid system and style compo work
+   in material ui. I learned how much styling can become deficult if I don't think through enough about styling consitency and base style for my app.
