@@ -6,9 +6,11 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router } from "react-router-dom";
 import { StylesProvider } from "@material-ui/core/styles";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core";
-import { red, blue } from "@material-ui/core/colors";
+import { blue } from "@material-ui/core/colors";
 import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 const theme = createMuiTheme({
   palette: {
@@ -22,15 +24,17 @@ const theme = createMuiTheme({
 });
 
 ReactDOM.render(
-  <Router>
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <ThemeProvider theme={theme}>
-        <StylesProvider injectFirst>
-          <App />
-        </StylesProvider>
-      </ThemeProvider>
-    </MuiPickersUtilsProvider>
-  </Router>,
+  <Provider store={store}>
+    <Router>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <ThemeProvider theme={theme}>
+          <StylesProvider injectFirst>
+            <App />
+          </StylesProvider>
+        </ThemeProvider>
+      </MuiPickersUtilsProvider>
+    </Router>
+  </Provider>,
   document.getElementById("root")
 );
 

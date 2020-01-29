@@ -32,6 +32,7 @@ import TodosPage from "../../pages/todosPage/todosPage.component";
 import TodosForm from "../todosForm/todosForm.component";
 import InfoIcon from "@material-ui/icons/Info";
 import MyTodoList from "./../myTodoList/myTodoList.component";
+import Calendar from "./../calendar/calendar.component";
 
 const Header = props => {
   const [user, setUser] = useState(true);
@@ -180,10 +181,10 @@ const Header = props => {
         <div className={classes.toolbar} />
         <Paper className={classes.paper}>
           <Switch>
+            <Route exact path="/start" component={StartPage} />
             <Route exact path="/todos" component={TodosPage} />
             <Route exact path="/todos/createTodos" component={TodosForm} />
-            <Route exact path="/todos/myTodos" component={MyTodoList} />
-            <Route exact path="/start" component={StartPage} />
+            <Route exact path="/todos/calendar" component={Calendar} />
           </Switch>
         </Paper>
       </main>

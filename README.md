@@ -79,4 +79,4 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
    but defenitely worth it. I learned many new concepts and after all, it helped me to style my app quickly and effortlessly.
 
 2. it took me some time to get used to my the grid system and style compo work
-   in material ui. I learned how much styling can become deficult if I don't think through enough about styling consitency and base style for my app.
+   in material ui. I learned how much styling can become overwhelming if I don't think through enough about consistent style and base layout for my app.

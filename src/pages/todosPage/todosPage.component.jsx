@@ -16,7 +16,14 @@ const useStyles = makeStyles(theme => ({
   },
   card: {
     width: 300,
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    borderRadius: 10,
+    boxShadow: "0 0.5rem 1rem grey",
+    transition: "transform 0.2s",
+    "&:hover": {
+      boxShadow: "0 1rem 1.4rem grey",
+      transform: "translateY(-1rem) scale(1.02)"
+    }
   }
 }));
 
@@ -92,7 +99,7 @@ const TodosPage = ({ history }) => {
             <Box width="100%">
               <Box display="flex" justifyContent="flex-end">
                 <Button
-                  onClick={() => history.push("/todos/myTodos")}
+                  onClick={() => history.push("/todos/calendar")}
                   size="large"
                   variant="contained"
                   color="primary"
