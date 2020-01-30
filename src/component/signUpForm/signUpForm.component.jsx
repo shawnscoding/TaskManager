@@ -1,25 +1,43 @@
 import React from "react";
+import { makeStyles } from "@material-ui/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import { TextField, Paper, Divider } from "@material-ui/core";
-import { useStyles } from "./signInForm.styles";
 import GTranslateIcon from "@material-ui/icons/GTranslate";
-import { Link } from "react-router-dom";
+import { toggleSignUpForm } from "./../../redux/auth/auth.actions";
 import { createStructuredSelector } from "reselect";
 import { selectToggleSignUpForm } from "./../../redux/auth/auth.selectors";
-import { toggleSignUpForm } from "./../../redux/auth/auth.actions";
 import { connect } from "react-redux";
 
+const useStyles = makeStyles(theme => ({
+  paper: {
+    marginTop: theme.spacing(1.5),
+    padding: theme.spacing(0, 4),
+    overflowY: "auto",
+    height: "55vh",
+    width: "30vw"
+  },
+  googleIcon: {
+    marginRight: theme.spacing(1)
+  },
+  button: {
+    marginTop: theme.spacing(2)
+  }
+}));
+
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="left" ref={ref} {...props} />;
 });
 
-const SignInForm = ({ signUpOpen }) => {
-  const [form, setForm] = React.useState({ email: "", password: "" });
-  const [open, setOpen] = React.useState(false);
+const SignUpForm = ({ open, setOpen }) => {
+  const [form, setForm] = React.useState({
+    displayName: "",
+    email: "",
+    password: ""
+  });
 
   const handleChange = name => ({ target: { value } }) =>
     setForm({
@@ -27,38 +45,33 @@ const SignInForm = ({ signUpOpen }) => {
       [name]: value
     });
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-    signUpOpen();
-  };
-
   const classes = useStyles();
 
   return (
     <div>
-      <Button
-        style={{ position: "absolute", right: "3vw", top: "2.1vh" }}
-        variant="outlined"
-        color="inherit"
-        onClick={handleClickOpen}
-      >
-        LOGIN
-      </Button>
       <Dialog
-        open={open}
+        open={true}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleClose}
+        onClose={() => setOpen()}
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">Sign In</DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title">Sign Up</DialogTitle>
+        <Divider />
         <Paper className={classes.paper}>
           <form>
+            <TextField
+              variant="outlined"
+              id="outlined-basic"
+              type="text"
+              value={form.displayName}
+              label="displayName"
+              margin="normal"
+              onChange={handleChange("displayName")}
+              fullWidth
+            />
+            <br />
             <TextField
               variant="outlined"
               id="outlined-basic"
@@ -70,6 +83,7 @@ const SignInForm = ({ signUpOpen }) => {
               fullWidth
             />
             <br />
+
             <TextField
               variant="outlined"
               id="outlined-basic"
@@ -82,28 +96,13 @@ const SignInForm = ({ signUpOpen }) => {
             />
           </form>
           <DialogActions style={{ marginBottom: 15 }}>
-            <Button size="large" color="primary" variant="outlined">
-              Sign in
-            </Button>
-          </DialogActions>
-          <Divider />
-          <DialogActions className={classes.buttonContainer}>
             <Button
-              size="small"
-              variant="contained"
-              onClick={handleClose}
+              className={classes.button}
+              size="large"
               color="primary"
+              variant="outlined"
             >
-              sign up now
-            </Button>
-            <Button
-              size="small"
-              variant="contained"
-              onClick={handleClose}
-              color="secondary"
-            >
-              <GTranslateIcon className={classes.googleIcon} />
-              Log In with google
+              Sign in
             </Button>
           </DialogActions>
         </Paper>
@@ -117,7 +116,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  signUpOpen: () => dispatch(toggleSignUpForm())
+  setOpen: () => dispatch(toggleSignUpForm())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignInForm);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);

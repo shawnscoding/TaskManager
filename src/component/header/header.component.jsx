@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { AppBar, Avatar, Paper, Box } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
@@ -28,11 +27,12 @@ import StartPage from "./../../pages/startpage/startpage.component";
 import { Route, Switch } from "react-router-dom";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import SignInForm from "../signInForm/signInForm.component";
-import TodosPage from "../../pages/todosPage/todosPage.component";
-import TodosForm from "../todosForm/todosForm.component";
+import TodoPage from "../../pages/todoPage/todoPage.component";
+import TodoForm from "../todoForm/todoForm.component";
 import InfoIcon from "@material-ui/icons/Info";
 import MyTodoList from "./../myTodoList/myTodoList.component";
 import Calendar from "./../calendar/calendar.component";
+import SignUpForm from "./../signUpForm/signUpForm.component";
 
 const Header = props => {
   const [user, setUser] = useState(true);
@@ -182,10 +182,11 @@ const Header = props => {
         <Paper className={classes.paper}>
           <Switch>
             <Route exact path="/start" component={StartPage} />
-            <Route exact path="/todos" component={TodosPage} />
-            <Route exact path="/todos/createTodos" component={TodosForm} />
+            <Route exact path="/todos" component={TodoPage} />
+            <Route exact path="/todos/createTodos" component={TodoForm} />
             <Route exact path="/todos/calendar" component={Calendar} />
           </Switch>
+          <SignUpForm />
         </Paper>
       </main>
     </div>

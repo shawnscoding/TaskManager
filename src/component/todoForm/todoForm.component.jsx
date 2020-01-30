@@ -14,10 +14,11 @@ import {
   MenuItem,
   Grid
 } from "@material-ui/core";
-// import Rating from "@material-ui/lab/Rating";
-import TodosFormFirst from "./todosFormSteps/todosFormFirst.component";
-import TodosFormSecond from "./todosFormSteps/todosFormSecond.component";
-import TodosFormLast from "./todosFormSteps/todosFormLast.component";
+import TodoFormFirst from "./todoFormSteps/todoFormFirst.component";
+import TodoFormSecond from "./todoFormSteps/todoFormSecond.component";
+import TodoFormLast from "./todoFormSteps/todoFormLast.component";
+import { connect } from "react-redux";
+import { addTodo } from "./../../redux/todo/todo.actions";
 
 const useStyles = makeStyles(theme => ({
   backButton: {
@@ -53,7 +54,7 @@ const getStepContent = stepIndex => {
   }
 };
 
-const TodosForm = ({ history }) => {
+const TodoForm = ({ history, addTodo }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [date, setDate] = React.useState(new Date("2020-02-18T00:00:00"));
   const [form, setForm] = React.useState({
@@ -95,12 +96,18 @@ const TodosForm = ({ history }) => {
       ...form,
       [name]: value
     });
-    console.log(form);
   };
 
   const handleSubmit = form => {
-    const test = console.log("submitted", form);
+    addTodo(form);
     history.push("/start");
+  };
+
+  const onFormSubmit = () => {
+    setTimeout(() => {
+      handleSubmit(form);
+    }, 3000);
+    return <div>Wait a bit please...</div>;
   };
 
   return (
@@ -115,7 +122,7 @@ const TodosForm = ({ history }) => {
         </Stepper>
       </Grid>
       {activeStep === steps.length ? (
-        handleSubmit(form)
+        onFormSubmit()
       ) : (
         <Grid className={classes.items} item>
           <Typography color="primary" variant="h4">
@@ -123,13 +130,13 @@ const TodosForm = ({ history }) => {
           </Typography>
           <form>
             {activeStep === 0 ? (
-              <TodosFormFirst
+              <TodoFormFirst
                 form={form}
                 onChange={handleChange}
                 classes={classes}
               />
             ) : activeStep === 1 ? (
-              <TodosFormSecond
+              <TodoFormSecond
                 date={date}
                 form={form}
                 onHourChange={handleChange}
@@ -137,7 +144,7 @@ const TodosForm = ({ history }) => {
                 onDateAndTimeChange={handleDateChange}
               />
             ) : activeStep === 2 ? (
-              <TodosFormLast
+              <TodoFormLast
                 onChange={handleChange}
                 classes={classes}
                 form={form}
@@ -164,4 +171,8 @@ const TodosForm = ({ history }) => {
   );
 };
 
-export default TodosForm;
+const mapDispatchToProps = dispatch => ({
+  addTodo: todo => dispatch(addTodo(todo))
+});
+
+export default connect(null, mapDispatchToProps)(TodoForm);

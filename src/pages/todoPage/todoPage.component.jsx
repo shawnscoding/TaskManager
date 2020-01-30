@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TodosPage = ({ history }) => {
+const TodoPage = ({ history }) => {
   const classes = useStyles();
 
   return (
@@ -115,4 +115,4 @@ const TodosPage = ({ history }) => {
   );
 };
 
-export default TodosPage;
+export default TodoPage;

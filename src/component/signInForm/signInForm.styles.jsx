@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/styles";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   buttonContainer: {
     marginTop: 20
   },
@@ -9,5 +9,8 @@ export const useStyles = makeStyles({
     marginTop: "5px",
     height: "53vh",
     overflowY: "auto"
+  },
+  googleIcon: {
+    marginRight: theme.spacing(1)
   }
-});
+}));

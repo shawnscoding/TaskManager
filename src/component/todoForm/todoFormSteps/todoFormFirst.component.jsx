@@ -19,7 +19,7 @@ const categories = [
   "TheRest"
 ];
 
-const TodosFormFirst = ({ classes, form, onChange }) => {
+const TodoFormFirst = ({ classes, form, onChange }) => {
   return (
     <React.Fragment>
       <TextField
@@ -65,4 +65,4 @@ const TodosFormFirst = ({ classes, form, onChange }) => {
   );
 };
 
-export default TodosFormFirst;
+export default TodoFormFirst;

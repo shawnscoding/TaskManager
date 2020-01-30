@@ -6,7 +6,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { hoursArray, minutesArray } from "../../../utils/helper";
 
-const TodosFormSecond = ({
+const TodoFormSecond = ({
   classes,
   onHourChange,
   date,
@@ -84,4 +84,4 @@ const TodosFormSecond = ({
   );
 };
 
-export default TodosFormSecond;
+export default TodoFormSecond;

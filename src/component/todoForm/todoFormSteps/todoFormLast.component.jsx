@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography, TextField } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
-const TodosFormLast = ({ onChange, form, onRatingChange, classes }) => {
+const TodoFormLast = ({ onChange, form, onRatingChange, classes }) => {
   return (
     <React.Fragment>
       <Box component="fieldset" mb={3} borderColor="transparent">
@@ -34,4 +34,4 @@ const TodosFormLast = ({ onChange, form, onRatingChange, classes }) => {
   );
 };
 
-export default TodosFormLast;
+export default TodoFormLast;
