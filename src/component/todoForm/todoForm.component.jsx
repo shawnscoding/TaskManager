@@ -1,17 +1,12 @@
-import React, { useRef, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import Button from "@material-ui/core/Button";
+import React from "react";
 import {
+  makeStyles,
+  Step,
+  Stepper,
+  StepLabel,
+  Button,
   Typography,
   Box,
-  TextField,
-  FormControl,
-  Select,
-  InputLabel,
-  MenuItem,
   Grid
 } from "@material-ui/core";
 import TodoFormFirst from "./todoFormSteps/todoFormFirst.component";

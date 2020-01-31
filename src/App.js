@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./component/header/header.component";
 import { Route } from "react-router-dom";
 import HomePage from "./pages/hompage/homepage.component";
+import { checkUserSession } from "./redux/auth/auth.actions";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUser } from "./redux/auth/auth.selectors";
 
-function App() {
+const App = ({ checkUserSession, currentUser }) => {
+  useEffect(() => {
+    checkUserSession();
+  }, [checkUserSession]);
   return (
     <React.Fragment>
       <Route path="/" exact component={HomePage} />
@@ -17,6 +24,14 @@ function App() {
       />
     </React.Fragment>
   );
-}
+};
 
-export default App;
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+});
+
+const mapDispatchToProps = dispatch => ({
+  checkUserSession: () => dispatch(checkUserSession())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

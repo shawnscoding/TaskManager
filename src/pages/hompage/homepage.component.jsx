@@ -10,8 +10,8 @@ import {
   BlueButton,
   ButtonContainer
 } from "./homepage.styles";
-import { makeStyles, withStyles } from "@material-ui/styles";
-import { CircularProgress, Typography, Paper } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+import { CircularProgress, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {

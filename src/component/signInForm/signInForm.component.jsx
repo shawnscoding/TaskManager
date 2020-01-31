@@ -61,7 +61,6 @@ const SignInForm = ({ signUpOpen }) => {
           <form>
             <TextField
               variant="outlined"
-              id="outlined-basic"
               type="email"
               value={form.email}
               label="Email"
@@ -72,7 +71,6 @@ const SignInForm = ({ signUpOpen }) => {
             <br />
             <TextField
               variant="outlined"
-              id="outlined-basic"
               type="password"
               value={form.password}
               label="Password"
@@ -101,8 +99,8 @@ const SignInForm = ({ signUpOpen }) => {
               variant="contained"
               onClick={handleClose}
               color="secondary"
+              startIcon={<GTranslateIcon />}
             >
-              <GTranslateIcon className={classes.googleIcon} />
               Log In with google
             </Button>
           </DialogActions>

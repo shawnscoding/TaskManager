@@ -41,8 +41,8 @@ export const useStyles = makeStyles(theme => ({
 
   loginIcon: {
     position: "absolute",
-    right: "4vw",
-    top: "2.2vh"
+    right: "3rem",
+    top: "0.6rem"
   },
   paper: {
     height: "81vh"

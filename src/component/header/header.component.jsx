@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AppBar, Avatar, Paper, Box } from "@material-ui/core";
+import { AppBar, Avatar, Paper } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
@@ -21,26 +21,25 @@ import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 import ForumIcon from "@material-ui/icons/Forum";
 import TimeToLeaveIcon from "@material-ui/icons/TimeToLeave";
 import SettingsIcon from "@material-ui/icons/Settings";
-import { withRouter } from "react-router-dom";
 import { useStyles } from "./header.styles";
 import StartPage from "./../../pages/startpage/startpage.component";
-import { Route, Switch } from "react-router-dom";
-import AccountCircle from "@material-ui/icons/AccountCircle";
+import { Route, Switch, withRouter } from "react-router-dom";
 import SignInForm from "../signInForm/signInForm.component";
 import TodoPage from "../../pages/todoPage/todoPage.component";
 import TodoForm from "../todoForm/todoForm.component";
 import InfoIcon from "@material-ui/icons/Info";
-import MyTodoList from "./../myTodoList/myTodoList.component";
 import Calendar from "./../calendar/calendar.component";
 import SignUpForm from "./../signUpForm/signUpForm.component";
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUser } from "../../redux/auth/auth.selectors";
+import { connect } from "react-redux";
+import ProfileIcon from "./header-materials/profileIcon.component";
 
 const Header = props => {
-  const [user, setUser] = useState(true);
-
-  const { container } = props;
+  const { container, currentUser } = props;
   const classes = useStyles();
   const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -137,13 +136,7 @@ const Header = props => {
           <Typography variant="h6" noWrap>
             Responsive drawer
           </Typography>
-          {!user ? (
-            <Box className={classes.loginIcon}>
-              <AccountCircle fontSize="large" />
-            </Box>
-          ) : (
-            <SignInForm />
-          )}
+          {currentUser ? <ProfileIcon classes={classes} /> : <SignInForm />}
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
@@ -193,14 +186,8 @@ const Header = props => {
   );
 };
 
-// ResponsiveDrawer.propTypes = {
-//   /**
-//    * Injected by the documentation to work in an iframe.
-//    * You won't need it on your project.
-//    */
-//   container: PropTypes.instanceOf(
-//     typeof Element === "undefined" ? Object : Element
-//   )
-// };
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+});
 
-export default withRouter(Header);
+export default withRouter(connect(mapStateToProps)(Header));

@@ -6,8 +6,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import { TextField, Paper, Divider } from "@material-ui/core";
-import GTranslateIcon from "@material-ui/icons/GTranslate";
-import { toggleSignUpForm } from "./../../redux/auth/auth.actions";
+import { toggleSignUpForm, signUpStart } from "./../../redux/auth/auth.actions";
 import { createStructuredSelector } from "reselect";
 import { selectToggleSignUpForm } from "./../../redux/auth/auth.selectors";
 import { connect } from "react-redux";
@@ -32,25 +31,32 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
 
-const SignUpForm = ({ open, setOpen }) => {
+const SignUpForm = ({ open, setOpen, signUp }) => {
+  const classes = useStyles();
+
   const [form, setForm] = React.useState({
     displayName: "",
     email: "",
     password: ""
   });
 
-  const handleChange = name => ({ target: { value } }) =>
+  const handleChange = name => ({ target: { value } }) => {
     setForm({
       ...form,
       [name]: value
     });
+    console.log(form);
+  };
 
-  const classes = useStyles();
+  const handleSubmit = () => {
+    signUp(form);
+    setOpen();
+  };
 
   return (
     <div>
       <Dialog
-        open={true}
+        open={open}
         TransitionComponent={Transition}
         keepMounted
         onClose={() => setOpen()}
@@ -63,7 +69,6 @@ const SignUpForm = ({ open, setOpen }) => {
           <form>
             <TextField
               variant="outlined"
-              id="outlined-basic"
               type="text"
               value={form.displayName}
               label="displayName"
@@ -74,7 +79,6 @@ const SignUpForm = ({ open, setOpen }) => {
             <br />
             <TextField
               variant="outlined"
-              id="outlined-basic"
               type="email"
               value={form.email}
               label="Email"
@@ -86,7 +90,6 @@ const SignUpForm = ({ open, setOpen }) => {
 
             <TextField
               variant="outlined"
-              id="outlined-basic"
               type="password"
               value={form.password}
               label="Password"
@@ -95,8 +98,10 @@ const SignUpForm = ({ open, setOpen }) => {
               fullWidth
             />
           </form>
+
           <DialogActions style={{ marginBottom: 15 }}>
             <Button
+              onClick={handleSubmit}
               className={classes.button}
               size="large"
               color="primary"
@@ -116,7 +121,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setOpen: () => dispatch(toggleSignUpForm())
+  setOpen: () => dispatch(toggleSignUpForm()),
+  signUp: userCredentials => dispatch(signUpStart(userCredentials))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);
