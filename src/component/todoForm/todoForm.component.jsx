@@ -13,7 +13,8 @@ import TodoFormFirst from "./todoFormSteps/todoFormFirst.component";
 import TodoFormSecond from "./todoFormSteps/todoFormSecond.component";
 import TodoFormLast from "./todoFormSteps/todoFormLast.component";
 import { connect } from "react-redux";
-import { addTodo } from "./../../redux/todo/todo.actions";
+import { addTodoStart } from "./../../redux/todo/todo.actions";
+import { pickUpYearMonthAndDate, createNewTodo } from "../../utils/helper";
 
 const useStyles = makeStyles(theme => ({
   backButton: {
@@ -74,8 +75,8 @@ const TodoForm = ({ history, addTodo }) => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
 
-  const handleDateChange = date => {
-    setDate(date);
+  const handleDateChange = async date => {
+    await setDate(date);
   };
 
   const handleRatingChange = (e, value) => {
@@ -83,7 +84,6 @@ const TodoForm = ({ history, addTodo }) => {
       ...form,
       importance: value
     });
-    console.log(form);
   };
 
   const handleChange = name => ({ target: { value } }) => {
@@ -93,9 +93,13 @@ const TodoForm = ({ history, addTodo }) => {
     });
   };
 
-  const handleSubmit = form => {
-    addTodo(form);
-    history.push("/start");
+  const handleSubmit = async form => {
+    try {
+      await addTodo(form, date);
+      history.push("/start");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const onFormSubmit = () => {
@@ -167,7 +171,7 @@ const TodoForm = ({ history, addTodo }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  addTodo: todo => dispatch(addTodo(todo))
+  addTodo: (form, date) => dispatch(addTodoStart(form, date))
 });
 
 export default connect(null, mapDispatchToProps)(TodoForm);

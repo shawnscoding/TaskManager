@@ -8,6 +8,7 @@ import {
   Box
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -63,7 +64,8 @@ const TodoPage = ({ history }) => {
             <Box width="100%">
               <Box display="flex" justifyContent="flex-end">
                 <Button
-                  onClick={() => history.push("/todos/createTodos")}
+                  component={Link}
+                  to="/todo/createTodo"
                   size="large"
                   variant="contained"
                   color="primary"
@@ -98,7 +100,8 @@ const TodoPage = ({ history }) => {
             <Box width="100%">
               <Box display="flex" justifyContent="flex-end">
                 <Button
-                  onClick={() => history.push("/todos/calendar")}
+                  component={Link}
+                  to="/todo/calendar"
                   size="large"
                   variant="contained"
                   color="primary"

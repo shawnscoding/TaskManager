@@ -23,7 +23,7 @@ import TimeToLeaveIcon from "@material-ui/icons/TimeToLeave";
 import SettingsIcon from "@material-ui/icons/Settings";
 import { useStyles } from "./header.styles";
 import StartPage from "./../../pages/startpage/startpage.component";
-import { Route, Switch, withRouter } from "react-router-dom";
+import { Route, Switch, withRouter, Redirect } from "react-router-dom";
 import SignInForm from "../signInForm/signInForm.component";
 import TodoPage from "../../pages/todoPage/todoPage.component";
 import TodoForm from "../todoForm/todoForm.component";
@@ -55,11 +55,17 @@ const Header = props => {
       </div>
       <Divider />
       <List>
-        <ListItem onClick={() => props.history.push("/todos")} button>
+        <ListItem onClick={() => props.history.push("/todo/calendar")} button>
           <ListItemIcon>
             <PlaylistAddCheckIcon />
           </ListItemIcon>
-          <ListItemText primary="Todos" />
+          <ListItemText primary="My Calendar" />
+        </ListItem>
+        <ListItem onClick={() => props.history.push("/todo/createTodo")} button>
+          <ListItemIcon>
+            <PlaylistAddCheckIcon />
+          </ListItemIcon>
+          <ListItemText primary="Create" />
         </ListItem>
         <ListItem button>
           <ListItemIcon>
@@ -174,10 +180,13 @@ const Header = props => {
         <div className={classes.toolbar} />
         <Paper className={classes.paper}>
           <Switch>
-            <Route exact path="/start" component={StartPage} />
-            <Route exact path="/todos" component={TodoPage} />
-            <Route exact path="/todos/createTodos" component={TodoForm} />
-            <Route exact path="/todos/calendar" component={Calendar} />
+            <Route
+              exact
+              path="/start"
+              render={() => (currentUser ? <TodoPage /> : <StartPage />)}
+            />
+            <Route exact path="/todo/createTodo" component={TodoForm} />
+            <Route exact path="/todo/calendar" component={Calendar} />
           </Switch>
           <SignUpForm />
         </Paper>

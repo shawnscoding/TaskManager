@@ -1,6 +1,6 @@
 import { takeLatest, put, all, call } from "redux-saga/effects";
 import authActionTypes from "./auth.types";
-import { auth } from "../../firebase/firebase.config";
+import { auth, firestore } from "../../firebase/firebase.config";
 import {
   signInSuccess,
   signInFailure,
@@ -45,6 +45,7 @@ export function* signInAfterSignUp({ payload: { user, additionalData } }) {
 export function* signUp({ payload: { displayName, email, password } }) {
   try {
     const { user } = yield auth.createUserWithEmailAndPassword(email, password);
+
     yield put(signUpSuccess({ user, additionalData: { displayName } }));
   } catch (err) {
     alert(err.message);
@@ -96,6 +97,7 @@ export function* authSagas() {
   yield all([
     call(onSignUpStart),
     call(onSignUpSuccess),
+    call(onSignInStart),
     call(onCheckUserSession),
     call(onSignOutStart)
   ]);

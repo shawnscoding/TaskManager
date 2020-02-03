@@ -5,19 +5,35 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import { TextField, Paper, Divider } from "@material-ui/core";
-import { useStyles } from "./signInForm.styles";
 import GTranslateIcon from "@material-ui/icons/GTranslate";
-import { Link } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
 import { selectToggleSignUpForm } from "./../../redux/auth/auth.selectors";
 import { toggleSignUpForm } from "./../../redux/auth/auth.actions";
 import { connect } from "react-redux";
+import { emailSignInStart } from "./../../redux/auth/auth.actions";
+
+import { makeStyles } from "@material-ui/styles";
+
+export const useStyles = makeStyles(theme => ({
+  buttonContainer: {
+    marginTop: 20
+  },
+  paper: {
+    padding: "20px",
+    marginTop: "5px",
+    height: "53vh",
+    overflowY: "auto"
+  },
+  googleIcon: {
+    marginRight: theme.spacing(1)
+  }
+}));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const SignInForm = ({ signUpOpen }) => {
+const SignInForm = ({ signUpOpen, signInWithEmail }) => {
   const [form, setForm] = React.useState({ email: "", password: "" });
   const [open, setOpen] = React.useState(false);
 
@@ -27,11 +43,19 @@ const SignInForm = ({ signUpOpen }) => {
       [name]: value
     });
 
+  const handleSubmit = () => {
+    signInWithEmail(form);
+  };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSignUpFormOpen = () => {
     setOpen(false);
     signUpOpen();
   };
@@ -80,7 +104,12 @@ const SignInForm = ({ signUpOpen }) => {
             />
           </form>
           <DialogActions style={{ marginBottom: 15 }}>
-            <Button size="large" color="primary" variant="outlined">
+            <Button
+              onClick={handleSubmit}
+              size="large"
+              color="primary"
+              variant="outlined"
+            >
               Sign in
             </Button>
           </DialogActions>
@@ -89,7 +118,7 @@ const SignInForm = ({ signUpOpen }) => {
             <Button
               size="small"
               variant="contained"
-              onClick={handleClose}
+              onClick={handleSignUpFormOpen}
               color="primary"
             >
               sign up now
@@ -97,7 +126,6 @@ const SignInForm = ({ signUpOpen }) => {
             <Button
               size="small"
               variant="contained"
-              onClick={handleClose}
               color="secondary"
               startIcon={<GTranslateIcon />}
             >
@@ -115,7 +143,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  signUpOpen: () => dispatch(toggleSignUpForm())
+  signUpOpen: () => dispatch(toggleSignUpForm()),
+  signInWithEmail: form => dispatch(emailSignInStart(form))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignInForm);

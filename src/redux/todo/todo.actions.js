@@ -1,16 +1,34 @@
 import todoActionTypes from "./todo.types";
 
-export const addTodo = todo => ({
-  type: todoActionTypes.ADD_TODO,
+export const addTodoStart = (form, date) => ({
+  type: todoActionTypes.ADD_TODO_START,
+  payload: { form, date }
+});
+
+export const addTodoSuccess = newTodo => ({
+  type: todoActionTypes.ADD_TODO_SUCCESS,
+  payload: newTodo
+});
+
+export const removeTodoStart = todo => ({
+  type: todoActionTypes.REMOVE_TODO_START,
   payload: todo
 });
 
-export const removeTodo = todo => ({
-  type: todoActionTypes.REMOVE_TODO,
+export const removeTodoSuccess = todo => ({
+  type: todoActionTypes.REMOVE_TODO_SUCCESS,
   payload: todo
 });
 
-export const setTodoFromFirebase = todos => ({
+export const setTodoFromFirebase = todoList => ({
   type: todoActionTypes.SET_TODO_FROM_FIREBASE,
-  payload: todos
+  payload: todoList
+});
+
+export const clearTodoList = () => ({
+  type: todoActionTypes.CLEAR_TODO_LIST
+});
+
+export const filterTodoForThisMonth = () => ({
+  type: todoActionTypes.FILTER_TODO_FOR_THIS_MONTH
 });
