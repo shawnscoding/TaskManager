@@ -67,7 +67,7 @@ const Header = props => {
           </ListItemIcon>
           <ListItemText primary="Create" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => props.history.push("/startTask")}>
           <ListItemIcon>
             <PlayCircleOutlineIcon />
           </ListItemIcon>
@@ -185,6 +185,7 @@ const Header = props => {
               path="/start"
               render={() => (currentUser ? <TodoPage /> : <StartPage />)}
             />
+            <Route exact path="/startTask" component={StartPage} />
             <Route exact path="/todo/createTodo" component={TodoForm} />
             <Route exact path="/todo/calendar" component={Calendar} />
           </Switch>

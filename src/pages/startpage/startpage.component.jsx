@@ -23,9 +23,7 @@ const StartPage = ({ history, todos }) => {
         alignItems="flex-start"
       >
         {todos.map(todo => (
-          <Grid key={todo.id} item>
-            {todo.title}
-          </Grid>
+          <Grid key={todo.id} item></Grid>
         ))}
       </Grid>
     </React.Fragment>

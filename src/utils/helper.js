@@ -61,3 +61,10 @@ export const thisMonth = () => {
   const month = date.toString().slice(4, 7);
   return month;
 };
+
+export const getMonthAndDay = day => {
+  const newDay = day.toString().slice(8, 10);
+  const month = day.toString().slice(4, 7);
+
+  return month + newDay;
+};

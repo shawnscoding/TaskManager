@@ -10,6 +10,11 @@ import {
 } from "./todo.actions";
 import { createNewTodo, pickUpYearMonthAndDate } from "./../../utils/helper";
 import authActionTypes from "../auth/auth.types";
+import {
+  asyncActionStart,
+  asyncActionFinish,
+  increaseTodoFormStep
+} from "./../async/async.actions";
 
 export function* addTodoToFirebase({ payload }) {
   const { form, date } = payload;
@@ -18,6 +23,7 @@ export function* addTodoToFirebase({ payload }) {
 
   if (user) {
     try {
+      yield put(asyncActionStart());
       const newTodo = createNewTodo(
         form,
         year,
@@ -28,8 +34,10 @@ export function* addTodoToFirebase({ payload }) {
         time
       );
       yield firestore.collection("todo_list").add(newTodo);
-
       yield put(addTodoSuccess(newTodo));
+      yield put(filterTodoForThisMonth());
+      yield put(asyncActionFinish());
+      yield put(increaseTodoFormStep());
     } catch (err) {
       alert("Sorry,, something went wrong,, try again later");
       console.log(err);
@@ -39,7 +47,6 @@ export function* addTodoToFirebase({ payload }) {
 
 export function* checkTodoInFirebase() {
   const user = yield select(selectCurrentUser);
-  console.log("fired");
   try {
     const listsRef = yield firestore.collection("todo_list");
     const query = yield listsRef

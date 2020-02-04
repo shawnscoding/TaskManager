@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   format,
   startOfWeek,
@@ -7,47 +7,48 @@ import {
   endOfWeek,
   startOfMonth,
   isSameMonth,
-  isSameDay,
-  toDate,
   addMonths,
   subMonths
 } from "date-fns";
-
 import "./calendar.styles.css";
-import { Button, Fab } from "@material-ui/core";
+import { Fab } from "@material-ui/core";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
+import { onIsTodoExist } from "../../redux/todo/todo.utils";
+import { createStructuredSelector } from "reselect";
+import { selectTodoListByMonth } from "../../redux/todo/todo.selectors";
+import { connect } from "react-redux";
+import { selectLoading } from "../../redux/async/async.selectors";
+import LoadingComponent from "./../loader/loadingCompoent";
+import { getMonthAndDay } from "./../../utils/helper";
 
-class Calendar extends React.Component {
-  state = {
-    currentMonth: new Date(),
-    isTaskExist: new Date()
-  };
+const Calendar = ({ todos }) => {
+  const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  renderHeader() {
+  const renderHeader = () => {
     const dateFormat = "MMMM yyyy";
 
     return (
       <div className="header row flex-middle">
         <div className="col col-start">
-          <div className="icon" onClick={this.prevMonth}>
+          <div className="icon" onClick={prevMonth}>
             chevron_left
           </div>
         </div>
         <div className="col col-center">
-          <span>{format(this.state.currentMonth, dateFormat)}</span>
+          <span>{format(currentMonth, dateFormat)}</span>
         </div>
-        <div className="col col-end" onClick={this.nextMonth}>
+        <div className="col col-end" onClick={nextMonth}>
           <div className="icon">chevron_right</div>
         </div>
       </div>
     );
-  }
+  };
 
-  renderDays() {
+  const renderDays = () => {
     const dateFormat = "EEEE";
     const days = [];
 
-    let startDate = startOfWeek(this.state.currentMonth);
+    let startDate = startOfWeek(currentMonth);
 
     for (let i = 0; i < 7; i++) {
       days.push(
@@ -58,10 +59,9 @@ class Calendar extends React.Component {
     }
 
     return <div className="days row">{days}</div>;
-  }
+  };
 
-  renderCells() {
-    const { currentMonth, isTaskExist } = this.state;
+  const renderCells = () => {
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(monthStart);
     const startDate = startOfWeek(monthStart);
@@ -78,19 +78,28 @@ class Calendar extends React.Component {
       for (let i = 0; i < 7; i++) {
         formattedDate = format(day, dateFormat);
         const cloneDay = day;
+        const monthAndDate = getMonthAndDay(day);
+
+        // let todoArray = todos.map(todo => todo.dateInTotal.toDate() === day);
         days.push(
           <div
             className={`col cell ${
-              !isSameMonth(day, monthStart) ? "disabled" : true ? "task" : ""
+              !isSameMonth(day, monthStart) ? "disabled" : false ? "task" : ""
             }`}
             key={day}
-            onClick={() => this.onDateClick(toDate(cloneDay))}
           >
             <span className="number">{formattedDate}</span>
-            <Fab size="small" variant="extended" color="primary" className="bg">
-              {formattedDate}
-              <PlaylistAddCheckIcon />
-            </Fab>
+            {onIsTodoExist(monthAndDate, todos) ? (
+              <Fab
+                size="small"
+                variant="extended"
+                color="primary"
+                className="bg"
+              >
+                {formattedDate}
+                <PlaylistAddCheckIcon />
+              </Fab>
+            ) : null}
           </div>
         );
         day = addDays(day, 1);
@@ -103,39 +112,40 @@ class Calendar extends React.Component {
       days = [];
     }
     return <div className="body">{rows}</div>;
-  }
-
-  onDateClick = day => {
-    this.setState({
-      isTaskExist: day
-    });
   };
 
-  nextMonth = () => {
-    this.setState({
-      currentMonth: addMonths(this.state.currentMonth, 1)
-    });
+  // const onDateClick = day => {
+  //   this.setState({
+  //     isTaskExist: day
+  //   });
+  // };
+
+  const nextMonth = () => {
+    setCurrentMonth(addMonths(currentMonth, 1));
   };
 
-  prevMonth = () => {
-    this.setState({
-      currentMonth: subMonths(this.state.currentMonth, 1)
-    });
+  const prevMonth = () => {
+    setCurrentMonth(subMonths(currentMonth, 1));
   };
 
-  render() {
-    return (
-      <div className="calendar-container">
-        <div className="main">
-          <div className="calendar">
-            {this.renderHeader()}
-            {this.renderDays()}
-            {this.renderCells()}
-          </div>
+  return (
+    <div className="calendar-container">
+      <div className="main">
+        <div className="calendar">
+          {renderHeader()}
+          {renderDays()}
+          {renderCells()}
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
-export default Calendar;
+const mapStateToProps = createStructuredSelector({
+  todos: selectTodoListByMonth,
+  loading: selectLoading
+});
+
+const mapDispatchToProps = dispatch => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calendar);

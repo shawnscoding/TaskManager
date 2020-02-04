@@ -8,7 +8,10 @@ import {
   Box
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { createStructuredSelector } from "reselect";
+import { connect } from "react-redux";
+import { setTodoFormStepToZero } from "../../redux/async/async.actions";
+import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -27,8 +30,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TodoPage = ({ history }) => {
+const TodoPage = ({ history, setStepToZero }) => {
   const classes = useStyles();
+
+  const handleGoToCreateTodo = () => {
+    history.push("/todo/createTodo");
+    setStepToZero();
+  };
+
+  const handleGoToCalendar = () => {
+    history.push("/todo/calendar");
+    setStepToZero();
+  };
 
   return (
     <React.Fragment>
@@ -64,8 +77,7 @@ const TodoPage = ({ history }) => {
             <Box width="100%">
               <Box display="flex" justifyContent="flex-end">
                 <Button
-                  component={Link}
-                  to="/todo/createTodo"
+                  onClick={handleGoToCreateTodo}
                   size="large"
                   variant="contained"
                   color="primary"
@@ -100,8 +112,7 @@ const TodoPage = ({ history }) => {
             <Box width="100%">
               <Box display="flex" justifyContent="flex-end">
                 <Button
-                  component={Link}
-                  to="/todo/calendar"
+                  onClick={handleGoToCalendar}
                   size="large"
                   variant="contained"
                   color="primary"
@@ -117,4 +128,12 @@ const TodoPage = ({ history }) => {
   );
 };
 
-export default TodoPage;
+const mapStateToProps = createStructuredSelector({});
+
+const mapDispatchToProps = dispatch => ({
+  setStepToZero: () => dispatch(setTodoFormStepToZero())
+});
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(TodoPage)
+);

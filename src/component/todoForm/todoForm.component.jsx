@@ -1,37 +1,28 @@
 import React from "react";
 import {
-  makeStyles,
   Step,
   Stepper,
   StepLabel,
   Button,
   Typography,
   Box,
-  Grid
+  Grid,
+  CircularProgress
 } from "@material-ui/core";
 import TodoFormFirst from "./todoFormSteps/todoFormFirst.component";
 import TodoFormSecond from "./todoFormSteps/todoFormSecond.component";
-import TodoFormLast from "./todoFormSteps/todoFormLast.component";
+import TodoFormThird from "./todoFormSteps/todoFormThird.component";
 import { connect } from "react-redux";
 import { addTodoStart } from "./../../redux/todo/todo.actions";
-import { pickUpYearMonthAndDate, createNewTodo } from "../../utils/helper";
-
-const useStyles = makeStyles(theme => ({
-  backButton: {
-    marginRight: theme.spacing(1)
-  },
-  formControl: {
-    minWidth: 120,
-    margin: theme.spacing(1),
-    marginTop: theme.spacing(1)
-  },
-  stepper: {
-    width: "50%"
-  },
-  items: {
-    width: "50%"
-  }
-}));
+import { createStructuredSelector } from "reselect";
+import { selectLoading, selectStep } from "../../redux/async/async.selectors";
+import {
+  increaseTodoFormStep,
+  decreaseTodoFormStep
+} from "../../redux/async/async.actions";
+import todoFormLast from "./todoFormSteps/todoFormLast.component";
+import useStyles from "./todoForm.styles";
+import TodoPage from "../../pages/todoPage/todoPage.component";
 
 const getSteps = () => {
   return ["Set your task", "set the date you will work on", "before you add"];
@@ -50,8 +41,14 @@ const getStepContent = stepIndex => {
   }
 };
 
-const TodoForm = ({ history, addTodo }) => {
-  const [activeStep, setActiveStep] = React.useState(0);
+const TodoForm = ({
+  history,
+  addTodo,
+  loading,
+  activeStep,
+  increaseStep,
+  decreaseStep
+}) => {
   const [date, setDate] = React.useState(new Date("2020-02-18T00:00:00"));
   const [form, setForm] = React.useState({
     title: "",
@@ -68,11 +65,11 @@ const TodoForm = ({ history, addTodo }) => {
   const steps = getSteps();
 
   const handleNext = () => {
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
+    increaseStep();
   };
 
   const handleBack = () => {
-    setActiveStep(prevActiveStep => prevActiveStep - 1);
+    decreaseStep();
   };
 
   const handleDateChange = async date => {
@@ -93,20 +90,8 @@ const TodoForm = ({ history, addTodo }) => {
     });
   };
 
-  const handleSubmit = async form => {
-    try {
-      await addTodo(form, date);
-      history.push("/start");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const onFormSubmit = () => {
-    setTimeout(() => {
-      handleSubmit(form);
-    }, 3000);
-    return <div>Wait a bit please...</div>;
+  const handleSubmit = () => {
+    addTodo(form, date);
   };
 
   return (
@@ -121,7 +106,7 @@ const TodoForm = ({ history, addTodo }) => {
         </Stepper>
       </Grid>
       {activeStep === steps.length ? (
-        onFormSubmit()
+        <TodoPage />
       ) : (
         <Grid className={classes.items} item>
           <Typography color="primary" variant="h4">
@@ -143,7 +128,7 @@ const TodoForm = ({ history, addTodo }) => {
                 onDateAndTimeChange={handleDateChange}
               />
             ) : activeStep === 2 ? (
-              <TodoFormLast
+              <TodoFormThird
                 onChange={handleChange}
                 classes={classes}
                 form={form}
@@ -153,16 +138,42 @@ const TodoForm = ({ history, addTodo }) => {
           </form>
 
           <Box mt={3}>
-            <Button
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              className={classes.backButton}
-            >
-              Back
-            </Button>
-            <Button variant="contained" color="primary" onClick={handleNext}>
-              {activeStep === steps.length - 1 ? "Finish" : "Next"}
-            </Button>
+            <div className={classes.root}>
+              <Button
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                className={classes.backButton}
+              >
+                Back
+              </Button>{" "}
+              {activeStep === steps.length - 1 ? (
+                <div className={classes.wrapper}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.buttonSuccess}
+                    disabled={loading}
+                    onClick={handleSubmit}
+                  >
+                    Accept terms
+                  </Button>
+                  {loading && (
+                    <CircularProgress
+                      size={24}
+                      className={classes.buttonProgress}
+                    />
+                  )}
+                </div>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNext}
+                >
+                  Next
+                </Button>
+              )}
+            </div>
           </Box>
         </Grid>
       )}
@@ -170,8 +181,15 @@ const TodoForm = ({ history, addTodo }) => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  addTodo: (form, date) => dispatch(addTodoStart(form, date))
+const mapStateToProps = createStructuredSelector({
+  loading: selectLoading,
+  activeStep: selectStep
 });
 
-export default connect(null, mapDispatchToProps)(TodoForm);
+const mapDispatchToProps = dispatch => ({
+  addTodo: (form, date) => dispatch(addTodoStart(form, date)),
+  increaseStep: () => dispatch(increaseTodoFormStep()),
+  decreaseStep: () => dispatch(decreaseTodoFormStep())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoForm);
