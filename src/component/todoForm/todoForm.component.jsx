@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Step,
   Stepper,
@@ -18,11 +18,13 @@ import { createStructuredSelector } from "reselect";
 import { selectLoading, selectStep } from "../../redux/async/async.selectors";
 import {
   increaseTodoFormStep,
-  decreaseTodoFormStep
+  decreaseTodoFormStep,
+  setTodoFormStepToZero
 } from "../../redux/async/async.actions";
 import todoFormLast from "./todoFormSteps/todoFormLast.component";
 import useStyles from "./todoForm.styles";
 import TodoPage from "../../pages/todoPage/todoPage.component";
+import WarningComponent from "./../alerts/warning.component";
 
 const getSteps = () => {
   return ["Set your task", "set the date you will work on", "before you add"];
@@ -42,15 +44,18 @@ const getStepContent = stepIndex => {
 };
 
 const TodoForm = ({
-  history,
   addTodo,
   loading,
   activeStep,
   increaseStep,
-  decreaseStep
+  decreaseStep,
+  warning,
+  setWarning,
+  setStepToZero
 }) => {
-  const [date, setDate] = React.useState(new Date("2020-02-18T00:00:00"));
-  const [form, setForm] = React.useState({
+  // const [openReady, setOpenReady] = useState(false);
+  const [date, setDate] = useState(new Date("2020-02-18T00:00:00"));
+  const [form, setForm] = useState({
     title: "",
     discription: "",
     category: "",
@@ -59,6 +64,15 @@ const TodoForm = ({
     importance: 3,
     reward: ""
   });
+
+  useEffect(() => {
+    // setOpenReady(true);
+    if (warning) {
+      setWarning(false);
+    }
+    console.log("effect fired warning", warning);
+    // console.log("effect fired openReady", openReady);
+  }, []);
 
   const classes = useStyles();
 
@@ -90,12 +104,33 @@ const TodoForm = ({
     });
   };
 
+  const onUserLeave = () => {
+    setForm({
+      title: "",
+      discription: "",
+      category: "",
+      hours: "",
+      minutes: "",
+      importance: 3,
+      reward: ""
+    });
+    setDate(new Date("2020-02-18T00:00:00"));
+  };
+
   const handleSubmit = () => {
     addTodo(form, date);
   };
 
   return (
     <Grid container direction="column" justify="center" alignItems="center">
+      {warning && activeStep === steps.length ? null : (
+        <WarningComponent
+          onUserLeave={onUserLeave}
+          setWarning={setWarning}
+          warning={warning}
+          setStepToZero={setStepToZero}
+        />
+      )}
       <Grid className={classes.stepper} item>
         <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map(label => (
@@ -106,7 +141,7 @@ const TodoForm = ({
         </Stepper>
       </Grid>
       {activeStep === steps.length ? (
-        <TodoPage />
+        <TodoPage setStepToZero={setStepToZero} onUserLeave={onUserLeave} />
       ) : (
         <Grid className={classes.items} item>
           <Typography color="primary" variant="h4">
@@ -189,7 +224,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
   addTodo: (form, date) => dispatch(addTodoStart(form, date)),
   increaseStep: () => dispatch(increaseTodoFormStep()),
-  decreaseStep: () => dispatch(decreaseTodoFormStep())
+  decreaseStep: () => dispatch(decreaseTodoFormStep()),
+  setStepToZero: () => dispatch(setTodoFormStepToZero())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoForm);

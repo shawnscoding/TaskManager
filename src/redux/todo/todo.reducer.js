@@ -4,17 +4,7 @@ import { onFilterTodoForThisMonth } from "./todo.utils";
 const INITIAL_STATE = {
   todoList: [],
   todosByMonth: [],
-  isTodoExist: false,
-  todoForm: {
-    title: "",
-    discription: "",
-    category: "",
-    hours: "",
-    minutes: "",
-    importance: 3,
-    reward: "",
-    date: new Date("2020-02-18T00:00:00")
-  }
+  isTodoExist: false
 };
 
 const todoReducer = (state = INITIAL_STATE, action) => {

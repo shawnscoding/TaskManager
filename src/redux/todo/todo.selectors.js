@@ -11,8 +11,3 @@ export const selectTodoListByMonth = createSelector(
   [selectTodoReducer],
   todoList => todoList.todosByMonth
 );
-
-export const selectTodoForm = createSelector(
-  [selectTodoReducer],
-  todoList => todoList.todoForm
-);

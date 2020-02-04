@@ -30,17 +30,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TodoPage = ({ history, setStepToZero }) => {
+const TodoPage = ({ history, setStepToZero, onUserLeave }) => {
   const classes = useStyles();
 
   const handleGoToCreateTodo = () => {
-    history.push("/todo/createTodo");
-    setStepToZero();
+    if (onUserLeave) {
+      onUserLeave();
+      setStepToZero();
+    } else {
+      history.push("/todo/createTodo");
+    }
   };
 
   const handleGoToCalendar = () => {
     history.push("/todo/calendar");
-    setStepToZero();
+    if (onUserLeave) {
+      onUserLeave();
+      setStepToZero();
+    }
   };
 
   return (
@@ -130,9 +137,7 @@ const TodoPage = ({ history, setStepToZero }) => {
 
 const mapStateToProps = createStructuredSelector({});
 
-const mapDispatchToProps = dispatch => ({
-  setStepToZero: () => dispatch(setTodoFormStepToZero())
-});
+const mapDispatchToProps = dispatch => ({});
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(TodoPage)

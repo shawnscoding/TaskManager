@@ -34,16 +34,31 @@ import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "../../redux/auth/auth.selectors";
 import { connect } from "react-redux";
 import ProfileIcon from "./header-materials/profileIcon.component";
+import { selectStep } from "../../redux/async/async.selectors";
+import { setTodoFormStepToZero } from "../../redux/async/async.actions";
 
 const Header = props => {
-  const { container, currentUser } = props;
+  const { container, currentUser, setStepToZero, activeStep } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const [warning, setWarning] = useState(false);
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const onClickCreate = () => {
+    if (activeStep === 3) {
+      setStepToZero();
+    } else {
+      setWarning(!warning);
+      props.history.push("/todo/createTodo");
+    }
+  };
+
+  console.log("warning", warning);
 
   const drawer = (
     <div>
@@ -61,7 +76,7 @@ const Header = props => {
           </ListItemIcon>
           <ListItemText primary="My Calendar" />
         </ListItem>
-        <ListItem onClick={() => props.history.push("/todo/createTodo")} button>
+        <ListItem onClick={onClickCreate} button>
           <ListItemIcon>
             <PlaylistAddCheckIcon />
           </ListItemIcon>
@@ -186,7 +201,13 @@ const Header = props => {
               render={() => (currentUser ? <TodoPage /> : <StartPage />)}
             />
             <Route exact path="/startTask" component={StartPage} />
-            <Route exact path="/todo/createTodo" component={TodoForm} />
+            <Route
+              exact
+              path="/todo/createTodo"
+              render={() => (
+                <TodoForm setWarning={setWarning} warning={warning} />
+              )}
+            />
             <Route exact path="/todo/calendar" component={Calendar} />
           </Switch>
           <SignUpForm />
@@ -197,7 +218,12 @@ const Header = props => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
+  activeStep: selectStep
 });
 
-export default withRouter(connect(mapStateToProps)(Header));
+const mapDispatchToProps = dispatch => ({
+  setStepToZero: () => dispatch(setTodoFormStepToZero())
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

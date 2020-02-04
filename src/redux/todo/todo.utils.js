@@ -8,7 +8,6 @@ export const onFilterTodoForThisMonth = todoList => {
 export const onIsTodoExist = (monthAndDate, todos) => {
   for (let i = 0; i < todos.length; i++) {
     let todo = todos[i].month + todos[i].date;
-    console.log(todo);
     if (todo === monthAndDate) {
       return Boolean(true);
     }
