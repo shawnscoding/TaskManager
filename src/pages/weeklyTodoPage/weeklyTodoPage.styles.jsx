@@ -1,22 +1,36 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
+import styled, { css } from "styled-components";
+import { Grid } from "@material-ui/core";
+
+export const HeaderDay = styled(Grid)`
+  -webkit-clip-path: polygon(16% 0, 100% 0, 80% 100%, 0% 100%);
+  clip-path: polygon(16% 0, 100% 0, 80% 100%, 0% 100%);
+  width: 5rem;
+  border-radius: 10px;
+`;
 
 export const useStyles = makeStyles(theme => ({
   header: {
     padding: theme.spacing(2, 0),
-    backgroundColor: grey[100]
+    backgroundColor: theme.palette.paper
   },
-  beforeToday: {
-    backgroundColor: grey[400],
-    padding: theme.spacing(2)
+  dayOfMonth: {
+    fontSize: "1.7rem",
+    textAlign: "center"
   },
-  afterToday: {
-    backgroundColor: "#fff",
-    padding: theme.spacing(2)
+  dayOfWeek: {
+    textAlign: "center"
   },
-  day: {
+  days: {
+    backgroundColor: "#f2f2f2",
+    padding: theme.spacing(1, 2),
+    color: theme.palette.text.secondary
+  },
+  selectedDay: {
     backgroundColor: theme.palette.text.secondary,
-    padding: theme.spacing(2)
+    color: "#fff",
+    padding: theme.spacing(1, 2)
   },
   red: {
     backgroundColor: "red"

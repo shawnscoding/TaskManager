@@ -21,24 +21,24 @@ import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 import ForumIcon from "@material-ui/icons/Forum";
 import TimeToLeaveIcon from "@material-ui/icons/TimeToLeave";
 import SettingsIcon from "@material-ui/icons/Settings";
-import { useStyles } from "./header.styles";
-import StartPage from "./../../pages/startpage/startpage.component";
+import { useStyles } from "./navbar.styles";
+import StartPage from "../../pages/startpage/startpage.component";
 import { Route, Switch, withRouter } from "react-router-dom";
 import SignInForm from "../signInForm/signInForm.component";
 import TodoPage from "../../pages/todoPage/todoPage.component";
 import TodoForm from "../todoForm/todoForm.component";
 import InfoIcon from "@material-ui/icons/Info";
-import Calendar from "./../calendar/calendar.component";
-import SignUpForm from "./../signUpForm/signUpForm.component";
+import Calendar from "../calendar/calendar.component";
+import SignUpForm from "../signUpForm/signUpForm.component";
 import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "../../redux/auth/auth.selectors";
 import { connect } from "react-redux";
-import ProfileIcon from "./header-materials/profileIcon.component";
+import ProfileIcon from "./navbarMaterials/profileIcon.component";
 import { selectStep } from "../../redux/async/async.selectors";
 import { setTodoFormStepToZero } from "../../redux/async/async.actions";
 import WeeklyTodoPage from "../../pages/weeklyTodoPage/weeklyTodoPage.component";
 
-const Header = props => {
+const Navbar = props => {
   const { container, currentUser, setStepToZero, activeStep } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -230,4 +230,4 @@ const mapDispatchToProps = dispatch => ({
   setStepToZero: () => dispatch(setTodoFormStepToZero())
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

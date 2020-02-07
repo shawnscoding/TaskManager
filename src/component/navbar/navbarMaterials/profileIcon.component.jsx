@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, MenuItem, Menu, IconButton } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import { signOutStart } from "./../../../redux/auth/auth.actions";
+import { signOutStart } from "../../../redux/auth/auth.actions";
 import { connect } from "react-redux";
 
 const ProfileIcon = ({ classes, signOutStart }) => {

@@ -28,3 +28,8 @@ export const setTodoFromFirebase = todoList => ({
 export const clearTodoList = () => ({
   type: todoActionTypes.CLEAR_TODO_LIST
 });
+
+export const getDailyTodo = monthAndDate => ({
+  type: todoActionTypes.GET_DAILY_TODO,
+  payload: monthAndDate
+});

@@ -22,6 +22,10 @@ export const countAndSliceTodo = (monthAndDate, todos) => {
   return { dailyTodo, slicedDailyTodo };
 };
 
+export const setDailyTodo = (todos, monthAndDate) => {
+  return todos.filter(todo => todo.month === monthAndDate);
+};
+
 export const categories = [
   "Work",
   "Study",

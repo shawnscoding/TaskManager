@@ -6,3 +6,8 @@ export const selectTodoList = createSelector(
   [selectTodoReducer],
   todoList => todoList.todoList
 );
+
+export const selectDailyTodo = createSelector(
+  [selectTodoReducer],
+  todoList => todoList.dailyTodo
+);

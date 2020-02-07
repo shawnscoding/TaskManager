@@ -46,7 +46,7 @@ const DailyTodoAll = ({ dailyTodo, classes }) => {
             <Divider />
             <Grid container>
               <Grid sm={8} item>
-                {dailyTodo &&
+                {dailyTodo.length !== 0 &&
                   dailyTodo
                     .filter(todo => {
                       return (

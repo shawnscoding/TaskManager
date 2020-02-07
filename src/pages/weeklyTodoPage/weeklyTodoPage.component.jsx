@@ -9,14 +9,21 @@ import { useStyles } from "./weeklyTodoPage.styles";
 import { format } from "date-fns";
 
 const WeeklyTodoPage = ({ match, todos }) => {
+  const [dailyTodo, setDailyTodo] = React.useState([]);
   const classes = useStyles();
   const monthAndDate = match.params.monthAndDate;
 
-  let dailyTodo = todos.filter(
-    todo => format(todo.date.toDate(), "MMMd") === monthAndDate
-  );
+  React.useEffect(() => {
+    if (todos.length !== 0) {
+      let newTodos = todos.filter(
+        todo => format(todo.date.toDate(), "MMMd") === monthAndDate
+      );
+      setDailyTodo(newTodos);
+      console.log("dailyTodo", dailyTodo);
+    }
+  }, [todos]);
 
-  if (todos.length === 0) return <LoadingCompoent />;
+  if (dailyTodo.length === 0) return <LoadingCompoent />;
   return (
     <React.Fragment>
       <WeeklyTodoHeader

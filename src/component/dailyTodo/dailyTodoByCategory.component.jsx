@@ -37,7 +37,7 @@ const DailyTodoByCategory = ({ dailyTodo, classes }) => {
 
   return (
     <React.Fragment>
-      {todosByCategories &&
+      {dailyTodo.length !== 0 &&
         todosByCategories.map(([group, todos]) =>
           todos.length !== 0 ? (
             <React.Fragment key={group}>

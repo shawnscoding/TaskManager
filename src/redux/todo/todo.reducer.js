@@ -1,7 +1,9 @@
 import todoActionTypes from "./todo.types";
+import { setDailyTodo } from "./todo.utils";
 
 const INITIAL_STATE = {
-  todoList: []
+  todoList: [],
+  dailyTodo: []
 };
 
 const todoReducer = (state = INITIAL_STATE, action) => {
@@ -10,6 +12,12 @@ const todoReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         todoList: [...state.todoList, action.payload]
+      };
+    case todoActionTypes.GET_DAILY_TODO:
+      return {
+        ...state,
+        todoList: [...state.todoList, action.payload],
+        dailyTodo: setDailyTodo(state.todoList, action.payload)
       };
     case todoActionTypes.REMOVE_TODO:
       return {

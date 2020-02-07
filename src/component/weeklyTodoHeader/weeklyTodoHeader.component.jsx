@@ -11,6 +11,7 @@ import {
   addMonths,
   subMonths
 } from "date-fns";
+import { HeaderDay } from "./../../pages/weeklyTodoPage/weeklyTodoPage.styles";
 
 const WeeklyTodoHeader = ({ classes, dailyTodo }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -28,6 +29,7 @@ const WeeklyTodoHeader = ({ classes, dailyTodo }) => {
       const days = [];
       let day = startDate;
       let sevenDays = [];
+      console.log(dailyTodo);
 
       let date = format(dailyTodo[0].date.toDate(), "d");
 
@@ -49,22 +51,28 @@ const WeeklyTodoHeader = ({ classes, dailyTodo }) => {
             formattedDate === sevenDays[i].toString()
           ) {
             days.push(
-              <Grid
+              <HeaderDay
                 key={day}
                 className={
                   Number(formattedDate) < Number(date)
-                    ? classes.beforeToday
+                    ? classes.days
                     : Number(formattedDate) === Number(date)
-                    ? classes.day
+                    ? classes.selectedDay
                     : Number(formattedDate) > Number(date)
-                    ? classes.afterToday
+                    ? classes.days
                     : null
                 }
                 item
               >
-                <Typography> {formattedDate}</Typography>
-                <Typography> {formattedDay}</Typography>
-              </Grid>
+                <div>
+                  <Typography className={classes.dayOfMonth}>
+                    {formattedDate}
+                  </Typography>
+                  <Typography className={classes.dayOfWeek}>
+                    {formattedDay}
+                  </Typography>
+                </div>
+              </HeaderDay>
             );
           }
         }

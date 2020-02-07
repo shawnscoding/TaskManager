@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Header from "./component/header/header.component";
+import Navbar from "./component/navbar/navbar.component";
 import { Route } from "react-router-dom";
 import HomePage from "./pages/hompage/homepage.component";
 import { checkUserSession } from "./redux/auth/auth.actions";
@@ -18,7 +18,7 @@ const App = ({ checkUserSession, currentUser }) => {
         path="/(.+)"
         render={() => (
           <React.Fragment>
-            <Header />
+            <Navbar />
           </React.Fragment>
         )}
       />
