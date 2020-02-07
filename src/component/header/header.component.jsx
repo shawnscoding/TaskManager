@@ -23,7 +23,7 @@ import TimeToLeaveIcon from "@material-ui/icons/TimeToLeave";
 import SettingsIcon from "@material-ui/icons/Settings";
 import { useStyles } from "./header.styles";
 import StartPage from "./../../pages/startpage/startpage.component";
-import { Route, Switch, withRouter, Redirect } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import SignInForm from "../signInForm/signInForm.component";
 import TodoPage from "../../pages/todoPage/todoPage.component";
 import TodoForm from "../todoForm/todoForm.component";
@@ -36,6 +36,7 @@ import { connect } from "react-redux";
 import ProfileIcon from "./header-materials/profileIcon.component";
 import { selectStep } from "../../redux/async/async.selectors";
 import { setTodoFormStepToZero } from "../../redux/async/async.actions";
+import WeeklyTodoPage from "../../pages/weeklyTodoPage/weeklyTodoPage.component";
 
 const Header = props => {
   const { container, currentUser, setStepToZero, activeStep } = props;
@@ -58,8 +59,6 @@ const Header = props => {
     }
   };
 
-  console.log("warning", warning);
-
   const drawer = (
     <div>
       <div className={classes.toolbar}>
@@ -70,24 +69,32 @@ const Header = props => {
       </div>
       <Divider />
       <List>
-        <ListItem onClick={() => props.history.push("/todo/calendar")} button>
+        <ListItem button>
           <ListItemIcon>
-            <PlaylistAddCheckIcon />
+            <PlayCircleOutlineIcon />
           </ListItemIcon>
-          <ListItemText primary="My Calendar" />
+          <ListItemText primary="Today" />
         </ListItem>
         <ListItem onClick={onClickCreate} button>
           <ListItemIcon>
             <PlaylistAddCheckIcon />
           </ListItemIcon>
-          <ListItemText primary="Create" />
+          <ListItemText primary="This week" />
         </ListItem>
+        <ListItem onClick={() => props.history.push("/todo/calendar")} button>
+          <ListItemIcon>
+            <PlaylistAddCheckIcon />
+          </ListItemIcon>
+          <ListItemText primary="Calendar" />
+        </ListItem>
+
         <ListItem button onClick={() => props.history.push("/startTask")}>
           <ListItemIcon>
             <PlayCircleOutlineIcon />
           </ListItemIcon>
           <ListItemText primary="Start Task" />
         </ListItem>
+
         <ListItem button>
           <ListItemIcon>
             <HistoryIcon />
@@ -108,12 +115,6 @@ const Header = props => {
             <PeopleOutlineIcon />
           </ListItemIcon>
           <ListItemText primary="People" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <ThumbUpIcon />
-          </ListItemIcon>
-          <ListItemText primary="Liked" />
         </ListItem>
       </List>
       <Divider />
@@ -191,28 +192,31 @@ const Header = props => {
           </Drawer>
         </Hidden>
       </nav>
-      <main className={classes.content}>
+      <Paper className={classes.content}>
         <div className={classes.toolbar} />
-        <Paper className={classes.paper}>
-          <Switch>
-            <Route
-              exact
-              path="/start"
-              render={() => (currentUser ? <TodoPage /> : <StartPage />)}
-            />
-            <Route exact path="/startTask" component={StartPage} />
-            <Route
-              exact
-              path="/todo/createTodo"
-              render={() => (
-                <TodoForm setWarning={setWarning} warning={warning} />
-              )}
-            />
-            <Route exact path="/todo/calendar" component={Calendar} />
-          </Switch>
-          <SignUpForm />
-        </Paper>
-      </main>
+        <Switch>
+          <Route
+            exact
+            path="/start"
+            render={() => (currentUser ? <TodoPage /> : <StartPage />)}
+          />
+          <Route exact path="/startTask" component={StartPage} />
+          <Route
+            exact
+            path="/todo/createTodo"
+            render={() => (
+              <TodoForm setWarning={setWarning} warning={warning} />
+            )}
+          />
+          <Route exact path="/todo/calendar" component={Calendar} />
+          <Route
+            exact
+            path="/todo/dailyTodo/:monthAndDate"
+            component={WeeklyTodoPage}
+          />
+        </Switch>
+        <SignUpForm />
+      </Paper>
     </div>
   );
 };

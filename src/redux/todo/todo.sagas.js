@@ -5,37 +5,28 @@ import { selectCurrentUser } from "../auth/auth.selectors";
 import {
   addTodoSuccess,
   clearTodoList,
-  setTodoFromFirebase,
-  filterTodoForThisMonth
+  setTodoFromFirebase
 } from "./todo.actions";
-import { createNewTodo, pickUpYearMonthAndDate } from "./../../utils/helper";
+import { createNewTodo } from "./../../utils/helper";
 import authActionTypes from "../auth/auth.types";
 import {
   asyncActionStart,
   asyncActionFinish,
   increaseTodoFormStep
 } from "./../async/async.actions";
+import { getThisMonth } from "../../utils/helper";
 
 export function* addTodoToFirebase({ payload }) {
   const { form, date } = payload;
-  const { year, month, newDate, time } = pickUpYearMonthAndDate(date);
   const user = yield select(selectCurrentUser);
 
   if (user) {
     try {
       yield put(asyncActionStart());
-      const newTodo = createNewTodo(
-        form,
-        year,
-        month,
-        date,
-        newDate,
-        user.id,
-        time
-      );
-      yield firestore.collection("todo_list").add(newTodo);
-      yield put(addTodoSuccess(newTodo));
-      yield put(filterTodoForThisMonth());
+      const newTodo = createNewTodo(form, date, user.id);
+      const docRef = yield firestore.collection("todo_list").add(newTodo);
+      const snapShot = yield docRef.get();
+      yield put(addTodoSuccess({ ...snapShot.data(), id: docRef.id }));
       yield put(asyncActionFinish());
       yield put(increaseTodoFormStep());
     } catch (err) {
@@ -47,11 +38,13 @@ export function* addTodoToFirebase({ payload }) {
 
 export function* checkTodoInFirebase() {
   const user = yield select(selectCurrentUser);
+  const month = getThisMonth();
   try {
     const listsRef = yield firestore.collection("todo_list");
     const query = yield listsRef
       .where("userId", "==", user.id)
-      .where("year", "==", "2020");
+      .where("month", "==", month)
+      .orderBy("date");
     const snapShot = yield query.get();
     const todoList = [];
     for (let i = 0; i < snapShot.docs.length; i++) {
@@ -59,7 +52,6 @@ export function* checkTodoInFirebase() {
       todoList.push(todo);
     }
     yield put(setTodoFromFirebase(todoList));
-    yield put(filterTodoForThisMonth());
   } catch (err) {
     alert("Sorry,, something went wrong,, try again later");
     console.log(err);

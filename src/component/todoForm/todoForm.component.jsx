@@ -21,7 +21,6 @@ import {
   decreaseTodoFormStep,
   setTodoFormStepToZero
 } from "../../redux/async/async.actions";
-import todoFormLast from "./todoFormSteps/todoFormLast.component";
 import useStyles from "./todoForm.styles";
 import TodoPage from "../../pages/todoPage/todoPage.component";
 import WarningComponent from "./../alerts/warning.component";
@@ -54,7 +53,7 @@ const TodoForm = ({
   setStepToZero
 }) => {
   // const [openReady, setOpenReady] = useState(false);
-  const [date, setDate] = useState(new Date("2020-02-18T00:00:00"));
+  const [date, setDate] = useState(new Date());
   const [form, setForm] = useState({
     title: "",
     discription: "",
@@ -66,12 +65,9 @@ const TodoForm = ({
   });
 
   useEffect(() => {
-    // setOpenReady(true);
     if (warning) {
       setWarning(false);
     }
-    console.log("effect fired warning", warning);
-    // console.log("effect fired openReady", openReady);
   }, []);
 
   const classes = useStyles();
@@ -114,7 +110,7 @@ const TodoForm = ({
       importance: 3,
       reward: ""
     });
-    setDate(new Date("2020-02-18T00:00:00"));
+    setDate(new Date());
   };
 
   const handleSubmit = () => {

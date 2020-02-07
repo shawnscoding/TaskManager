@@ -18,7 +18,7 @@ const LoadingComponent = ({ loading }) => {
 
   return (
     <div>
-      <Backdrop className={classes.backdrop} open={loading}>
+      <Backdrop className={classes.backdrop} open={true}>
         <CircularProgress color="inherit" />
       </Backdrop>
     </div>

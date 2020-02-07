@@ -11,22 +11,18 @@ import {
   subMonths
 } from "date-fns";
 import "./calendar.styles.css";
-import { Fab } from "@material-ui/core";
+import { Fab, Box } from "@material-ui/core";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
-import { onIsTodoExist } from "../../redux/todo/todo.utils";
+import { isTodoExist } from "../../redux/todo/todo.utils";
 import { createStructuredSelector } from "reselect";
-import { selectTodoListByMonth } from "../../redux/todo/todo.selectors";
 import { connect } from "react-redux";
-import { selectLoading } from "../../redux/async/async.selectors";
 import LoadingComponent from "./../loader/loadingCompoent";
 import { getMonthAndDay } from "./../../utils/helper";
+import { selectTodoList } from "./../../redux/todo/todo.selectors";
 
-const Calendar = ({ todos }) => {
+const Calendar = ({ todos, history }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-
   const renderHeader = () => {
-    const dateFormat = "MMMM yyyy";
-
     return (
       <div className="header row flex-middle">
         <div className="col col-start">
@@ -35,7 +31,7 @@ const Calendar = ({ todos }) => {
           </div>
         </div>
         <div className="col col-center">
-          <span>{format(currentMonth, dateFormat)}</span>
+          <span>{format(currentMonth, "MMMM yyyy")}</span>
         </div>
         <div className="col col-end" onClick={nextMonth}>
           <div className="icon">chevron_right</div>
@@ -62,63 +58,101 @@ const Calendar = ({ todos }) => {
   };
 
   const renderCells = () => {
-    const monthStart = startOfMonth(currentMonth);
-    const monthEnd = endOfMonth(monthStart);
-    const startDate = startOfWeek(monthStart);
-    const endDate = endOfWeek(monthEnd);
+    if (todos.length === 0) {
+      return;
+    } else {
+      const monthStart = startOfMonth(currentMonth);
+      const monthEnd = endOfMonth(monthStart);
+      const startDate = startOfWeek(monthStart);
+      const endDate = endOfWeek(monthEnd);
 
-    const dateFormat = "d";
-    const rows = [];
+      const dateFormat = "d";
+      const rows = [];
 
-    let days = [];
-    let day = startDate;
-    let formattedDate = "";
+      let days = [];
+      let day = startDate;
+      let formattedDate = "";
 
-    while (day <= endDate) {
-      for (let i = 0; i < 7; i++) {
-        formattedDate = format(day, dateFormat);
-        const cloneDay = day;
-        const monthAndDate = getMonthAndDay(day);
+      while (day <= endDate) {
+        for (let i = 0; i < 7; i++) {
+          formattedDate = format(day, dateFormat);
+          const cloneDay = day;
+          const monthAndDate = getMonthAndDay(day);
 
-        // let todoArray = todos.map(todo => todo.dateInTotal.toDate() === day);
-        days.push(
-          <div
-            className={`col cell ${
-              !isSameMonth(day, monthStart) ? "disabled" : false ? "task" : ""
-            }`}
-            key={day}
-          >
-            <span className="number">{formattedDate}</span>
-            {onIsTodoExist(monthAndDate, todos) ? (
-              <Fab
-                size="small"
-                variant="extended"
-                color="primary"
-                className="bg"
+          // const { dailyTodo, slicedDailyTodo } = countAndSliceTodo(
+          //   monthAndDate,
+          //   todos
+          // );
+
+          let dailyTodo = todos.filter(
+            todo => format(todo.date.toDate(), "MMMd") === monthAndDate
+          );
+
+          let slicedDailyTodo = dailyTodo.slice(0, 3);
+
+          days.push(
+            <Box
+              className={`col cell ${
+                !isSameMonth(day, monthStart)
+                  ? "disabled"
+                  : isTodoExist(monthAndDate, todos)
+                  ? "task"
+                  : ""
+              }`}
+              key={day}
+            >
+              <div
+                className={
+                  dailyTodo.length === 0 ? "clickDisabled" : "clickAbled"
+                }
+                onClick={() => history.push(`/todo/dailyTodo/${monthAndDate}`)}
               >
-                {formattedDate}
-                <PlaylistAddCheckIcon />
-              </Fab>
-            ) : null}
+                <span className="number">{formattedDate}</span>
+                <Fab
+                  size="small"
+                  variant="extended"
+                  color="primary"
+                  className="bg"
+                >
+                  {dailyTodo.length}
+                  <PlaylistAddCheckIcon />
+                </Fab>
+                <div className="title">
+                  {slicedDailyTodo && slicedDailyTodo.length === 1 ? (
+                    <React.Fragment>
+                      <div>{slicedDailyTodo[0].userId}</div>
+                    </React.Fragment>
+                  ) : slicedDailyTodo.length === 2 ? (
+                    <React.Fragment>
+                      <div>{slicedDailyTodo[0].userId}</div>
+
+                      <div>{slicedDailyTodo[1].userId}</div>
+                    </React.Fragment>
+                  ) : slicedDailyTodo.length === 3 ? (
+                    <React.Fragment>
+                      <div>{slicedDailyTodo[0].userId}</div>
+
+                      <div>{slicedDailyTodo[1].userId}</div>
+
+                      <div>{slicedDailyTodo[2].userId}</div>
+                    </React.Fragment>
+                  ) : null}
+                </div>
+              </div>
+            </Box>
+          );
+          day = addDays(day, 1);
+        }
+        rows.push(
+          <div className="row" key={day}>
+            {days}
           </div>
         );
-        day = addDays(day, 1);
+        days = [];
       }
-      rows.push(
-        <div className="row" key={day}>
-          {days}
-        </div>
-      );
-      days = [];
+      return <div className="body">{rows}</div>;
     }
-    return <div className="body">{rows}</div>;
   };
-
-  // const onDateClick = day => {
-  //   this.setState({
-  //     isTaskExist: day
-  //   });
-  // };
 
   const nextMonth = () => {
     setCurrentMonth(addMonths(currentMonth, 1));
@@ -128,6 +162,7 @@ const Calendar = ({ todos }) => {
     setCurrentMonth(subMonths(currentMonth, 1));
   };
 
+  if (todos.length === 0) return <LoadingComponent />;
   return (
     <div className="calendar-container">
       <div className="main">
@@ -142,10 +177,8 @@ const Calendar = ({ todos }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  todos: selectTodoListByMonth,
-  loading: selectLoading
+  todos: selectTodoList
 });
-
 const mapDispatchToProps = dispatch => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Calendar);

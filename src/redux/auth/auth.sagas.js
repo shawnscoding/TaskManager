@@ -1,6 +1,6 @@
 import { takeLatest, put, all, call } from "redux-saga/effects";
 import authActionTypes from "./auth.types";
-import { auth, firestore } from "../../firebase/firebase.config";
+import { auth } from "../../firebase/firebase.config";
 import {
   signInSuccess,
   signInFailure,

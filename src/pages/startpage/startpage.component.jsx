@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
-import { selectTodoListByMonth } from "./../../redux/todo/todo.selectors";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
@@ -11,7 +10,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const StartPage = ({ history, todos }) => {
+const StartPage = ({ history }) => {
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -21,18 +20,12 @@ const StartPage = ({ history, todos }) => {
         direction="column"
         justify="flex-start"
         alignItems="flex-start"
-      >
-        {todos.map(todo => (
-          <Grid key={todo.id} item></Grid>
-        ))}
-      </Grid>
+      ></Grid>
     </React.Fragment>
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  todos: selectTodoListByMonth
-});
+const mapStateToProps = createStructuredSelector({});
 
 // const mapDispatchToProps = dispatch => ({
 //   getTodoForThisMonth: () => dispatch(filterTodoForThisMonth())

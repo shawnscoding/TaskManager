@@ -6,16 +6,7 @@ import {
   InputLabel,
   MenuItem
 } from "@material-ui/core";
-
-const categories = [
-  "Work",
-  "Study",
-  "HouseChore",
-  "Socializing",
-  "Health",
-  "SelfDevelopment",
-  "TheRest"
-];
+import { categories } from "./../../../redux/todo/todo.utils";
 
 const TodoFormFirst = ({ classes, form, onChange }) => {
   return (

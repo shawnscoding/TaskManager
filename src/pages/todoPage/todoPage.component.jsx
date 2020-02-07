@@ -10,7 +10,6 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
-import { setTodoFormStepToZero } from "../../redux/async/async.actions";
 import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({

@@ -28,11 +28,3 @@ export const setTodoFromFirebase = todoList => ({
 export const clearTodoList = () => ({
   type: todoActionTypes.CLEAR_TODO_LIST
 });
-
-export const filterTodoForThisMonth = () => ({
-  type: todoActionTypes.FILTER_TODO_FOR_THIS_MONTH
-});
-
-export const checkIfTodoExistPerDay = () => ({
-  type: todoActionTypes.CHECK_IF_TODO_EXIST_PER_DAY
-});

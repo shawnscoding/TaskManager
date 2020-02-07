@@ -6,7 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router } from "react-router-dom";
 import { StylesProvider } from "@material-ui/core/styles";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core";
-import { blue } from "@material-ui/core/colors";
+import { blue, lime } from "@material-ui/core/colors";
 import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { Provider } from "react-redux";
@@ -15,7 +15,10 @@ import store from "./redux/store";
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: blue[500]
+      main: "#3949ab"
+    },
+    text: {
+      secondary: "#3949ab"
     }
   },
   typography: {
