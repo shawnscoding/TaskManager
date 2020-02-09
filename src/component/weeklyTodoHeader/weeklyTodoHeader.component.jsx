@@ -13,7 +13,7 @@ import {
 } from "date-fns";
 import { HeaderDay } from "./../../pages/weeklyTodoPage/weeklyTodoPage.styles";
 
-const WeeklyTodoHeader = ({ classes, dailyTodo }) => {
+const WeeklyTodoHeader = ({ classes, onDayClick, dailyTodo }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const renderDays = () => {
     if (dailyTodo.length !== 0) {
@@ -29,9 +29,14 @@ const WeeklyTodoHeader = ({ classes, dailyTodo }) => {
       const days = [];
       let day = startDate;
       let sevenDays = [];
-      console.log(dailyTodo);
 
-      let date = format(dailyTodo[0].date.toDate(), "d");
+      let date;
+
+      if (typeof dailyTodo[0].date === typeof "") {
+        date = dailyTodo[0].date;
+      } else {
+        date = format(dailyTodo[0].date.toDate(), "d");
+      }
 
       for (let i = 1; i < 4; i++) {
         sevenDays.push(Number(date) - 4 + i);
@@ -45,6 +50,8 @@ const WeeklyTodoHeader = ({ classes, dailyTodo }) => {
         formattedDate = format(day, dateFormat);
         formattedDay = format(day, dayFormat);
 
+        let clonedDay = day;
+
         for (let i = 0; i < sevenDays.length; i++) {
           if (
             isSameMonth(day, monthStart) &&
@@ -52,6 +59,7 @@ const WeeklyTodoHeader = ({ classes, dailyTodo }) => {
           ) {
             days.push(
               <HeaderDay
+                onClick={() => onDayClick(clonedDay)}
                 key={day}
                 className={
                   Number(formattedDate) < Number(date)

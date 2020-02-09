@@ -23,13 +23,35 @@ const WeeklyTodoPage = ({ match, todos }) => {
     }
   }, [todos]);
 
+  const onDayClick = day => {
+    const monthAndDate = format(day, "MMMd");
+    let newTodos = todos.filter(
+      todo => format(todo.date.toDate(), "MMMd") === monthAndDate
+    );
+    if (newTodos.length === 0) {
+      const date = format(day, "d");
+      setDailyTodo([
+        {
+          title: "",
+          category: "",
+          date: date
+        }
+      ]);
+    } else {
+      setDailyTodo(newTodos);
+    }
+  };
+  console.log(dailyTodo);
+
   if (dailyTodo.length === 0) return <LoadingCompoent />;
+
   return (
     <React.Fragment>
       <WeeklyTodoHeader
         dailyTodo={dailyTodo}
         monthAndDate={monthAndDate}
         classes={classes}
+        onDayClick={onDayClick}
       />
       <DailyTodoDashBoard classes={classes} dailyTodo={dailyTodo} />
     </React.Fragment>

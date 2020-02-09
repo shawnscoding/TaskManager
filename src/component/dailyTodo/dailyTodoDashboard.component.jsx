@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import DailyTodoAll from "./dailyTodoAll.component";
 import DailyTodoCompleted from "./dailyTodoCompleted.component";
+import DailyTodoByPriority from "./dailyTodoByPriority.component";
 
 const TabPanel = props => {
   const { children, value, index, ...other } = props;
@@ -81,7 +82,9 @@ const DailyTodoDashBoard = ({ dailyTodo, classes }) => {
         <TabPanel value={value} index={1} dir={theme.direction}>
           <DailyTodoByCategory classes={classes} dailyTodo={dailyTodo} />
         </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}></TabPanel>
+        <TabPanel value={value} index={2} dir={theme.direction}>
+          <DailyTodoByPriority dailyTodo={dailyTodo} classes={classes} />
+        </TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
           <DailyTodoCompleted />
         </TabPanel>

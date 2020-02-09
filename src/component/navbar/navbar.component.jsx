@@ -13,7 +13,6 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { useTheme } from "@material-ui/core/styles";
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
 import HistoryIcon from "@material-ui/icons/History";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
@@ -37,7 +36,6 @@ import ProfileIcon from "./navbarMaterials/profileIcon.component";
 import { selectStep } from "../../redux/async/async.selectors";
 import { setTodoFormStepToZero } from "../../redux/async/async.actions";
 import WeeklyTodoPage from "../../pages/weeklyTodoPage/weeklyTodoPage.component";
-
 const Navbar = props => {
   const { container, currentUser, setStepToZero, activeStep } = props;
   const classes = useStyles();
