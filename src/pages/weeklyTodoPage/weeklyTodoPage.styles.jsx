@@ -26,7 +26,9 @@ export const HeaderDay = styled(Grid)`
 export const SummaryContainer = styled(Grid)`
   /* -webkit-clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
   clip-path: polygon(8%0, 100% 0, 92% 100%, 0% 100%); */
-  margin: 12px;
+  margin: 1.5rem 0;
+
+  margin-right: 3rem;
   border-radius: 10px;
   background-color: #fff;
   box-shadow: 0 0 5px 5px rgb(236, 236, 236);
@@ -100,11 +102,14 @@ export const useStyles = makeStyles(theme => ({
   categoryContainer: {
     textTransform: "uppercase"
   },
+  todoByCompletionHeader: {
+    margin: "30px 0",
+    fontSize: "1.5rem"
+  },
   summaryRightButton: {
     backgroundColor: theme.palette.secondary.main
   },
   todosContainer: {
-    flexWrap: "wrap",
     marginBottom: "2rem"
   },
 
@@ -120,9 +125,10 @@ export const useStyles = makeStyles(theme => ({
   summaryLeft: {
     backgroundColor: theme.palette.paper,
     borderRadius: "10px 0 0 10px",
-    color: "#fff",
     padding: theme.spacing(1),
-    "& p": {},
+    "& p": {
+      color: "#fff"
+    },
     position: "relative"
   },
   summaryRight: {
@@ -130,9 +136,12 @@ export const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1),
     "& p:nth-child(1)": {
       fontSize: "1.1rem",
-      fontWeight: "bold"
+      fontWeight: "bold",
+      color: "#2c2c2c"
     },
-    "& p:nth-child(2)": {}
+    "& p:nth-child(2)": {
+      color: "#6f6f6f"
+    }
   },
   rateBox: {
     color: theme.palette.primary.main,

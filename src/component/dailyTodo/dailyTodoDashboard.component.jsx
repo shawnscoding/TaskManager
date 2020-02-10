@@ -9,7 +9,7 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import DailyTodoAll from "./dailyTodoAll.component";
-import DailyTodoCompleted from "./dailyTodoCompleted.component";
+import DailyTodoByCompletion from "./dailyTodoByCompletion.component";
 import DailyTodoByPriority from "./dailyTodoByPriority.component";
 
 const TabPanel = props => {
@@ -86,7 +86,7 @@ const DailyTodoDashBoard = ({ dailyTodo, classes }) => {
           <DailyTodoByPriority dailyTodo={dailyTodo} classes={classes} />
         </TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
-          <DailyTodoCompleted />
+          <DailyTodoByCompletion dailyTodo={dailyTodo} classes={classes} />
         </TabPanel>
       </SwipeableViews>
     </div>

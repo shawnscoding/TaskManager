@@ -36,7 +36,6 @@ const DailyTodoByPriority = ({ dailyTodo, classes }) => {
 
   if (typeof dailyTodo[0].date !== typeof "") {
     todosByPriority = getTodosByPriority();
-    console.log(todosByPriority);
   }
 
   return (
@@ -140,8 +139,8 @@ const DailyTodoByPriority = ({ dailyTodo, classes }) => {
                     item
                   >
                     <Grid item>
-                      <Typography color="primary">{todo.title}</Typography>
-                      <Typography color="primary">
+                      <Typography>{todo.title}</Typography>
+                      <Typography>
                         expected to take &nbsp;
                         {todo.hours === "1"
                           ? todo.hours + " hour"
