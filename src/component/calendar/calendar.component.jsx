@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   format,
   startOfWeek,
@@ -22,6 +22,17 @@ import { selectTodoList } from "./../../redux/todo/todo.selectors";
 
 const Calendar = ({ todos, history }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [calendarTodos, setCalendarTodos] = useState([]);
+
+  useEffect(() => {
+    if (todos.length !== 0) {
+      setCalendarTodos(todos);
+    } else {
+      setCalendarTodos([{}]);
+    }
+    console.log(calendarTodos, "calendarTodos");
+  }, [todos]);
+
   const renderHeader = () => {
     return (
       <div className="header row flex-middle">
@@ -58,7 +69,7 @@ const Calendar = ({ todos, history }) => {
   };
 
   const renderCells = () => {
-    if (todos.length === 0) {
+    if (calendarTodos.length === 0) {
       return;
     } else {
       const monthStart = startOfMonth(currentMonth);
@@ -84,9 +95,15 @@ const Calendar = ({ todos, history }) => {
           //   todos
           // );
 
-          let dailyTodo = todos.filter(
-            todo => format(todo.date.toDate(), "MMMd") === monthAndDate
-          );
+          let dailyTodo;
+
+          if (calendarTodos[0].date) {
+            dailyTodo = calendarTodos.filter(
+              todo => format(todo.date.toDate(), "MMMd") === monthAndDate
+            );
+          } else {
+            dailyTodo = calendarTodos;
+          }
 
           let slicedDailyTodo = dailyTodo.slice(0, 3);
 
@@ -95,7 +112,7 @@ const Calendar = ({ todos, history }) => {
               className={`col cell ${
                 !isSameMonth(day, monthStart)
                   ? "disabled"
-                  : isTodoExist(monthAndDate, todos)
+                  : isTodoExist(monthAndDate, calendarTodos)
                   ? "task"
                   : ""
               }`}
@@ -161,6 +178,7 @@ const Calendar = ({ todos, history }) => {
   const prevMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1));
   };
+  console.log(calendarTodos, "calendarTodos");
 
   if (todos.length === 0) return <LoadingComponent />;
   return (

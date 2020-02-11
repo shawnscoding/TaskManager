@@ -16,12 +16,11 @@ const theme = createMuiTheme({
     primary: {
       main: "#3949ab"
     },
-    text: {
-      secondary: "#3949ab"
-    }
+    text: {}
   },
   typography: {
-    fontSize: 14
+    fontSize: 14,
+    fontFamily: "'Google Sans','Noto Sans Myanmar UI',arial,sans-serif"
   }
 });
 

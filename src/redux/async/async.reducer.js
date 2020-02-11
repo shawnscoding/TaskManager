@@ -4,11 +4,17 @@ const INITIAL_STATE = {
   loading: false,
   elementName: null,
   errorMessage: null,
-  step: 0
+  step: 0,
+  todoFormOpen: false
 };
 
 const asyncReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case asyncActionTypes.TOGGLE_TODO_FORM_OPEN:
+      return {
+        ...state,
+        todoFormOpen: !state.todoFormOpen
+      };
     case asyncActionTypes.SET_TODO_FORM_STEP_TO_ZERO:
       return {
         ...state,

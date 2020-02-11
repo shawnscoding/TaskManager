@@ -19,9 +19,13 @@ const TodoFormFirst = ({ classes, form, onChange }) => {
         label="Title"
         onChange={onChange("title")}
         fullWidth
-        className={classes.formControl}
+        className={classes.formControlFirst}
       />
-      <FormControl fullWidth variant="outlined" className={classes.formControl}>
+      <FormControl
+        fullWidth
+        variant="outlined"
+        className={classes.formControlFirst}
+      >
         <InputLabel htmlFor="category" id="category">
           What is it about?
         </InputLabel>
@@ -48,7 +52,7 @@ const TodoFormFirst = ({ classes, form, onChange }) => {
         fullWidth
         multiline
         rows="3"
-        className={classes.formControl}
+        className={classes.formControlFirst}
       />
     </React.Fragment>
   );

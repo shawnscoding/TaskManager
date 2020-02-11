@@ -23,3 +23,7 @@ export const decreaseTodoFormStep = () => ({
 export const setTodoFormStepToZero = () => ({
   type: asyncActionTypes.SET_TODO_FORM_STEP_TO_ZERO
 });
+
+export const toggleTodoFormOpen = () => ({
+  type: asyncActionTypes.TOGGLE_TODO_FORM_OPEN
+});

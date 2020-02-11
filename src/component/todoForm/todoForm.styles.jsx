@@ -6,10 +6,32 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     alignItems: "center"
   },
+  todoFormButton: {
+    position: "fixed",
+    bottom: "5rem",
+    right: "5rem",
+    width: "4rem",
+    height: "4rem"
+  },
   wrapper: {
-    margin: theme.spacing(1),
     position: "relative"
   },
+  button: {
+    margin: theme.spacing(4, 0)
+  },
+
+  thirdTextFirst: {
+    fontSize: "1.5rem",
+    marginBottom: theme.spacing(1)
+  },
+  thirdTextSecond: {
+    fontSize: "1.3rem",
+    marginBottom: theme.spacing(1)
+  },
+  thirdRatingBox: {
+    fontSize: "2.2rem"
+  },
+
   buttonProgress: {
     color: green[500],
     position: "absolute",
@@ -21,17 +43,21 @@ const useStyles = makeStyles(theme => ({
   backButton: {
     marginRight: theme.spacing(1)
   },
-  formControl: {
+  formControlSecond: {
     minWidth: 120,
-    margin: theme.spacing(1),
-    marginTop: theme.spacing(1)
+    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(1),
+    width: "100%"
   },
+  formControlFirst: {
+    minWidth: 120,
+    margin: theme.spacing(1)
+  },
+
   stepper: {
-    width: "50%"
+    width: "80%"
   },
-  items: {
-    width: "50%"
-  },
+
   buttonSuccess: {
     backgroundColor: green[500],
     "&:hover": {

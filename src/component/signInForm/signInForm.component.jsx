@@ -91,6 +91,7 @@ const SignInForm = ({ signUpOpen, signInWithEmail }) => {
               margin="normal"
               onChange={handleChange("email")}
               fullWidth
+              id="alert-dialog-slide-description"
             />
             <br />
             <TextField

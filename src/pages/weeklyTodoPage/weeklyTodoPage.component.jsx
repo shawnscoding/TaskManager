@@ -18,10 +18,22 @@ const WeeklyTodoPage = ({ match, todos }) => {
       let newTodos = todos.filter(
         todo => format(todo.date.toDate(), "MMMd") === monthAndDate
       );
-      setDailyTodo(newTodos);
+      if (newTodos.length === 0) {
+        const today = format(new Date(), "d");
+        setDailyTodo([
+          {
+            title: "",
+            category: "",
+            date: today
+          }
+        ]);
+        console.log("fired !");
+      } else {
+        setDailyTodo(newTodos);
+      }
       console.log("dailyTodo", dailyTodo);
     }
-  }, [todos]);
+  }, [todos, monthAndDate]);
 
   const onDayClick = day => {
     const monthAndDate = format(day, "MMMd");
@@ -41,7 +53,7 @@ const WeeklyTodoPage = ({ match, todos }) => {
       setDailyTodo(newTodos);
     }
   };
-  console.log(dailyTodo);
+  console.log("dailyTodo", dailyTodo);
 
   if (dailyTodo.length === 0) return <LoadingCompoent />;
 

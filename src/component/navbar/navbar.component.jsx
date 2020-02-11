@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AppBar, Avatar, Paper } from "@material-ui/core";
+import { AppBar, Avatar, Paper, Button } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
@@ -36,8 +36,18 @@ import ProfileIcon from "./navbarMaterials/profileIcon.component";
 import { selectStep } from "../../redux/async/async.selectors";
 import { setTodoFormStepToZero } from "../../redux/async/async.actions";
 import WeeklyTodoPage from "../../pages/weeklyTodoPage/weeklyTodoPage.component";
+import { format } from "date-fns";
+import { toggleTodoFormOpen } from "./../../redux/async/async.actions";
+import AlertDialogSlide from "./../../test/test.component";
+
 const Navbar = props => {
-  const { container, currentUser, setStepToZero, activeStep } = props;
+  const {
+    toggleOpen,
+    container,
+    currentUser,
+    setStepToZero,
+    activeStep
+  } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -57,6 +67,9 @@ const Navbar = props => {
     }
   };
 
+  const today = format(new Date(), "MMMd");
+  console.log(today);
+
   const drawer = (
     <div>
       <div className={classes.toolbar}>
@@ -71,7 +84,10 @@ const Navbar = props => {
           <ListItemIcon>
             <PlayCircleOutlineIcon />
           </ListItemIcon>
-          <ListItemText primary="Today" />
+          <ListItemText
+            onClick={() => props.history.push(`/todo/dailyTodo/${today}`)}
+            primary="Today"
+          />
         </ListItem>
         <ListItem onClick={onClickCreate} button>
           <ListItemIcon>
@@ -199,13 +215,7 @@ const Navbar = props => {
             render={() => (currentUser ? <TodoPage /> : <StartPage />)}
           />
           <Route exact path="/startTask" component={StartPage} />
-          <Route
-            exact
-            path="/todo/createTodo"
-            render={() => (
-              <TodoForm setWarning={setWarning} warning={warning} />
-            )}
-          />
+
           <Route exact path="/todo/calendar" component={Calendar} />
           <Route
             exact
@@ -213,6 +223,8 @@ const Navbar = props => {
             component={WeeklyTodoPage}
           />
         </Switch>
+        <TodoForm />
+
         <SignUpForm />
       </Paper>
     </div>

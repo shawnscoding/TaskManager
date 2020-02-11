@@ -4,20 +4,29 @@ import Rating from "@material-ui/lab/Rating";
 const TodoFormThird = ({ onChange, form, onRatingChange, classes }) => {
   return (
     <React.Fragment>
-      <Box component="fieldset" mb={3} borderColor="transparent">
-        <Typography varient="h5" component="legend">
-          how important is it?
+      <Box component="fieldset" m={1} borderColor="transparent">
+        <Typography
+          className={classes.thirdTextFirst}
+          varient="h5"
+          component="legend"
+        >
+          How important is it?
         </Typography>
         <Rating
+          className={classes.thirdRatingBox}
           name="simple-controlled"
           value={form.importance}
           onChange={onRatingChange}
         />
       </Box>
-      <Box>
-        <Typography varient="subtitle1" component="legend">
-          why don't you give yourself a small reward when you have completed? it
-          will help you to stay motivated :)
+      <Box m={1}>
+        <Typography
+          className={classes.thirdTextSecond}
+          varient="subtitle1"
+          component="legend"
+        >
+          Give yourself a small reward when you have completed. It will help you
+          to stay motivated :)
         </Typography>
         <TextField
           variant="outlined"

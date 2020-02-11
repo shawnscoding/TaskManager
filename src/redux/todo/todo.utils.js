@@ -1,8 +1,12 @@
 import { format } from "date-fns";
 
 export const isTodoExist = (monthAndDate, todos) => {
+  if (!todos[0].date) {
+    return Boolean(false);
+  }
   for (let i = 0; i < todos.length; i++) {
-    let todo = todos[i].month + todos[i].dayOfMonth;
+    let date = todos[i].date.toDate();
+    let todo = format(date, "MMMd");
     if (todo === monthAndDate) {
       return Boolean(true);
     }
