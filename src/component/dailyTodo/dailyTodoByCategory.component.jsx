@@ -9,13 +9,13 @@ import {
   SocializingTitle,
   ShoppingTitle,
   SummaryContainer
-} from "../../pages/weeklyTodoPage/weeklyTodoPage.styles";
+} from "./dailyTodo.styles";
 import { categories } from "./../../redux/todo/todo.utils";
 import { format } from "date-fns";
 import StarBorderRoundedIcon from "@material-ui/icons/StarBorderRounded";
 import StarRoundedIcon from "@material-ui/icons/StarRounded";
 
-const DailyTodoByCategory = ({ dailyTodo, classes }) => {
+const DailyTodoByCategory = ({ dailyTodo, classes, withCalendar }) => {
   const getTodosByCategories = () => {
     const initCategories = categories.reduce(
       (typeOftodos, category) => ({
@@ -40,7 +40,6 @@ const DailyTodoByCategory = ({ dailyTodo, classes }) => {
     todosByCategories = getTodosByCategories();
   }
 
-  console.log(todosByCategories, "todosByCategories");
   return (
     <React.Fragment>
       {dailyTodo.length !== 0 && typeof dailyTodo[0].date !== typeof "" ? (
@@ -81,7 +80,13 @@ const DailyTodoByCategory = ({ dailyTodo, classes }) => {
 
               <Grid className={classes.todosContainer} container>
                 {todos.map(todo => (
-                  <SummaryContainer key={todo.id} container sm={5} xs={11} item>
+                  <SummaryContainer
+                    key={todo.id}
+                    container
+                    sm={withCalendar ? 11 : 5}
+                    xs={11}
+                    item
+                  >
                     <Grid
                       container
                       className={classes.summaryLeft}

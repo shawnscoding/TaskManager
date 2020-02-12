@@ -12,8 +12,9 @@ import {
   subMonths
 } from "date-fns";
 import { HeaderDay } from "./../../pages/weeklyTodoPage/weeklyTodoPage.styles";
+import { withRouter } from "react-router-dom";
 
-const WeeklyTodoHeader = ({ classes, onDayClick, dailyTodo }) => {
+const WeeklyTodoHeader = ({ history, classes, dailyTodo }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const renderDays = () => {
     if (dailyTodo.length !== 0) {
@@ -52,6 +53,8 @@ const WeeklyTodoHeader = ({ classes, onDayClick, dailyTodo }) => {
 
         let clonedDay = day;
 
+        let monthAndDay = format(day, "MMMd");
+
         for (let i = 0; i < sevenDays.length; i++) {
           if (
             isSameMonth(day, monthStart) &&
@@ -59,7 +62,7 @@ const WeeklyTodoHeader = ({ classes, onDayClick, dailyTodo }) => {
           ) {
             days.push(
               <HeaderDay
-                onClick={() => onDayClick(clonedDay)}
+                onClick={() => history.push(`/todo/dailyTodo/${monthAndDay}`)}
                 key={day}
                 className={
                   Number(formattedDate) < Number(date)
@@ -103,4 +106,4 @@ const WeeklyTodoHeader = ({ classes, onDayClick, dailyTodo }) => {
   return <React.Fragment>{renderDays()}</React.Fragment>;
 };
 
-export default WeeklyTodoHeader;
+export default withRouter(WeeklyTodoHeader);

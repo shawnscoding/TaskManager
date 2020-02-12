@@ -11,18 +11,21 @@ import {
   subMonths
 } from "date-fns";
 import "./calendar.styles.css";
-import { Fab, Box } from "@material-ui/core";
-import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
+import { Fab, Box, Button, Grid, Typography } from "@material-ui/core";
 import { isTodoExist } from "../../redux/todo/todo.utils";
-import { createStructuredSelector } from "reselect";
-import { connect } from "react-redux";
+
 import LoadingComponent from "./../loader/loadingCompoent";
 import { getMonthAndDay } from "./../../utils/helper";
-import { selectTodoList } from "./../../redux/todo/todo.selectors";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 
-const Calendar = ({ todos, history }) => {
+const Calendar = ({ todos, history, handleClickDate }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [calendarTodos, setCalendarTodos] = useState([]);
+  const [dayOpen, setDayOpen] = useState(null);
+
+  const handleDayOpen = index => {
+    setDayOpen(index);
+  };
 
   useEffect(() => {
     if (todos.length !== 0) {
@@ -30,7 +33,6 @@ const Calendar = ({ todos, history }) => {
     } else {
       setCalendarTodos([{}]);
     }
-    console.log(calendarTodos, "calendarTodos");
   }, [todos]);
 
   const renderHeader = () => {
@@ -83,8 +85,10 @@ const Calendar = ({ todos, history }) => {
       let days = [];
       let day = startDate;
       let formattedDate = "";
+      let indexOfRow = 0;
 
       while (day <= endDate) {
+        const index = indexOfRow;
         for (let i = 0; i < 7; i++) {
           formattedDate = format(day, dateFormat);
           const cloneDay = day;
@@ -108,7 +112,12 @@ const Calendar = ({ todos, history }) => {
           let slicedDailyTodo = dailyTodo.slice(0, 3);
 
           days.push(
-            <Box
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              onClick={() => handleClickDate(monthAndDate)}
               className={`col cell ${
                 !isSameMonth(day, monthStart)
                   ? "disabled"
@@ -118,53 +127,41 @@ const Calendar = ({ todos, history }) => {
               }`}
               key={day}
             >
-              <div
-                className={
-                  dailyTodo.length === 0 ? "clickDisabled" : "clickAbled"
-                }
-                onClick={() => history.push(`/todo/dailyTodo/${monthAndDate}`)}
-              >
-                <span className="number">{formattedDate}</span>
-                <Fab
-                  size="small"
-                  variant="extended"
-                  color="primary"
-                  className="bg"
-                >
-                  {dailyTodo.length}
-                  <PlaylistAddCheckIcon />
-                </Fab>
-                <div className="title">
-                  {slicedDailyTodo && slicedDailyTodo.length === 1 ? (
-                    <React.Fragment>
-                      <div>{slicedDailyTodo[0].userId}</div>
-                    </React.Fragment>
-                  ) : slicedDailyTodo.length === 2 ? (
-                    <React.Fragment>
-                      <div>{slicedDailyTodo[0].userId}</div>
+              <Grid item>
+                <Typography style={{ fontSize: "1.5rem" }}>
+                  {formattedDate}
+                </Typography>
+              </Grid>
 
-                      <div>{slicedDailyTodo[1].userId}</div>
-                    </React.Fragment>
-                  ) : slicedDailyTodo.length === 3 ? (
-                    <React.Fragment>
-                      <div>{slicedDailyTodo[0].userId}</div>
+              {dailyTodo.length !== 0 ? (
+                <div className="exist">
+                  <span className="number">
+                    <FiberManualRecordIcon style={{ fontSize: "1rem" }} />
+                  </span>
 
-                      <div>{slicedDailyTodo[1].userId}</div>
-
-                      <div>{slicedDailyTodo[2].userId}</div>
-                    </React.Fragment>
-                  ) : null}
+                  {/* <div className="icons">
+                  <span style={{ fontSize: "2.4rem" }}>{dailyTodo.length}</span>
+                  <PlaylistAddCheckIcon style={{ fontSize: "2.4rem" }} />
+                </div> */}
                 </div>
-              </div>
-            </Box>
+              ) : null}
+            </Grid>
           );
           day = addDays(day, 1);
         }
+
         rows.push(
-          <div className="row" key={day}>
-            {days}
-          </div>
+          <React.Fragment key={day}>
+            <div className="row">{days}</div>
+            <Grid hidden={dayOpen === index ? false : true}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Aspernatur vel sit est officiis eos fugit suscipit voluptatum.
+              Fugit distinctio pariatur atque veritatis similique velit,
+              quisquam quidem aut recusandae commodi totam.
+            </Grid>
+          </React.Fragment>
         );
+        indexOfRow += 1;
         days = [];
       }
       return <div className="body">{rows}</div>;
@@ -178,11 +175,10 @@ const Calendar = ({ todos, history }) => {
   const prevMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1));
   };
-  console.log(calendarTodos, "calendarTodos");
 
   if (todos.length === 0) return <LoadingComponent />;
   return (
-    <div className="calendar-container">
+    <React.Fragment>
       <div className="main">
         <div className="calendar">
           {renderHeader()}
@@ -190,13 +186,8 @@ const Calendar = ({ todos, history }) => {
           {renderCells()}
         </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  todos: selectTodoList
-});
-const mapDispatchToProps = dispatch => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Calendar);
+export default Calendar;

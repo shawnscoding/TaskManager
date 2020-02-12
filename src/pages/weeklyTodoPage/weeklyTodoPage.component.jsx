@@ -19,12 +19,12 @@ const WeeklyTodoPage = ({ match, todos }) => {
         todo => format(todo.date.toDate(), "MMMd") === monthAndDate
       );
       if (newTodos.length === 0) {
-        const today = format(new Date(), "d");
+        const mockDate = monthAndDate.slice(3);
         setDailyTodo([
           {
             title: "",
             category: "",
-            date: today
+            date: mockDate
           }
         ]);
         console.log("fired !");
@@ -65,7 +65,7 @@ const WeeklyTodoPage = ({ match, todos }) => {
         classes={classes}
         onDayClick={onDayClick}
       />
-      <DailyTodoDashBoard classes={classes} dailyTodo={dailyTodo} />
+      <DailyTodoDashBoard dailyTodo={dailyTodo} />
     </React.Fragment>
   );
 };

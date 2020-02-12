@@ -27,7 +27,6 @@ import SignInForm from "../signInForm/signInForm.component";
 import TodoPage from "../../pages/todoPage/todoPage.component";
 import TodoForm from "../todoForm/todoForm.component";
 import InfoIcon from "@material-ui/icons/Info";
-import Calendar from "../calendar/calendar.component";
 import SignUpForm from "../signUpForm/signUpForm.component";
 import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "../../redux/auth/auth.selectors";
@@ -39,6 +38,7 @@ import WeeklyTodoPage from "../../pages/weeklyTodoPage/weeklyTodoPage.component"
 import { format } from "date-fns";
 import { toggleTodoFormOpen } from "./../../redux/async/async.actions";
 import AlertDialogSlide from "./../../test/test.component";
+import CalendarPage from "./../../pages/calendarPage/calendarPage.component";
 
 const Navbar = props => {
   const {
@@ -159,7 +159,7 @@ const Navbar = props => {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
+        <Toolbar style={{ minHeight: "3.3rem" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -169,9 +169,28 @@ const Navbar = props => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Responsive drawer
-          </Typography>
+
+          {currentUser ? (
+            <Typography
+              style={{
+                fontSize: "1.1rem"
+              }}
+              variant="h6"
+              noWrap
+            >
+              Welcome ! {currentUser.displayName}
+            </Typography>
+          ) : (
+            <Typography
+              style={{
+                fontSize: "1.1rem"
+              }}
+              variant="h6"
+              noWrap
+            >
+              Welcome !
+            </Typography>
+          )}
           {currentUser ? <ProfileIcon classes={classes} /> : <SignInForm />}
         </Toolbar>
       </AppBar>
@@ -207,7 +226,6 @@ const Navbar = props => {
         </Hidden>
       </nav>
       <Paper className={classes.content}>
-        <div className={classes.toolbar} />
         <Switch>
           <Route
             exact
@@ -216,7 +234,7 @@ const Navbar = props => {
           />
           <Route exact path="/startTask" component={StartPage} />
 
-          <Route exact path="/todo/calendar" component={Calendar} />
+          <Route exact path="/todo/calendar" component={CalendarPage} />
           <Route
             exact
             path="/todo/dailyTodo/:monthAndDate"

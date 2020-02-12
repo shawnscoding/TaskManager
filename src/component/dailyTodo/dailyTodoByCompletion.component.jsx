@@ -1,11 +1,11 @@
 import React from "react";
 import { Grid, Typography, Button } from "@material-ui/core";
-import { SummaryContainer } from "../../pages/weeklyTodoPage/weeklyTodoPage.styles";
+import { SummaryContainer } from "./dailyTodo.styles";
 import { format } from "date-fns";
 
 const isTodoCompletedArray = ["true", "false"];
 
-const DailyTodoByCompletion = ({ dailyTodo, classes }) => {
+const DailyTodoByCompletion = ({ dailyTodo, classes, withCalendar }) => {
   const runIsTodoCompleted = () => {
     const initIsTodoCompleted = isTodoCompletedArray.reduce(
       (todosByCompletion, trueOrFalse) => ({
@@ -84,7 +84,13 @@ const DailyTodoByCompletion = ({ dailyTodo, classes }) => {
             <Grid className={classes.todosContainer} container>
               {todos.length !== 0 &&
                 todos.map(todo => (
-                  <SummaryContainer key={todo.id} container sm={5} xs={11} item>
+                  <SummaryContainer
+                    key={todo.id}
+                    container
+                    sm={withCalendar ? 11 : 5}
+                    xs={11}
+                    item
+                  >
                     <Grid
                       container
                       className={classes.summaryLeft}

@@ -1,15 +1,15 @@
 import React from "react";
 import { Grid, Typography, Button } from "@material-ui/core";
-import {
-  SummaryContainer,
-  RoundedBigIcon,
-  BorderRoundedBigIcon
-} from "../../pages/weeklyTodoPage/weeklyTodoPage.styles";
 import { format } from "date-fns";
+import {
+  RoundedBigIcon,
+  BorderRoundedBigIcon,
+  SummaryContainer
+} from "./dailyTodo.styles";
 
 const importance = ["5", "4", "3", "2", "1"];
 
-const DailyTodoByPriority = ({ dailyTodo, classes }) => {
+const DailyTodoByPriority = ({ dailyTodo, classes, withCalendar }) => {
   const getTodosByPriority = () => {
     const initPriorities = importance.reduce(
       (importanceOftodos, importance) => ({
@@ -25,7 +25,7 @@ const DailyTodoByPriority = ({ dailyTodo, classes }) => {
       dailyTodo.reduce((todos, todo) => {
         const { importance } = todo;
         let priority = importance.toString();
-        console.log(priority);
+
         todos[priority] = [...todos[priority], todo];
         return todos;
       }, initPriorities)
@@ -108,7 +108,13 @@ const DailyTodoByPriority = ({ dailyTodo, classes }) => {
 
             <Grid className={classes.todosContainer} container>
               {todos.map(todo => (
-                <SummaryContainer key={todo.id} container sm={5} xs={11} item>
+                <SummaryContainer
+                  key={todo.id}
+                  container
+                  sm={withCalendar ? 11 : 5}
+                  xs={11}
+                  item
+                >
                   <Grid
                     container
                     className={classes.summaryLeft}

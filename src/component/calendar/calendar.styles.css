@@ -24,10 +24,9 @@
 /* VARIABLES */
 
 :root {
-  --main-color: #1a8fff;
-  --text-color: #777;
+  --text-color: #000;
   --text-color-light: #ccc;
-  --border-color: #eee;
+  --border-color: rgb(249, 249, 249);
   --bg-color: #f9f9f9;
   --neutral-color: #fff;
 }
@@ -55,17 +54,13 @@ header #logo .icon {
 } */
 
 .calendar-container {
-  font-weight: 300;
-  line-height: 1.5;
   color: var(--text-color);
   position: relative;
   padding: 2rem 0;
 }
 
 .main {
-  display: block;
   margin: 0 auto;
-  max-width: 50em;
 }
 
 /* GRID */
@@ -110,8 +105,7 @@ header #logo .icon {
   display: block;
   position: relative;
   width: 100%;
-  background: var(--neutral-color);
-  border: 1px solid var(--border-color);
+  background: var(--border-color);
 }
 
 .calendar .header {
@@ -119,7 +113,10 @@ header #logo .icon {
   font-weight: 700;
   font-size: 115%;
   padding: 1.5em 0;
-  border-bottom: 1px solid var(--border-color);
+  background-color: var(--neutral-color);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  margin-bottom: 1rem;
 }
 
 .calendar .header .icon {
@@ -142,25 +139,36 @@ header #logo .icon {
 }
 
 .calendar .days {
+  background-color: var(--neutral-color);
+
   text-transform: uppercase;
   font-weight: 400;
   color: var(--text-color-light);
   font-size: 70%;
-  padding: 0.75em 0;
-  border-bottom: 1px solid var(--border-color);
+  padding: 1rem 0;
+  border-radius: 12px;
+  margin-bottom: 0.2rem;
+
+  border: 1px solid var(--border-color);
+}
+
+.calendar .body {
+  background-color: var(--border-color);
 }
 
 .calendar .body .cell {
   position: relative;
   height: 5em;
-  border-right: 1px solid var(--border-color);
+  border: 2px solid var(--border-color);
+  border-radius: 5px;
   overflow: hidden;
   background: var(--neutral-color);
   transition: 0.25s ease-out;
+  cursor: pointer;
 }
 
 .calendar .body .cell:hover {
-  background: var(--bg-color);
+  /* background: var(--bg-color); */
   transition: 0.5s ease-out;
 }
 
@@ -186,9 +194,10 @@ header #logo .icon {
   position: absolute;
   font-size: 82.5%;
   line-height: 1;
-  top: 0.75em;
-  right: 0.75em;
+  top: 0.2rem;
+  right: 0.4rem;
   font-weight: 700;
+  color: #3949ab;
 }
 
 .calendar .body .disabled {
@@ -196,58 +205,53 @@ header #logo .icon {
   pointer-events: none;
 }
 
-.calendar .body .clickDisabled {
-  pointer-events: none;
-  padding: 0;
-  margin: 0;
-}
-
-.calendar .body .clickAbled {
-  padding: 0;
-  margin: 0;
+.calendar .body .exist {
+  color: #3949ab;
+  opacity: 0.8;
   cursor: pointer;
 }
 
-.calendar .body .cell .bg {
-  font-weight: 700;
-  line-height: 1;
+.calendar .body .cell .icons {
   opacity: 0;
-  font-size: 1rem;
   position: absolute;
-  top: 2rem;
-  right: 2rem;
+  top: 1rem;
+  right: 1rem;
+  color: #f9f9f9;
   transition: 0.25s ease-out;
-  letter-spacing: -0.07em;
 }
 
-.calendar .body .cell .title {
+/* .calendar .body .cell .title {
   font-weight: 700;
   line-height: 1;
   opacity: 0;
   font-size: 0.5rem;
   transition: 0.25s ease-out;
   letter-spacing: -0.07em;
-}
+} */
 
-.calendar .body .task .bg {
-  opacity: 0.8;
-  transition: 0.5s ease-in;
-}
+/* .calendar .body .task {
+  background-color: #3949ab;
+} */
 
-.calendar .body .task:hover .bg {
-  opacity: 0;
-  transition: 0.5s ease-in;
-}
-
-.calendar .body .task:hover .title {
+.calendar .body .task .icons {
   opacity: 1;
   transition: 0.5s ease-in;
 }
 
-.calendar .body .task:hover {
+/* .calendar .body .task:hover .bg {
+  opacity: 0;
+  transition: 0.5s ease-in;
+} */
+
+/* .calendar .body .task:hover .title {
+  opacity: 1;
+  transition: 0.5s ease-in;
+} */
+
+/* .calendar .body .task:hover {
   transform: scale(1.5);
   z-index: 100;
-}
+} */
 
 .calendar .body .col {
   flex-grow: 0;

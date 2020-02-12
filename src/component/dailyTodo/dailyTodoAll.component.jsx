@@ -11,7 +11,7 @@ import FitnessCenterIcon from "@material-ui/icons/FitnessCenter";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import MusicNoteOutlinedIcon from "@material-ui/icons/MusicNoteOutlined";
 
-const DailyTodoAll = ({ dailyTodo, classes }) => {
+const DailyTodoAll = ({ dailyTodo, classes, withCalendar }) => {
   const allHours = getAllHoursFromSix();
 
   const substract12 = hour => {
@@ -22,10 +22,16 @@ const DailyTodoAll = ({ dailyTodo, classes }) => {
     <React.Fragment>
       {allHours.map((hour, index) => (
         <Grid className={classes.todoAllContainer} key={index} container>
-          <Grid className={classes.todoAllHour} sm={1} xs={2} item>
+          <Grid
+            className={classes.todoAllHour}
+            sm={withCalendar ? 2 : 1}
+            xs={2}
+            item
+          >
             {index < 6 ? (
               <React.Fragment>
                 <Typography color="textSecondary">{hour.toString()}</Typography>
+
                 <Typography color="textSecondary">AM</Typography>
               </React.Fragment>
             ) : hour === 12 ? (
@@ -42,12 +48,18 @@ const DailyTodoAll = ({ dailyTodo, classes }) => {
               </React.Fragment>
             )}
           </Grid>
-          <Grid sm={11} xs={10} direction="column" container item>
+          <Grid
+            sm={withCalendar ? 10 : 11}
+            xs={10}
+            direction="column"
+            container
+            item
+          >
             <Grid item>
               <Divider />
             </Grid>
             <Grid container item>
-              <Grid sm={8} style={{ overflow: "hidden" }} item>
+              <Grid sm={11} style={{ overflow: "hidden" }} item>
                 {dailyTodo.length !== 0 &&
                 typeof dailyTodo[0].date !== typeof ""
                   ? dailyTodo
@@ -105,9 +117,6 @@ const DailyTodoAll = ({ dailyTodo, classes }) => {
                         </React.Fragment>
                       ))
                   : null}
-              </Grid>
-              <Grid item sm={4}>
-                ff
               </Grid>
             </Grid>
           </Grid>
