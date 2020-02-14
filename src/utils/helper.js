@@ -23,6 +23,7 @@ export const createNewTodo = (form, date, userId) => {
   } = form;
   const month = format(date, "MMM");
   const year = format(date, "yyyy");
+  const week = format(new Date(), "ww");
   return {
     userId,
     title,
@@ -33,6 +34,7 @@ export const createNewTodo = (form, date, userId) => {
     importance,
     reward,
     year,
+    week,
     month,
     createdAt: new Date(),
     date,
@@ -62,6 +64,30 @@ export const getAllHoursFromSix = () => {
   }
 
   return hoursArray;
+};
+
+export const getThisWeek = () => {
+  const thisWeek = format(new Date(), "ww");
+  return thisWeek;
+};
+
+export const beforeRenderTodo = dailyTodo => {
+  if (dailyTodo.length !== 0 && typeof dailyTodo[0].date !== typeof "") {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const getPercentageOfCompletedTodo = todos => {
+  if (todos.length === 0) return;
+  const completedTodo = todos.filter(todo => todo.completed === true);
+  const result = (completedTodo.length / todos.length) * 100;
+  console.log(result);
+  return {
+    result,
+    completedTodo
+  };
 };
 
 // export const pickUpYearMonthAndDate = date => {

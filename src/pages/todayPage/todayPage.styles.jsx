@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
-import { Grid, Typography } from "@material-ui/core";
-import { drawerWidth } from "./../../component/navbar/navbar.styles";
+import { Grid } from "@material-ui/core";
+import { drawerWidth } from "../../component/navbar/navbar.styles";
 
 export const HeaderDay = styled(Grid)`
   width: 4.5rem;

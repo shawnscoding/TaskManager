@@ -23,7 +23,8 @@ export const SummaryContainer = styled(Grid)`
   margin-right: 3rem;
   border-radius: 10px;
   background-color: #fff;
-  box-shadow: 0 0 5px 5px rgb(236, 236, 236);
+  border: 4px solid #f5f5f5;
+  box-shadow: 0 0 10px 10px #f5f5f5;
 `;
 
 export const WorkTitle = styled(Typography)`
@@ -145,29 +146,56 @@ export const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: theme.palette.background.paper
   },
-  wdAppBar: {
+  tdAppBar: {
     top: "9.4rem",
     left: `${drawerWidth + 10}px`,
     width: `calc(100% - ${drawerWidth + 20}px)`,
-    backgroundColor: "#fdfdfd",
+    backgroundColor: "#fff",
+    border: "4px solid #f5f5f5",
+    boxShadow: "0 0 6px 6px #f5f5f5",
     position: "fixed",
     borderRadius: "10px"
   },
   caAppBar: {
-    backgroundColor: "#fdfdfd",
     borderRadius: "10px",
-    marginBottom: "1.2rem"
+    marginBottom: "1.2rem",
+    backgroundColor: "#fff",
+    boxShadow: "0 0 10px 10px #f5f5f5"
   },
+  twAppBar: {
+    borderRadius: "10px",
+    border: "4px solid #f5f5f5",
+    boxShadow: "0 0 10px 10px #f5f5f5",
+    backgroundColor: theme.palette.background.paper
+  },
+  twAppBarContainer: {
+    zIndex: 100,
+    position: "fixed",
+    top: "3.3rem",
+    left: `${drawerWidth}px`,
+    width: `calc(100% - ${drawerWidth}px)`,
+    backgroundColor: theme.palette.background.paper,
+    padding: "2rem 3rem 0.5rem 3rem"
+  },
+
   todoAllContainer: {
     height: "3.1rem"
   },
-  wdPanelContainer: {
+
+  twHeader: {},
+
+  tdPanelContainer: {
     padding: "9.5rem 1.5rem 0 1.5rem"
+  },
+  twPanelContainer: {
+    padding: "13rem 0 0 0 "
   },
   caPanelContainer: {
     backgroundColor: theme.palette.background.paper,
-    borderRadius: "10px"
+    borderRadius: "10px",
+    minHeight: "62vh"
   },
+
   todoAllHour: {
     "&:after": {
       content: "''",

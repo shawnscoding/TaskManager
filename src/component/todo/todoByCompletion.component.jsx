@@ -5,7 +5,7 @@ import { format } from "date-fns";
 
 const isTodoCompletedArray = ["true", "false"];
 
-const DailyTodoByCompletion = ({ dailyTodo, classes, withCalendar }) => {
+const TodoByCompletion = ({ dailyTodo, classes, withCalendar }) => {
   const runIsTodoCompleted = () => {
     const initIsTodoCompleted = isTodoCompletedArray.reduce(
       (todosByCompletion, trueOrFalse) => ({
@@ -161,4 +161,4 @@ const DailyTodoByCompletion = ({ dailyTodo, classes, withCalendar }) => {
   );
 };
 
-export default DailyTodoByCompletion;
+export default TodoByCompletion;

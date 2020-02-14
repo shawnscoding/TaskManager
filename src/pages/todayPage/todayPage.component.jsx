@@ -1,14 +1,14 @@
 import React from "react";
 import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
-import WeeklyTodoHeader from "../../component/weeklyTodoHeader/weeklyTodoHeader.component";
+import DailyTodoHeader from "../../component/dailyTodoHeader/dailyTodoHeader.component";
 import LoadingCompoent from "../../component/loader/loadingCompoent";
-import DailyTodoDashBoard from "./../../component/dailyTodo/dailyTodoDashboard.component";
-import { selectTodoList } from "./../../redux/todo/todo.selectors";
-import { useStyles } from "./weeklyTodoPage.styles";
+import TodoDashBoard from "../../component/todo/todoDashboard.component";
+import { selectTodoList } from "../../redux/todo/todo.selectors";
+import { useStyles } from "./todayPage.styles";
 import { format } from "date-fns";
 
-const WeeklyTodoPage = ({ match, todos }) => {
+const TodayPage = ({ match, todos }) => {
   const [dailyTodo, setDailyTodo] = React.useState([]);
   const classes = useStyles();
   const monthAndDate = match.params.monthAndDate;
@@ -27,11 +27,9 @@ const WeeklyTodoPage = ({ match, todos }) => {
             date: mockDate
           }
         ]);
-        console.log("fired !");
       } else {
         setDailyTodo(newTodos);
       }
-      console.log("dailyTodo", dailyTodo);
     }
   }, [todos, monthAndDate]);
 
@@ -53,19 +51,18 @@ const WeeklyTodoPage = ({ match, todos }) => {
       setDailyTodo(newTodos);
     }
   };
-  console.log("dailyTodo", dailyTodo);
 
   if (dailyTodo.length === 0) return <LoadingCompoent />;
 
   return (
     <React.Fragment>
-      <WeeklyTodoHeader
+      <DailyTodoHeader
         dailyTodo={dailyTodo}
         monthAndDate={monthAndDate}
         classes={classes}
         onDayClick={onDayClick}
       />
-      <DailyTodoDashBoard dailyTodo={dailyTodo} />
+      <TodoDashBoard dailyTodo={dailyTodo} />
     </React.Fragment>
   );
 };
@@ -76,4 +73,4 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(WeeklyTodoPage);
+export default connect(mapStateToProps, mapDispatchToProps)(TodayPage);

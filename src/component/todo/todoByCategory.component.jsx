@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Box, Typography, Button } from "@material-ui/core";
+import { Grid, Typography, Button } from "@material-ui/core";
 import {
   WorkTitle,
   StudyTitle,
@@ -10,12 +10,12 @@ import {
   ShoppingTitle,
   SummaryContainer
 } from "./dailyTodo.styles";
-import { categories } from "./../../redux/todo/todo.utils";
+import { categories } from "../../redux/todo/todo.utils";
 import { format } from "date-fns";
 import StarBorderRoundedIcon from "@material-ui/icons/StarBorderRounded";
 import StarRoundedIcon from "@material-ui/icons/StarRounded";
 
-const DailyTodoByCategory = ({ dailyTodo, classes, withCalendar }) => {
+const TodoByCategory = ({ dailyTodo, classes, withCalendar }) => {
   const getTodosByCategories = () => {
     const initCategories = categories.reduce(
       (typeOftodos, category) => ({
@@ -203,4 +203,4 @@ const DailyTodoByCategory = ({ dailyTodo, classes, withCalendar }) => {
   );
 };
 
-export default DailyTodoByCategory;
+export default TodoByCategory;

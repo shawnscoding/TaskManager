@@ -11,14 +11,18 @@ import {
   subMonths
 } from "date-fns";
 import "./calendar.styles.css";
-import { Fab, Box, Button, Grid, Typography } from "@material-ui/core";
-import { isTodoExist } from "../../redux/todo/todo.utils";
-
-import LoadingComponent from "./../loader/loadingCompoent";
+import { Grid, Button, Typography } from "@material-ui/core";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import { getMonthAndDay } from "./../../utils/helper";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 
-const Calendar = ({ todos, history, handleClickDate }) => {
+const Calendar = ({
+  handleClickAnotherMonth,
+  todos,
+  history,
+  loading = true,
+  handleClickDate
+}) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [calendarTodos, setCalendarTodos] = useState([]);
   const [dayOpen, setDayOpen] = useState(null);
@@ -31,24 +35,39 @@ const Calendar = ({ todos, history, handleClickDate }) => {
     if (todos.length !== 0) {
       setCalendarTodos(todos);
     } else {
-      setCalendarTodos([{}]);
+      setCalendarTodos([{ date: "" }]);
     }
   }, [todos]);
 
   const renderHeader = () => {
     return (
-      <div className="header row flex-middle">
-        <div className="col col-start">
-          <div className="icon" onClick={prevMonth}>
-            chevron_left
+      <div style={{ position: "relative" }}>
+        <div className="header row flex-middle">
+          <Button
+            disabled={loading}
+            onClick={handlePrevMonth}
+            className="col col-start"
+          >
+            <div className="icon">chevron_left</div>
+          </Button>
+          <div className="col col-center">
+            <span>{format(currentMonth, "MMMM yyyy")}</span>
           </div>
+          <Button
+            disabled={loading}
+            className="col col-end"
+            onClick={handleNextMonth}
+          >
+            <div className="icon">chevron_right</div>
+          </Button>
         </div>
-        <div className="col col-center">
-          <span>{format(currentMonth, "MMMM yyyy")}</span>
-        </div>
-        <div className="col col-end" onClick={nextMonth}>
-          <div className="icon">chevron_right</div>
-        </div>
+        {loading ? (
+          <LinearProgress
+            className="progress"
+            variant="query"
+            color="secondary"
+          />
+        ) : null}
       </div>
     );
   };
@@ -94,11 +113,6 @@ const Calendar = ({ todos, history, handleClickDate }) => {
           const cloneDay = day;
           const monthAndDate = getMonthAndDay(day);
 
-          // const { dailyTodo, slicedDailyTodo } = countAndSliceTodo(
-          //   monthAndDate,
-          //   todos
-          // );
-
           let dailyTodo;
 
           if (calendarTodos[0].date) {
@@ -109,8 +123,6 @@ const Calendar = ({ todos, history, handleClickDate }) => {
             dailyTodo = calendarTodos;
           }
 
-          let slicedDailyTodo = dailyTodo.slice(0, 3);
-
           days.push(
             <Grid
               container
@@ -119,11 +131,7 @@ const Calendar = ({ todos, history, handleClickDate }) => {
               alignItems="center"
               onClick={() => handleClickDate(monthAndDate)}
               className={`col cell ${
-                !isSameMonth(day, monthStart)
-                  ? "disabled"
-                  : isTodoExist(monthAndDate, calendarTodos)
-                  ? "task"
-                  : ""
+                !isSameMonth(day, monthStart) ? "disabled" : ""
               }`}
               key={day}
             >
@@ -133,16 +141,11 @@ const Calendar = ({ todos, history, handleClickDate }) => {
                 </Typography>
               </Grid>
 
-              {dailyTodo.length !== 0 ? (
+              {dailyTodo.length !== 0 && dailyTodo[0].date !== "" ? (
                 <div className="exist">
                   <span className="number">
                     <FiberManualRecordIcon style={{ fontSize: "1rem" }} />
                   </span>
-
-                  {/* <div className="icons">
-                  <span style={{ fontSize: "2.4rem" }}>{dailyTodo.length}</span>
-                  <PlaylistAddCheckIcon style={{ fontSize: "2.4rem" }} />
-                </div> */}
                 </div>
               ) : null}
             </Grid>
@@ -168,15 +171,20 @@ const Calendar = ({ todos, history, handleClickDate }) => {
     }
   };
 
-  const nextMonth = () => {
-    setCurrentMonth(addMonths(currentMonth, 1));
+  const handleNextMonth = () => {
+    const nextMonth = addMonths(currentMonth, 1);
+    setCurrentMonth(nextMonth);
+    const month = format(nextMonth, "MMM");
+    handleClickAnotherMonth(month);
   };
 
-  const prevMonth = () => {
-    setCurrentMonth(subMonths(currentMonth, 1));
+  const handlePrevMonth = () => {
+    const prevMonth = subMonths(currentMonth, 1);
+    setCurrentMonth(prevMonth);
+    const month = format(prevMonth, "MMM");
+    handleClickAnotherMonth(month);
   };
 
-  if (todos.length === 0) return <LoadingComponent />;
   return (
     <React.Fragment>
       <div className="main">

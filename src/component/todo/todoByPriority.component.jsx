@@ -9,7 +9,7 @@ import {
 
 const importance = ["5", "4", "3", "2", "1"];
 
-const DailyTodoByPriority = ({ dailyTodo, classes, withCalendar }) => {
+const TodoByPriority = ({ dailyTodo, classes, withCalendar }) => {
   const getTodosByPriority = () => {
     const initPriorities = importance.reduce(
       (importanceOftodos, importance) => ({
@@ -18,8 +18,6 @@ const DailyTodoByPriority = ({ dailyTodo, classes, withCalendar }) => {
       }),
       {}
     );
-
-    console.log(initPriorities, "reversedPriorities");
 
     return Object.entries(
       dailyTodo.reduce((todos, todo) => {
@@ -183,4 +181,4 @@ const DailyTodoByPriority = ({ dailyTodo, classes, withCalendar }) => {
   );
 };
 
-export default DailyTodoByPriority;
+export default TodoByPriority;

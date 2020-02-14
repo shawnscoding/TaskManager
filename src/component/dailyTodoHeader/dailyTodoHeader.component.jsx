@@ -7,14 +7,12 @@ import {
   endOfMonth,
   endOfWeek,
   startOfMonth,
-  isSameMonth,
-  addMonths,
-  subMonths
+  isSameMonth
 } from "date-fns";
-import { HeaderDay } from "./../../pages/weeklyTodoPage/weeklyTodoPage.styles";
+import { HeaderDay } from "../../pages/todayPage/todayPage.styles";
 import { withRouter } from "react-router-dom";
 
-const WeeklyTodoHeader = ({ history, classes, dailyTodo }) => {
+const DailyTodoHeader = ({ history, classes, dailyTodo }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const renderDays = () => {
     if (dailyTodo.length !== 0) {
@@ -106,4 +104,4 @@ const WeeklyTodoHeader = ({ history, classes, dailyTodo }) => {
   return <React.Fragment>{renderDays()}</React.Fragment>;
 };
 
-export default withRouter(WeeklyTodoHeader);
+export default withRouter(DailyTodoHeader);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AppBar, Avatar, Paper, Button } from "@material-ui/core";
+import { AppBar, Avatar, Paper } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
@@ -34,41 +34,27 @@ import { connect } from "react-redux";
 import ProfileIcon from "./navbarMaterials/profileIcon.component";
 import { selectStep } from "../../redux/async/async.selectors";
 import { setTodoFormStepToZero } from "../../redux/async/async.actions";
-import WeeklyTodoPage from "../../pages/weeklyTodoPage/weeklyTodoPage.component";
+import TodayPage from "../../pages/todayPage/todayPage.component";
 import { format } from "date-fns";
-import { toggleTodoFormOpen } from "./../../redux/async/async.actions";
-import AlertDialogSlide from "./../../test/test.component";
 import CalendarPage from "./../../pages/calendarPage/calendarPage.component";
+import LoadingComponent from "./../loader/loadingCompoent";
+import { selectTodoList } from "./../../redux/todo/todo.selectors";
+import ThisWeekPage from "../../pages/thisWeekPage/thisWeekPage.component";
+import { getThisWeek } from "../../utils/helper";
 
 const Navbar = props => {
-  const {
-    toggleOpen,
-    container,
-    currentUser,
-    setStepToZero,
-    activeStep
-  } = props;
+  const { container, currentUser, todos } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  const [warning, setWarning] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const onClickCreate = () => {
-    if (activeStep === 3) {
-      setStepToZero();
-    } else {
-      setWarning(!warning);
-      props.history.push("/todo/createTodo");
-    }
-  };
-
   const today = format(new Date(), "MMMd");
-  console.log(today);
+  const week = getThisWeek();
+  const thisWeek = format(new Date(), "MMdd").concat(week);
 
   const drawer = (
     <div>
@@ -89,7 +75,10 @@ const Navbar = props => {
             primary="Today"
           />
         </ListItem>
-        <ListItem onClick={onClickCreate} button>
+        <ListItem
+          onClick={() => props.history.push(`/todo/thisWeek/${thisWeek}`)}
+          button
+        >
           <ListItemIcon>
             <PlaylistAddCheckIcon />
           </ListItemIcon>
@@ -226,21 +215,31 @@ const Navbar = props => {
         </Hidden>
       </nav>
       <Paper className={classes.content}>
-        <Switch>
-          <Route
-            exact
-            path="/start"
-            render={() => (currentUser ? <TodoPage /> : <StartPage />)}
-          />
-          <Route exact path="/startTask" component={StartPage} />
+        {todos.length === 0 ? (
+          <LoadingComponent />
+        ) : (
+          <Switch>
+            <Route
+              exact
+              path="/start"
+              render={() => (currentUser ? <TodoPage /> : <StartPage />)}
+            />
+            <Route exact path="/startTask" component={StartPage} />
+            <Route
+              exact
+              path="/todo/thisWeek/:thisWeek"
+              component={ThisWeekPage}
+            />
 
-          <Route exact path="/todo/calendar" component={CalendarPage} />
-          <Route
-            exact
-            path="/todo/dailyTodo/:monthAndDate"
-            component={WeeklyTodoPage}
-          />
-        </Switch>
+            <Route exact path="/todo/calendar" component={CalendarPage} />
+            <Route
+              exact
+              path="/todo/dailyTodo/:monthAndDate"
+              component={TodayPage}
+            />
+          </Switch>
+        )}
+
         <TodoForm />
 
         <SignUpForm />
@@ -251,7 +250,8 @@ const Navbar = props => {
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
-  activeStep: selectStep
+  activeStep: selectStep,
+  todos: selectTodoList
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -30,6 +30,14 @@ export const setDailyTodo = (todos, monthAndDate) => {
   return todos.filter(todo => todo.month === monthAndDate);
 };
 
+export const checkIfTodoExist = todoList => {
+  if (todoList.length === 0) {
+    return [{ date: "" }];
+  } else {
+    return todoList;
+  }
+};
+
 export const categories = [
   "Work",
   "Study",

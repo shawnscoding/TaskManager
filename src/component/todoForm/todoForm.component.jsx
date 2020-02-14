@@ -5,7 +5,6 @@ import {
   StepLabel,
   Button,
   Typography,
-  Box,
   Grid,
   Fab,
   CircularProgress
@@ -28,7 +27,6 @@ import {
   toggleTodoFormOpen
 } from "../../redux/async/async.actions";
 import useStyles from "./todoForm.styles";
-import TodoPage from "../../pages/todoPage/todoPage.component";
 import Dialog from "@material-ui/core/Dialog";
 import Slide from "@material-ui/core/Slide";
 import AddIcon from "@material-ui/icons/Add";

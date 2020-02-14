@@ -20,11 +20,6 @@ export const removeTodoSuccess = todo => ({
   payload: todo
 });
 
-export const setTodoFromFirebase = todoList => ({
-  type: todoActionTypes.SET_TODO_FROM_FIREBASE,
-  payload: todoList
-});
-
 export const clearTodoList = () => ({
   type: todoActionTypes.CLEAR_TODO_LIST
 });
@@ -32,4 +27,29 @@ export const clearTodoList = () => ({
 export const getDailyTodo = monthAndDate => ({
   type: todoActionTypes.GET_DAILY_TODO,
   payload: monthAndDate
+});
+
+export const setTodoFromFirebase = todoList => ({
+  type: todoActionTypes.SET_TODO_FROM_FIREBASE,
+  payload: todoList
+});
+
+export const setAnotherTodoStart = month => ({
+  type: todoActionTypes.SET_ANOTHER_TODO_START,
+  payload: month
+});
+
+export const setAnotherTodoSuccess = todoList => ({
+  type: todoActionTypes.SET_ANOTHER_TODO_SUCCESS,
+  payload: todoList
+});
+
+export const getWeeklyTodoStart = week => ({
+  type: todoActionTypes.GET_WEEKLY_TODO_START,
+  payload: week
+});
+
+export const getWeeklyTodoSuccess = todoList => ({
+  type: todoActionTypes.GET_WEEKLY_TODO_SUCCESS,
+  payload: todoList
 });

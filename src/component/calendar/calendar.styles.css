@@ -116,7 +116,6 @@ header #logo .icon {
   background-color: var(--neutral-color);
   border: 1px solid var(--border-color);
   border-radius: 14px;
-  margin-bottom: 1rem;
 }
 
 .calendar .header .icon {
@@ -138,12 +137,21 @@ header #logo .icon {
   margin-right: 1em;
 }
 
+.calendar .progress {
+  position: absolute;
+  top: 4rem;
+  z-index: 200;
+  width: 88.5%;
+  left: 2rem;
+}
+
 .calendar .days {
   background-color: var(--neutral-color);
+  margin-top: 1rem;
 
   text-transform: uppercase;
   font-weight: 400;
-  color: var(--text-color-light);
+  color: #000;
   font-size: 70%;
   padding: 1rem 0;
   border-radius: 12px;
