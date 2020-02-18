@@ -3,7 +3,6 @@ import authActionTypes from "./auth.types";
 const INITIAL_STATE = {
   open: false,
   currentUser: null,
-  authenticated: false,
   error: null
 };
 

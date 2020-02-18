@@ -1,11 +1,10 @@
 import React from "react";
-import { Grid, Typography, Button } from "@material-ui/core";
-import { format } from "date-fns";
+import { Grid, } from "@material-ui/core";
 import {
   RoundedBigIcon,
   BorderRoundedBigIcon,
-  SummaryContainer
 } from "./dailyTodo.styles";
+import TodoSummary from "./todoSummary.component";
 
 const importance = ["5", "4", "3", "2", "1"];
 
@@ -106,72 +105,8 @@ const TodoByPriority = ({ dailyTodo, classes, withCalendar }) => {
 
             <Grid className={classes.todosContainer} container>
               {todos.map(todo => (
-                <SummaryContainer
-                  key={todo.id}
-                  container
-                  sm={withCalendar ? 11 : 5}
-                  xs={11}
-                  item
-                >
-                  <Grid
-                    container
-                    className={classes.summaryLeft}
-                    justify="center"
-                    alignItems="flex-start"
-                    xs={2}
-                    item
-                  >
-                    <Grid
-                      container
-                      alignItems="center"
-                      justify="center"
-                      className={classes.summaryTextBox}
-                      item
-                    >
-                      <Typography style={{ textAlign: "center" }}>
-                        {format(todo.date.toDate(), "p")}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid
-                    container
-                    direction="column"
-                    justify="space-between"
-                    alignItems="flex-start"
-                    className={classes.summaryRight}
-                    xs={10}
-                    item
-                  >
-                    <Grid item>
-                      <Typography>{todo.title}</Typography>
-                      <Typography>
-                        expected to take &nbsp;
-                        {todo.hours === "1"
-                          ? todo.hours + " hour"
-                          : todo.hours + " hours"}
-                        {false
-                          ? todo.minutes === "1"
-                            ? todo.minutes + "minute"
-                            : todo.minutes + "minutes"
-                          : null}
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      direction="row"
-                      justify="flex-end"
-                      alignItems="center"
-                      container
-                      className={classes.rateBox}
-                      item
-                    >
-                      <Grid item>
-                        <Button color="primary" variant="outlined">
-                          view
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </SummaryContainer>
+                         <TodoSummary  key={todo.id} todo={todo} classes={classes} withCalendar={withCalendar}   />
+
               ))}
             </Grid>
           </React.Fragment>

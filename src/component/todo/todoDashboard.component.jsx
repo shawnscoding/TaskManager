@@ -67,7 +67,6 @@ const TodoDashBoard = ({
     setValue(newValue);
   };
 
-  console.log(formattedDate);
 
   const handleChangeIndex = index => {
     setValue(index);
@@ -81,7 +80,7 @@ const TodoDashBoard = ({
           className={classes.twAppBarContainer}
           container
         >
-          <Grid xs={6} style={{ padding: "0 7rem 0 0" }} container>
+          <Grid xs={6} style={{ padding: "0 7rem 0 0" }} item container>
             <Grid xs={6} container item>
               <Grid item>
                 <CircularProgress
