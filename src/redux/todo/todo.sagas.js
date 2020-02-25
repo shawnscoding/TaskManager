@@ -8,7 +8,7 @@ import {
   setTodoFromFirebase,
   setAnotherTodoSuccess
 } from "./todo.actions";
-import { createNewTodo } from "./../../utils/helper";
+import { createNewTodo } from "./todo.utils";
 import authActionTypes from "../auth/auth.types";
 import {
   asyncActionStart,

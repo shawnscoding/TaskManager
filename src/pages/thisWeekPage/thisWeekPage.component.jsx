@@ -4,31 +4,35 @@ import { connect } from "react-redux";
 import LoadingCompoent from "../../component/loader/loadingCompoent";
 import TodoDashBoard from "../../component/todo/todoDashboard.component";
 import { selectTodoList } from "../../redux/todo/todo.selectors";
-import { getWeeklyTodoStart } from "../../redux/todo/todo.actions";
-import { format, startOfWeek, endOfWeek } from "date-fns";
+import { format, startOfWeek, endOfWeek, addWeeks, subWeeks } from "date-fns";
+import { withRouter } from "react-router-dom";
+import { setAnotherTodoStart } from "../../redux/todo/todo.actions";
 
-const ThisWeekPage = ({ match, todos }) => {
+const ThisWeekPage = ({ todos, getAnotherTodoList }) => {
   const [weeklyTodo, setWeeklyTodo] = React.useState([]);
-  const thisWeek = match.params.thisWeek;
-  const [week, setWeek] = React.useState(null);
+  const [week, setWeek] = React.useState(new Date());
 
   React.useEffect(() => {
-    if (thisWeek !== week) {
-      setWeek(thisWeek);
-    }
     if (todos !== weeklyTodo) {
       const filteredTodo = todos.filter(
-        todo => format(todo.date.toDate(), "ww") === thisWeek.slice(4)
+        todo => format(todo.date.toDate(), "ww") === format(week, "ww")
       );
-
-      setWeeklyTodo(filteredTodo);
+      if (filteredTodo.length === 0) {
+        setWeeklyTodo([
+          {
+            title: "",
+            category: "",
+            date: ""
+          }
+        ]);
+      } else {
+        setWeeklyTodo(filteredTodo);
+      }
     }
   }, [todos, week]);
 
-  const monthDate = new Date(thisWeek.slice(0, 2) + " " + thisWeek.slice(2, 4));
-
-  const startDay = startOfWeek(monthDate);
-  const endDay = endOfWeek(monthDate);
+  const startDay = startOfWeek(week);
+  const endDay = endOfWeek(week);
 
   const formattedDate = {
     month: format(startDay, "MMMM"),
@@ -36,26 +40,18 @@ const ThisWeekPage = ({ match, todos }) => {
     endDay: format(endDay, "dd")
   };
 
-  console.log(formattedDate);
+  const handleNextWeek = () => {
+    const nextWeek = addWeeks(week, 1);
 
-  const onClickAnthorWeek = day => {
-    const monthAndDate = format(day, "MMMd");
-    let newTodos = todos.filter(
-      todo => format(todo.date.toDate(), "MMMd") === monthAndDate
-    );
-    if (newTodos.length === 0) {
-      const date = format(day, "d");
-      setWeeklyTodo([
-        {
-          title: "",
-          category: "",
-          date: date
-        }
-      ]);
-    } else {
-      setWeeklyTodo(newTodos);
-    }
+    setWeek(nextWeek);
   };
+
+  const handlePreWeek = () => {
+    const preWeek = subWeeks(week, 1);
+
+    setWeek(preWeek);
+  };
+
   if (weeklyTodo.length === 0) return <LoadingCompoent />;
 
   return (
@@ -64,6 +60,8 @@ const ThisWeekPage = ({ match, todos }) => {
         formattedDate={formattedDate}
         withThisWeekPage={true}
         dailyTodo={weeklyTodo}
+        handleNextWeek={handleNextWeek}
+        handlePreWeek={handlePreWeek}
       />
     </React.Fragment>
   );
@@ -74,7 +72,9 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getWeeklyTodo: week => dispatch(getWeeklyTodoStart(week))
+  getAnotherTodoList: month => dispatch(setAnotherTodoStart(month))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ThisWeekPage);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ThisWeekPage)
+);

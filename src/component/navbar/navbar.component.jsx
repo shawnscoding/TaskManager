@@ -53,8 +53,7 @@ const Navbar = props => {
   };
 
   const today = format(new Date(), "MMMd");
-  const week = getThisWeek();
-  const thisWeek = format(new Date(), "MMdd").concat(week);
+  const thisWeek = getThisWeek();
 
   const drawer = (
     <div>

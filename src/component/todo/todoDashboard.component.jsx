@@ -55,6 +55,8 @@ const a11yProps = index => {
 
 const TodoDashBoard = ({
   withThisWeekPage = false,
+  handleNextWeek,
+  handlePreWeek,
   dailyTodo,
   withCalendar = false,
   formattedDate = false
@@ -66,8 +68,6 @@ const TodoDashBoard = ({
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  console.log(formattedDate);
 
   const handleChangeIndex = index => {
     setValue(index);
@@ -81,29 +81,64 @@ const TodoDashBoard = ({
           className={classes.twAppBarContainer}
           container
         >
-          <Grid xs={6} style={{ padding: "0 7rem 0 0" }} container>
+          <Grid xs={6} style={{ padding: "0 7rem 0 0" }} item container>
             <Grid xs={6} container item>
-              <Grid item>
+              <Grid
+                style={{
+                  zIndex: 100
+                }}
+                item
+              >
                 <CircularProgress
-                  style={{ width: "10rem", height: "10rem" }}
+                  style={{
+                    width: "10rem",
+                    height: "10rem"
+                  }}
                   variant="static"
                   value={
                     getPercentageOfCompletedTodo(dailyTodo).result === 0
-                      ? 100
+                      ? 60
                       : 50
                   }
+                />
+              </Grid>
+              <Grid className={classes.transparentCircleBox} item>
+                <CircularProgress
+                  style={{
+                    color: "#f5f5f5",
+                    width: "10rem",
+                    height: "10rem"
+                  }}
+                  variant="static"
+                  value={100}
                 />
               </Grid>
             </Grid>
             <Grid xs={6} container direction="column" justify="center" item>
               <Grid item>
-                {formattedDate.month} &nbsp;
-                {formattedDate.startDay} ~ &nbsp; {formattedDate.endDay}
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  className={classes.headerTextFirst}
+                >
+                  {formattedDate.startDay} ~ {formattedDate.endDay}
+                  &nbsp; {formattedDate.month}
+                </Typography>
               </Grid>
-              <Grid item>Completed Tasks </Grid>
               <Grid item>
-                {getPercentageOfCompletedTodo(dailyTodo).completedTodo.length} /{" "}
-                {dailyTodo.length}{" "}
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  className={classes.headerText}
+                >
+                  Completed Tasks
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="h4" className={classes.headerText}>
+                  {getPercentageOfCompletedTodo(dailyTodo).completedTodo.length}{" "}
+                  / {dailyTodo.length}
+                </Typography>
               </Grid>
               <Grid item>
                 <Button
@@ -112,6 +147,7 @@ const TodoDashBoard = ({
                     margin: "10px 10px 10px 0"
                   }}
                   variant="outlined"
+                  onClick={handlePreWeek}
                 >
                   Last Week
                 </Button>
@@ -121,6 +157,7 @@ const TodoDashBoard = ({
                     margin: "10px 0 10px 0"
                   }}
                   variant="contained"
+                  onClick={handleNextWeek}
                 >
                   Next Week
                 </Button>

@@ -47,3 +47,34 @@ export const categories = [
   "Shopping",
   "TheRest"
 ];
+
+export const createNewTodo = (form, date, userId) => {
+  const {
+    title,
+    discription,
+    category,
+    hours,
+    minutes,
+    importance,
+    reward
+  } = form;
+  const month = format(date, "MMM");
+  const year = format(date, "yyyy");
+  const week = format(new Date(), "ww");
+  return {
+    userId,
+    title,
+    discription,
+    category,
+    hours,
+    minutes,
+    importance,
+    reward,
+    year,
+    week,
+    month,
+    createdAt: new Date(),
+    date,
+    completed: false
+  };
+};
