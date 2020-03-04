@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import DailyTodoHeader from "../../component/dailyTodoHeader/dailyTodoHeader.component";
 import LoadingCompoent from "../../component/loader/loadingCompoent";
 import TodoDashBoard from "../../component/todo/todoDashboard.component";
-import { selectTodoList } from "../../redux/todo/todo.selectors";
+import { selectMonthlyTodo } from "../../redux/todo/todo.selectors";
 import { useStyles } from "./todayPage.styles";
 import { format } from "date-fns";
 
@@ -68,7 +68,7 @@ const TodayPage = ({ match, todos }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  todos: selectTodoList
+  todos: selectMonthlyTodo
 });
 
 const mapDispatchToProps = {};

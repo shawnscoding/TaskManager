@@ -137,6 +137,15 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "2rem",
     width: "100%"
   },
+  percentage: {
+    position: "absolute",
+    fontSize: "3rem",
+
+    top: "2rem",
+    left: "3.5rem",
+
+    letterSpacing: "-1px"
+  },
   red: {
     backgroundColor: "red"
   },
@@ -182,13 +191,25 @@ export const useStyles = makeStyles(theme => ({
     height: "3.1rem"
   },
 
-  twHeader: {},
+  transparentCircleBox: {
+    left: "16.75rem",
+    top: "5.3rem",
+    position: "fixed"
+  },
+
+  headerTextFirst: {
+    color: theme.palette.secondary.light
+  },
+
+  headerText: {
+    color: theme.palette.primary.light
+  },
 
   tdPanelContainer: {
     padding: "9.5rem 1.5rem 0 1.5rem"
   },
   twPanelContainer: {
-    padding: "13rem 0 0 0 "
+    padding: "13rem  1.5rem 0 1.5rem "
   },
   caPanelContainer: {
     backgroundColor: theme.palette.background.paper,

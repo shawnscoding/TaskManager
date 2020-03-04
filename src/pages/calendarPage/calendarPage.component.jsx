@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Box } from "@material-ui/core";
 import Calendar from "./../../component/calendar/calendar.component";
-import { selectTodoList } from "./../../redux/todo/todo.selectors";
+import { selectMonthlyTodo } from "./../../redux/todo/todo.selectors";
 import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
 import TodoDashBoard from "../../component/todo/todoDashboard.component";
@@ -109,7 +109,7 @@ const CalendarPage = ({ todos, getAnotherTodoList, loading }) => {
   );
 };
 const mapStateToProps = createStructuredSelector({
-  todos: selectTodoList,
+  todos: selectMonthlyTodo,
   loading: selectLoading
 });
 

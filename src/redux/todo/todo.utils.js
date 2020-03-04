@@ -38,6 +38,32 @@ export const checkIfTodoExist = todoList => {
   }
 };
 
+// export const onChageWeeklyTodo = todos => {
+//   if (todos.length === 0) {
+//     return [{ date: "" }];
+//   } else {
+//     return [...todos];
+//   }
+// };
+
+// export const isTodoThisWeek = (todos, newTodo) => {
+//   if(todos.length === 0){
+//     todos
+//   }
+
+//   // if(week !== null){
+//   //   format(week, "ww")
+//   // }
+//   // if (todos.length === 0 && week !== 0) {
+//   //   return [...newTodo];
+//   // }
+//   // if (newTodo.week === todos[0].week) {
+//   //   return [newTodo, ...todos];
+//   // } else {
+//   //   return [...todos];
+//   // }
+// };
+
 export const categories = [
   "Work",
   "Study",
@@ -47,3 +73,34 @@ export const categories = [
   "Shopping",
   "TheRest"
 ];
+
+export const createNewTodo = (form, date, userId) => {
+  const {
+    title,
+    discription,
+    category,
+    hours,
+    minutes,
+    importance,
+    reward = ""
+  } = form;
+  const month = format(date, "MMM");
+  const year = format(date, "yyyy");
+  const week = format(date, "ww");
+  return {
+    userId,
+    title,
+    discription,
+    category,
+    hours,
+    minutes,
+    importance,
+    reward,
+    year,
+    week,
+    month,
+    createdAt: new Date(),
+    date,
+    completed: false
+  };
+};

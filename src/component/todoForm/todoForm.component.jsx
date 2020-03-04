@@ -70,7 +70,7 @@ const TodoForm = ({
     discription: "",
     category: "",
     hours: "",
-    minutes: "",
+    minutes: "0",
     importance: 3,
     reward: ""
   });
@@ -119,6 +119,18 @@ const TodoForm = ({
   };
 
   const handleSubmit = () => {
+    if (form.reward === "") {
+      delete form.reward;
+    }
+    console.log(Object.values(form), "form");
+    const formArray = Object.values(form);
+
+    for (let i = 0; i < formArray.length; i++) {
+      if (formArray[i] === "") {
+        alert("you need to fill in all of the required fields");
+        return;
+      }
+    }
     addTodo(form, date);
   };
 

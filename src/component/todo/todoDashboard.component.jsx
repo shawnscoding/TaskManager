@@ -56,6 +56,8 @@ const a11yProps = index => {
 const TodoDashBoard = ({
   withThisWeekPage = false,
   dailyTodo,
+  handleNextWeek,
+  handlePreWeek,
   withCalendar = false,
   formattedDate = false
 }) => {
@@ -66,7 +68,6 @@ const TodoDashBoard = ({
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
 
   const handleChangeIndex = index => {
     setValue(index);
@@ -80,21 +81,37 @@ const TodoDashBoard = ({
           className={classes.twAppBarContainer}
           container
         >
-          <Grid xs={6} style={{ padding: "0 7rem 0 0" }} item container>
-            <Grid xs={6} container item>
-              <Grid item>
+          <Grid xs={6} item container>
+            <Grid xs={4} style={{ position: "relative" }} container item>
+              <Grid
+                style={{
+                  zIndex: 100
+                }}
+                item
+              >
                 <CircularProgress
-                  style={{ width: "10rem", height: "10rem" }}
+                  style={{
+                    width: "10rem",
+                    height: "10rem"
+                  }}
                   variant="static"
                   value={
                     getPercentageOfCompletedTodo(dailyTodo).result === 0
-                      ? 100
+                      ? 60
                       : 50
                   }
                 />
               </Grid>
+              <Grid container className={classes.percentage}>
+                <Grid item>
+                  {getPercentageOfCompletedTodo(dailyTodo).result}
+                </Grid>
+                <Grid style={{ fontSize: "1rem", marginTop: "37px" }} item>
+                  %
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid xs={6} container direction="column" justify="center" item>
+            <Grid xs={8} container direction="column" justify="center" item>
               <Grid item>
                 {formattedDate.month} &nbsp;
                 {formattedDate.startDay} ~ &nbsp; {formattedDate.endDay}
@@ -107,6 +124,7 @@ const TodoDashBoard = ({
               <Grid item>
                 <Button
                   color="secondary"
+                  onClick={handlePreWeek}
                   style={{
                     margin: "10px 10px 10px 0"
                   }}
@@ -116,6 +134,7 @@ const TodoDashBoard = ({
                 </Button>
                 <Button
                   color="secondary"
+                  onClick={handleNextWeek}
                   style={{
                     margin: "10px 0 10px 0"
                   }}

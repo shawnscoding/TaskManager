@@ -2,9 +2,9 @@ import { createSelector } from "reselect";
 
 const selectTodoReducer = state => state.todoList;
 
-export const selectTodoList = createSelector(
+export const selectMonthlyTodo = createSelector(
   [selectTodoReducer],
-  todoList => todoList.todoList
+  todoList => todoList.monthlyTodo
 );
 
 export const selectWeeklyTodo = createSelector(

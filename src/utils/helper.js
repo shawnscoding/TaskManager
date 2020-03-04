@@ -7,40 +7,9 @@ for (let i = 1; i < 11; i++) {
   hoursArray.push(`${i}`);
 }
 
-for (let i = 1; i < 61; i++) {
+for (let i = 0; i < 60; i++) {
   minutesArray.push(`${i}`);
 }
-
-export const createNewTodo = (form, date, userId) => {
-  const {
-    title,
-    discription,
-    category,
-    hours,
-    minutes,
-    importance,
-    reward
-  } = form;
-  const month = format(date, "MMM");
-  const year = format(date, "yyyy");
-  const week = format(new Date(), "ww");
-  return {
-    userId,
-    title,
-    discription,
-    category,
-    hours,
-    minutes,
-    importance,
-    reward,
-    year,
-    week,
-    month,
-    createdAt: new Date(),
-    date,
-    completed: false
-  };
-};
 
 export const getThisMonth = () => {
   const date = new Date();
@@ -83,7 +52,6 @@ export const getPercentageOfCompletedTodo = todos => {
   if (todos.length === 0) return;
   const completedTodo = todos.filter(todo => todo.completed === true);
   const result = (completedTodo.length / todos.length) * 100;
-  console.log(result);
   return {
     result,
     completedTodo

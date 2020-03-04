@@ -38,7 +38,7 @@ import TodayPage from "../../pages/todayPage/todayPage.component";
 import { format } from "date-fns";
 import CalendarPage from "./../../pages/calendarPage/calendarPage.component";
 import LoadingComponent from "./../loader/loadingCompoent";
-import { selectTodoList } from "./../../redux/todo/todo.selectors";
+import { selectMonthlyTodo } from "./../../redux/todo/todo.selectors";
 import ThisWeekPage from "../../pages/thisWeekPage/thisWeekPage.component";
 import { getThisWeek } from "../../utils/helper";
 
@@ -53,8 +53,8 @@ const Navbar = props => {
   };
 
   const today = format(new Date(), "MMMd");
-  const week = getThisWeek();
-  const thisWeek = format(new Date(), "MMdd").concat(week);
+
+  const thisWeek = getThisWeek();
 
   const drawer = (
     <div>
@@ -215,34 +215,33 @@ const Navbar = props => {
         </Hidden>
       </nav>
       <Paper className={classes.content}>
-        {todos.length === 0 ? (
-          <LoadingComponent />
-        ) : (
-          <Switch>
-            <Route
-              exact
-              path="/start"
-              render={() => (currentUser ? <TodoPage /> : <StartPage />)}
-            />
-            <Route exact path="/startTask" component={StartPage} />
-            <Route
-              exact
-              path="/todo/thisWeek/:thisWeek"
-              component={ThisWeekPage}
-            />
+        {currentUser && (
+          <React.Fragment>
+            <Switch>
+              <Route
+                exact
+                path="/start"
+                render={() => (currentUser ? <TodoPage /> : <StartPage />)}
+              />
+              <Route exact path="/startTask" component={StartPage} />
+              <Route
+                exact
+                path="/todo/thisWeek/:thisWeek"
+                component={ThisWeekPage}
+              />
 
-            <Route exact path="/todo/calendar" component={CalendarPage} />
-            <Route
-              exact
-              path="/todo/dailyTodo/:monthAndDate"
-              component={TodayPage}
-            />
-          </Switch>
+              <Route exact path="/todo/calendar" component={CalendarPage} />
+              <Route
+                exact
+                path="/todo/dailyTodo/:monthAndDate"
+                component={TodayPage}
+              />
+            </Switch>
+            <TodoForm />
+
+            <SignUpForm />
+          </React.Fragment>
         )}
-
-        <TodoForm />
-
-        <SignUpForm />
       </Paper>
     </div>
   );
@@ -251,7 +250,7 @@ const Navbar = props => {
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
   activeStep: selectStep,
-  todos: selectTodoList
+  todos: selectMonthlyTodo
 });
 
 const mapDispatchToProps = dispatch => ({

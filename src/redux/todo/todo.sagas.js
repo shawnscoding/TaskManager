@@ -6,16 +6,17 @@ import {
   addTodoSuccess,
   clearTodoList,
   setTodoFromFirebase,
-  setAnotherTodoSuccess
+  setAnotherTodoSuccess,
+  getWeeklyTodoSuccess
 } from "./todo.actions";
-import { createNewTodo } from "./../../utils/helper";
+import { createNewTodo } from "./todo.utils";
 import authActionTypes from "../auth/auth.types";
 import {
   asyncActionStart,
   asyncActionFinish,
   increaseTodoFormStep
 } from "./../async/async.actions";
-import { getThisMonth } from "../../utils/helper";
+import { getThisMonth, getThisYear } from "../../utils/helper";
 
 export function* addTodoToFirebase({ payload }) {
   const { form, date } = payload;
@@ -28,6 +29,12 @@ export function* addTodoToFirebase({ payload }) {
       const docRef = yield firestore.collection("todo_list").add(newTodo);
       const snapShot = yield docRef.get();
       yield put(addTodoSuccess({ ...snapShot.data(), id: docRef.id }));
+
+      console.log(snapShot.data().week, "week in saga");
+      const test = { payload: snapShot.data().week };
+      console.log(test);
+      yield getWeeklyTodoFromFb(test);
+
       yield put(asyncActionFinish());
       yield put(increaseTodoFormStep());
     } catch (err) {
@@ -37,39 +44,51 @@ export function* addTodoToFirebase({ payload }) {
   }
 }
 
-// export function* getWeeklyTodoFromFb() {
-//   const user = yield select(selectCurrentUser);
-//   const year = getThisYear();
-//   const week = getThisWeek();
-//   try {
-//     const listsRef = yield firestore.collection("todo_list");
-//     const query = yield listsRef
-//       .where("userId", "==", user.id)
-//       .where("year", "==", year)
-//       .where("week", "==", week)
-//       .orderBy("date");
-//     const snapShot = yield query.get();
-//     const todoList = [];
-//     for (let i = 0; i < snapShot.docs.length; i++) {
-//       let todo = { ...snapShot.docs[i].data(), id: snapShot.docs[i].id };
-//       todoList.push(todo);
-//     }
-//     yield put(getWeeklyTodoSuccess(todoList));
-//   } catch (err) {
-//     alert("Sorry,, something went wrong,, try again later");
-//     console.log(err);
-//   }
-// }
+export function* getWeeklyTodoFromFb(test) {
+  const user = yield select(selectCurrentUser);
+  const year = getThisYear();
+  console.log(test);
+  const { payload } = test;
+  console.log(payload, "week in saga");
+  // const { formattedWeek, newWeek } = payload;
+
+  // const week = getThisWeek();
+  try {
+    const listsRef = yield firestore.collection("todo_list");
+    const query = yield listsRef
+      .where("userId", "==", user.id)
+      .where("year", "==", year)
+      .where("week", "==", payload)
+      .orderBy("date");
+    const snapShot = yield query.get();
+    const todoList = [];
+    if (snapShot.docs.length === 0) {
+      todoList.push({ date: "" });
+    } else {
+      for (let i = 0; i < snapShot.docs.length; i++) {
+        let todo = { ...snapShot.docs[i].data(), id: snapShot.docs[i].id };
+        todoList.push(todo);
+      }
+    }
+
+    yield put(getWeeklyTodoSuccess(todoList));
+  } catch (err) {
+    alert("Sorry,, something went wrong,, try again later");
+    console.log(err);
+  }
+}
 
 export function* checkTodoInFirebase(month) {
   const user = yield select(selectCurrentUser);
   try {
+    console.log("runned!");
     const listsRef = yield firestore.collection("todo_list");
     const query = yield listsRef
       .where("userId", "==", user.id)
       .where("month", "==", month)
       .orderBy("date");
     const snapShot = yield query.get();
+    if (snapShot.docs.length === 0) return;
     const todoList = [];
     for (let i = 0; i < snapShot.docs.length; i++) {
       let todo = { ...snapShot.docs[i].data(), id: snapShot.docs[i].id };
@@ -82,7 +101,8 @@ export function* checkTodoInFirebase(month) {
   }
 }
 
-export function* checkAnotherMonthTodoInFb({ payload }) {
+export function* checkMonthlyTodo({ payload }) {
+  console.log("run");
   yield put(asyncActionStart());
 
   const todoList = yield checkTodoInFirebase(payload);
@@ -117,11 +137,12 @@ export function* onSignOutStart() {
   yield takeLatest(authActionTypes.SIGN_OUT_START, clearTodoListOnSignOut);
 }
 
+export function* onGetWeeklyTodo() {
+  yield takeLatest(todoActionTypes.GET_WEEKLY_TODO_START, getWeeklyTodoFromFb);
+}
+
 export function* onSetAnotherTodo() {
-  yield takeLatest(
-    todoActionTypes.SET_ANOTHER_TODO_START,
-    checkAnotherMonthTodoInFb
-  );
+  yield takeLatest(todoActionTypes.SET_ANOTHER_TODO_START, checkMonthlyTodo);
 }
 
 // compose
@@ -129,6 +150,7 @@ export function* onSetAnotherTodo() {
 export function* todoSagas() {
   yield all([
     call(onAddTodo),
+    call(onGetWeeklyTodo),
     call(onUserSignIn),
     call(onSetAnotherTodo),
     call(onSignOutStart)
