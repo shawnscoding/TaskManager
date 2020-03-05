@@ -6,16 +6,11 @@ import TodoDashBoard from "../../component/todo/todoDashboard.component";
 import { selectWeeklyTodo } from "../../redux/todo/todo.selectors";
 import { format, startOfWeek, endOfWeek, addWeeks, subWeeks } from "date-fns";
 import { withRouter } from "react-router-dom";
-import {
-  setAnotherTodoStart,
-  getWeeklyTodoStart
-} from "../../redux/todo/todo.actions";
-import NotTodoExist from "../../component/nonTodoExist/nonTodoExist.component";
+import { getWeeklyTodoStart } from "../../redux/todo/todo.actions";
 
-const ThisWeekPage = ({ getWeeklyTodo, weeklyTodo, match }) => {
+const ThisWeekPage = ({ getWeeklyTodo, weeklyTodo, match, location }) => {
   const [week, setWeek] = React.useState(new Date());
   const [todo, setTodo] = React.useState(null);
-  const [noTodo, setNotodo] = React.useState(false);
   React.useEffect(() => {
     // if (thisWeek !== week) {
     //   setWeek(thisWeek);
@@ -25,21 +20,22 @@ const ThisWeekPage = ({ getWeeklyTodo, weeklyTodo, match }) => {
 
     if (weeklyTodo.length === 0 && formattedWeek === match.params.thisWeek) {
       getWeeklyTodo(formattedWeek);
-    } else if (
-      weeklyTodo.length === 0 &&
-      formattedWeek !== match.params.thisWeek
-    ) {
-      setNotodo(!noTodo);
     }
 
     if (weeklyTodo.length !== 0) {
       if (weeklyTodo[0].date === "") {
-        setNotodo(!noTodo);
+        setTodo(weeklyTodo);
       } else {
-        setNotodo(false);
         setTodo(weeklyTodo);
       }
     }
+    return () => {
+      if (location.pathname.indexOf("th") !== 6) {
+        const week = format(new Date(), "ww");
+        console.log(match, "");
+        console.log(location, "");
+      }
+    };
   }, [weeklyTodo, week]);
 
   const startDay = startOfWeek(week);
@@ -64,12 +60,10 @@ const ThisWeekPage = ({ getWeeklyTodo, weeklyTodo, match }) => {
     const newWeek = subWeeks(week, 1);
     setWeek(newWeek);
     const formattedWeek = format(newWeek, "ww");
-    console.log(newWeek);
     getWeeklyTodo(formattedWeek);
   };
 
   if (todo === null) return <LoadingCompoent />;
-  if (noTodo) return <NotTodoExist />;
   return (
     <React.Fragment>
       <TodoDashBoard

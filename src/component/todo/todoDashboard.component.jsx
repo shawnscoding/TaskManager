@@ -22,6 +22,10 @@ import TodoByCategory from "./todoByCategory.component";
 import TodoByCompletion from "./todoByCompletion.component";
 import TodoByPriority from "./todoByPriority.component";
 import NonTodoExist from "../nonTodoExist/nonTodoExist.component";
+import SmallLoader from "./../loader/SmallLoader";
+import { connect } from "react-redux";
+import { selectLoading } from "./../../redux/async/async.selectors";
+import { createStructuredSelector } from "reselect";
 
 const TabPanel = props => {
   const { children, value, index, ...other } = props;
@@ -57,6 +61,7 @@ const TodoDashBoard = ({
   withThisWeekPage = false,
   dailyTodo,
   handleNextWeek,
+  loading,
   handlePreWeek,
   withCalendar = false,
   formattedDate = false
@@ -73,7 +78,8 @@ const TodoDashBoard = ({
     setValue(index);
   };
 
-  if (withThisWeekPage)
+  if (withThisWeekPage) {
+    if (loading) return <SmallLoader />;
     return (
       <div className={classes.root}>
         <Grid
@@ -208,15 +214,16 @@ const TodoDashBoard = ({
           <SwipeableViews
             axis={theme.direction === "rtl" ? "x-reverse" : "x"}
             index={0}
-            className={classes.wdPanelContainer}
+            className={classes.twNoTodoContainer}
           >
             <TabPanel value={0} index={0} dir={theme.direction}>
-              <NonTodoExist />
+              <NonTodoExist withThisWeekPage={withThisWeekPage} />
             </TabPanel>
           </SwipeableViews>
         )}
       </div>
     );
+  }
 
   return (
     <div className={withCalendar ? null : classes.root}>
@@ -315,4 +322,8 @@ const TodoDashBoard = ({
   );
 };
 
-export default TodoDashBoard;
+const mapStateToProps = createStructuredSelector({
+  loading: selectLoading
+});
+
+export default connect(mapStateToProps)(TodoDashBoard);

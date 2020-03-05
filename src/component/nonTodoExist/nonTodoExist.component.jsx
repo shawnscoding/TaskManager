@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { toggleTodoFormOpen } from "./../../redux/async/async.actions";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 
-const NonTodoExist = ({ toggleOpen }) => {
+const NonTodoExist = ({ toggleOpen, withThisWeekPage }) => {
   const handleAddTodo = () => {
     toggleOpen();
   };
@@ -18,7 +18,14 @@ const NonTodoExist = ({ toggleOpen }) => {
       container
     >
       <Grid item>
-        <Typography>You have No task today</Typography>
+        <Typography>
+          You have No task{" "}
+          {withThisWeekPage ? (
+            <React.Fragment>thisWeek</React.Fragment>
+          ) : (
+            <React.Fragment>today</React.Fragment>
+          )}
+        </Typography>
       </Grid>
       <Grid item>
         <FormatListBulletedIcon

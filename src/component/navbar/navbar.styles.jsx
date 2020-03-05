@@ -1,6 +1,9 @@
 import { makeStyles } from "@material-ui/styles";
+import { Toolbar } from "@material-ui/core/Toolbar";
 
 export const drawerWidth = 220;
+
+export const ToolbarHeight = 3.3;
 
 export const useStyles = makeStyles(theme => ({
   root: {
@@ -24,7 +27,9 @@ export const useStyles = makeStyles(theme => ({
       display: "none"
     }
   },
-  toolbar: theme.mixins.toolbar,
+  toolbar: {
+    minHeight: `${ToolbarHeight}rem`
+  },
   drawerPaper: {
     width: drawerWidth
   },

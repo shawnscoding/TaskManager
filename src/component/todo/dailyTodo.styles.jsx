@@ -186,11 +186,12 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     padding: "2rem 3rem 0.5rem 3rem"
   },
-
   todoAllContainer: {
     height: "3.1rem"
   },
-
+  twNoTodoContainer: {
+    padding: "13rem 0 0 0"
+  },
   transparentCircleBox: {
     left: "16.75rem",
     top: "5.3rem",

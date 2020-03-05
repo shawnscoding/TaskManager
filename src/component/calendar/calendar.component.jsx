@@ -21,10 +21,12 @@ const Calendar = ({
   todos,
   history,
   loading = true,
+
   handleClickDate
 }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [calendarTodos, setCalendarTodos] = useState([]);
+
   const [dayOpen, setDayOpen] = useState(null);
 
   const handleDayOpen = index => {

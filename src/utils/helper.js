@@ -40,8 +40,8 @@ export const getThisWeek = () => {
   return thisWeek;
 };
 
-export const beforeRenderTodo = dailyTodo => {
-  if (dailyTodo.length !== 0 && typeof dailyTodo[0].date !== typeof "") {
+export const beforeRenderTodo = todos => {
+  if (todos.length !== 0 && typeof todos[0].date !== typeof "") {
     return true;
   } else {
     return false;

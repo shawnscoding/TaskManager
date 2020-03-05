@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AppBar, Avatar, Paper } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
@@ -41,9 +41,11 @@ import LoadingComponent from "./../loader/loadingCompoent";
 import { selectMonthlyTodo } from "./../../redux/todo/todo.selectors";
 import ThisWeekPage from "../../pages/thisWeekPage/thisWeekPage.component";
 import { getThisWeek } from "../../utils/helper";
+import { getWeeklyTodoStart } from "../../redux/todo/todo.actions";
+import { selectLoading } from "./../../redux/async/async.selectors";
 
 const Navbar = props => {
-  const { container, currentUser, todos } = props;
+  const { container, loading, currentUser, todos, getWeeklyTodo } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -55,6 +57,12 @@ const Navbar = props => {
   const today = format(new Date(), "MMMd");
 
   const thisWeek = getThisWeek();
+
+  const onClickThisWeek = () => {
+    getWeeklyTodo(thisWeek);
+    console.log(" runneddddd");
+    props.history.push(`/todo/thisWeek/${thisWeek}`);
+  };
 
   const drawer = (
     <div>
@@ -75,10 +83,7 @@ const Navbar = props => {
             primary="Today"
           />
         </ListItem>
-        <ListItem
-          onClick={() => props.history.push(`/todo/thisWeek/${thisWeek}`)}
-          button
-        >
+        <ListItem onClick={onClickThisWeek} button>
           <ListItemIcon>
             <PlaylistAddCheckIcon />
           </ListItemIcon>
@@ -143,12 +148,11 @@ const Navbar = props => {
       </List>
     </div>
   );
-
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar style={{ minHeight: "3.3rem" }}>
+        <Toolbar className={classes.toolbar}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -215,46 +219,50 @@ const Navbar = props => {
         </Hidden>
       </nav>
       <Paper className={classes.content}>
-        {currentUser && (
-          <React.Fragment>
-            <Switch>
-              <Route
-                exact
-                path="/start"
-                render={() => (currentUser ? <TodoPage /> : <StartPage />)}
-              />
-              <Route exact path="/startTask" component={StartPage} />
-              <Route
-                exact
-                path="/todo/thisWeek/:thisWeek"
-                component={ThisWeekPage}
-              />
+        <React.Fragment>
+          {currentUser && (
+            <React.Fragment>
+              <Switch>
+                <Route
+                  exact
+                  path="/start"
+                  render={() => (currentUser ? <TodoPage /> : <StartPage />)}
+                />
+                <Route exact path="/startTask" component={StartPage} />
+                <Route
+                  exact
+                  path="/todo/thisWeek/:thisWeek"
+                  component={ThisWeekPage}
+                />
 
-              <Route exact path="/todo/calendar" component={CalendarPage} />
-              <Route
-                exact
-                path="/todo/dailyTodo/:monthAndDate"
-                component={TodayPage}
-              />
-            </Switch>
-            <TodoForm />
+                <Route exact path="/todo/calendar" component={CalendarPage} />
+                <Route
+                  exact
+                  path="/todo/dailyTodo/:monthAndDate"
+                  component={TodayPage}
+                />
+              </Switch>
+              <TodoForm />
 
-            <SignUpForm />
-          </React.Fragment>
-        )}
+              <SignUpForm />
+            </React.Fragment>
+          )}
+        </React.Fragment>
       </Paper>
     </div>
   );
 };
 
 const mapStateToProps = createStructuredSelector({
+  loading: selectLoading,
   currentUser: selectCurrentUser,
   activeStep: selectStep,
   todos: selectMonthlyTodo
 });
 
 const mapDispatchToProps = dispatch => ({
-  setStepToZero: () => dispatch(setTodoFormStepToZero())
+  setStepToZero: () => dispatch(setTodoFormStepToZero()),
+  getWeeklyTodo: formattedWeek => dispatch(getWeeklyTodoStart(formattedWeek))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

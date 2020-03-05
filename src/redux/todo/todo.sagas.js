@@ -44,15 +44,13 @@ export function* addTodoToFirebase({ payload }) {
   }
 }
 
-export function* getWeeklyTodoFromFb(test) {
+export function* getWeeklyTodoFromFb({ payload }) {
+  yield put(asyncActionStart());
+
   const user = yield select(selectCurrentUser);
   const year = getThisYear();
-  console.log(test);
-  const { payload } = test;
   console.log(payload, "week in saga");
-  // const { formattedWeek, newWeek } = payload;
 
-  // const week = getThisWeek();
   try {
     const listsRef = yield firestore.collection("todo_list");
     const query = yield listsRef
@@ -72,6 +70,7 @@ export function* getWeeklyTodoFromFb(test) {
     }
 
     yield put(getWeeklyTodoSuccess(todoList));
+    yield put(asyncActionFinish());
   } catch (err) {
     alert("Sorry,, something went wrong,, try again later");
     console.log(err);
