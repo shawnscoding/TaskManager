@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Typography, Button, ButtonGroup } from "@material-ui/core";
+import { Grid, Typography, Button } from "@material-ui/core";
 import { SummaryContainer } from "./dailyTodo.styles";
 import { format } from "date-fns";
 import StarBorderRoundedIcon from "@material-ui/icons/StarBorderRounded";
@@ -10,8 +10,8 @@ import { connect } from "react-redux";
 import { getMinutes } from "../../utils/helper";
 import { getHours } from "./../../utils/helper";
 import { selectWorking } from "../../redux/todo/todo.selectors";
-
 import { createStructuredSelector } from "reselect";
+import { toggleTimerWarning } from "./../../redux/warning/warning.actions";
 
 const TodoSummary = ({
   setTodoOnTimer,
@@ -20,16 +20,18 @@ const TodoSummary = ({
   withCalendar = false,
   withPriority = false,
   openTimer,
+  toggleTimerWarning,
   working
 }) => {
   const [open, setOpen] = useState(false);
 
   const onClickStart = todo => {
     if (working) {
-      return;
+      toggleTimerWarning();
+    } else {
+      setTodoOnTimer(todo);
+      openTimer();
     }
-    setTodoOnTimer(todo);
-    openTimer();
   };
 
   const minutes = getMinutes(todo.timeToComplete);
@@ -164,11 +166,13 @@ const TodoSummary = ({
         </Grid>
       </SummaryContainer>
       <MyTodoDetailedPage
-        onClickStart={onClickStart}
+        toggleTimerWarning={toggleTimerWarning}
         setTodoOnTimer={setTodoOnTimer}
         todo={todo}
         open={open}
+        openTimer={openTimer}
         setOpen={setOpen}
+        working={working}
       />
     </React.Fragment>
   );
@@ -180,7 +184,8 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   setTodoOnTimer: todo => dispatch(setTodoOnTimer(todo)),
-  openTimer: () => dispatch(openTimer())
+  openTimer: () => dispatch(openTimer()),
+  toggleTimerWarning: () => dispatch(toggleTimerWarning())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoSummary);

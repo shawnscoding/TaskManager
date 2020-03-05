@@ -53,6 +53,9 @@ import {
 import { selectLoading } from "./../../redux/async/async.selectors";
 import SmallLoader from "./../loader/SmallLoader";
 import Timer from "../timer/Timer";
+import { selectTimerWarning } from "./../../redux/warning/warning.selectors";
+import { toggleTimerWarning } from "./../../redux/warning/warning.actions";
+import Warning from "./../warning/TimerWarning";
 
 const Navbar = props => {
   const {
@@ -60,6 +63,8 @@ const Navbar = props => {
     loading,
     user,
     todos,
+    timerWarning,
+    toggleTimerWarning,
     currentTask,
     openTimer,
     closeTimer,
@@ -256,7 +261,11 @@ const Navbar = props => {
                 />
               </Switch>
               <TodoForm />
-
+              <Warning
+                timerWarning={timerWarning}
+                toggleTimerWarning={toggleTimerWarning}
+                openTimer={openTimer}
+              />
               <SignUpForm />
               {currentTask ? (
                 <Timer openTimer={timer} closeTimer={closeTimer} />
@@ -280,14 +289,16 @@ const mapStateToProps = createStructuredSelector({
   activeStep: selectStep,
   todos: selectMonthlyTodo,
   timer: selectTimer,
-  currentTask: selectCurrentTask
+  currentTask: selectCurrentTask,
+  timerWarning: selectTimerWarning
 });
 
 const mapDispatchToProps = dispatch => ({
   setStepToZero: () => dispatch(setTodoFormStepToZero()),
   getWeeklyTodo: formattedWeek => dispatch(getWeeklyTodoStart(formattedWeek)),
   openTimer: () => dispatch(openTimer()),
-  closeTimer: () => dispatch(closeTimer())
+  closeTimer: () => dispatch(closeTimer()),
+  toggleTimerWarning: () => dispatch(toggleTimerWarning())
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

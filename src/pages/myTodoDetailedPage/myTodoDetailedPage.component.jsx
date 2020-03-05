@@ -16,7 +16,26 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const MyTodoDetailedPage = ({ onClickStart, open, todo, setOpen, user }) => {
+const MyTodoDetailedPage = ({
+  openTimer,
+  open,
+  toggleTimerWarning,
+  setTodoOnTimer,
+  todo,
+  setOpen,
+  working,
+  user
+}) => {
+  const onClickStart = todo => {
+    if (working) {
+      toggleTimerWarning();
+      setOpen(!open);
+    } else {
+      setTodoOnTimer(todo);
+      openTimer();
+      setOpen(!open);
+    }
+  };
   return (
     <div>
       <Dialog

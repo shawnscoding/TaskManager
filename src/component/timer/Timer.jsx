@@ -35,7 +35,7 @@ class Timer extends Component {
       counter: 0,
       stopped: true,
       started: false,
-      enableFinish: true
+      disableFinish: true
     };
   }
 
@@ -49,6 +49,14 @@ class Timer extends Component {
 
   getHours = () => {
     return Math.floor(this.state.counter / 3600);
+  };
+
+  displayNone = () => {
+    console.log(this.state.counter, "ddd");
+    if (this.state.counter === 0) {
+      return true;
+    }
+    return false;
   };
 
   componentWillUnmount() {}
@@ -78,14 +86,13 @@ class Timer extends Component {
     const { task } = currentTask;
     clearInterval(this.myInterval);
     this.props.stoppedWork();
-    console.log(task, "currentTask");
     task.timeToComplete = this.state.counter;
-    console.log(task);
     storeTimeStart(task);
     this.setState({
       counter: 0,
       started: false,
-      stopped: true
+      stopped: true,
+      disableFinish: true
     });
   };
 
@@ -102,7 +109,7 @@ class Timer extends Component {
       ...this.state,
       started: true,
       stopped: false,
-      enableFinish: false
+      disableFinish: false
     });
   };
 
@@ -119,8 +126,7 @@ class Timer extends Component {
   render() {
     const { openTimer, closeTimer } = this.props;
     const { classes } = this.props;
-    const { started, stopped, enableFinish } = this.state;
-    console.log(this.state);
+    const { started, stopped, disableFinish } = this.state;
     return (
       <Dialog
         open={openTimer}
@@ -148,7 +154,11 @@ class Timer extends Component {
           >
             <Grid item>
               <Typography>
-                {this.getHours()} : {this.getMinutes()} :{this.getSecond()}
+                {this.displayNone() ? null : (
+                  <React.Fragment>
+                    {this.getHours()} : {this.getMinutes()} :{this.getSecond()}
+                  </React.Fragment>
+                )}
               </Typography>
             </Grid>
             <Grid item>
@@ -184,7 +194,7 @@ class Timer extends Component {
                 color="secondary"
                 onClick={this.onClickFinish}
                 variant="contained"
-                disabled={enableFinish}
+                disabled={disableFinish}
               >
                 Finish
               </Button>
