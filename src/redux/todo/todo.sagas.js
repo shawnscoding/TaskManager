@@ -7,7 +7,8 @@ import {
   clearTodoList,
   setTodoFromFirebase,
   setAnotherTodoSuccess,
-  getWeeklyTodoSuccess
+  getWeeklyTodoSuccess,
+  storeTimeToCompleteFinish
 } from "./todo.actions";
 import { createNewTodo } from "./todo.utils";
 import authActionTypes from "../auth/auth.types";
@@ -30,10 +31,8 @@ export function* addTodoToFirebase({ payload }) {
       const snapShot = yield docRef.get();
       yield put(addTodoSuccess({ ...snapShot.data(), id: docRef.id }));
 
-      console.log(snapShot.data().week, "week in saga");
-      const test = { payload: snapShot.data().week };
-      console.log(test);
-      yield getWeeklyTodoFromFb(test);
+      const formattedWeek = { payload: snapShot.data().week };
+      yield getWeeklyTodoFromFb(formattedWeek);
 
       yield put(asyncActionFinish());
       yield put(increaseTodoFormStep());
@@ -44,14 +43,31 @@ export function* addTodoToFirebase({ payload }) {
   }
 }
 
-export function* getWeeklyTodoFromFb({ payload }) {
-  yield put(asyncActionStart());
-
-  const user = yield select(selectCurrentUser);
-  const year = getThisYear();
-  console.log(payload, "week in saga");
-
+export function* setNewTimeToFb({ payload }) {
   try {
+    console.log("payload", payload);
+    yield put(asyncActionStart());
+    let todoDocRef = yield firestore.collection("todo_list").doc(payload.id);
+    yield todoDocRef.update(payload);
+
+    yield put(storeTimeToCompleteFinish(payload));
+
+    yield put(asyncActionFinish());
+  } catch (err) {
+    alert("Sorry,, something went wrong,, try again later");
+
+    console.log(err);
+  }
+}
+
+export function* getWeeklyTodoFromFb({ payload }) {
+  try {
+    yield put(asyncActionStart());
+
+    const user = yield select(selectCurrentUser);
+    const year = getThisYear();
+    console.log(payload, "week in saga");
+
     const listsRef = yield firestore.collection("todo_list");
     const query = yield listsRef
       .where("userId", "==", user.id)
@@ -80,7 +96,6 @@ export function* getWeeklyTodoFromFb({ payload }) {
 export function* checkTodoInFirebase(month) {
   const user = yield select(selectCurrentUser);
   try {
-    console.log("runned!");
     const listsRef = yield firestore.collection("todo_list");
     const query = yield listsRef
       .where("userId", "==", user.id)
@@ -144,6 +159,13 @@ export function* onSetAnotherTodo() {
   yield takeLatest(todoActionTypes.SET_ANOTHER_TODO_START, checkMonthlyTodo);
 }
 
+export function* onStoreTimeToComplete() {
+  yield takeLatest(
+    todoActionTypes.STORE_TIME_TO_COMPLETE_START,
+    setNewTimeToFb
+  );
+}
+
 // compose
 
 export function* todoSagas() {
@@ -152,6 +174,7 @@ export function* todoSagas() {
     call(onGetWeeklyTodo),
     call(onUserSignIn),
     call(onSetAnotherTodo),
-    call(onSignOutStart)
+    call(onSignOutStart),
+    call(onStoreTimeToComplete)
   ]);
 }

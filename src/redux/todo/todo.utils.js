@@ -84,6 +84,13 @@ export const createNewTodo = (form, date, userId) => {
     importance,
     reward = ""
   } = form;
+
+  const mins = Number(minutes) * 60;
+  const hour = Number(hours) * 3600;
+  const timeToComplete = mins + hour;
+
+  console.log(timeToComplete, "hid dd dd");
+
   const month = format(date, "MMM");
   const year = format(date, "yyyy");
   const week = format(date, "ww");
@@ -92,8 +99,7 @@ export const createNewTodo = (form, date, userId) => {
     title,
     description,
     category,
-    hours,
-    minutes,
+    timeToComplete,
     importance,
     reward,
     year,

@@ -5,9 +5,35 @@ import { format } from "date-fns";
 import StarBorderRoundedIcon from "@material-ui/icons/StarBorderRounded";
 import StarRoundedIcon from "@material-ui/icons/StarRounded";
 import MyTodoDetailedPage from "./../../pages/myTodoDetailedPage/myTodoDetailedPage.component";
+import { setTodoOnTimer, openTimer } from "../../redux/todo/todo.actions";
+import { connect } from "react-redux";
+import { getMinutes } from "../../utils/helper";
+import { getHours } from "./../../utils/helper";
+import { selectWorking } from "../../redux/todo/todo.selectors";
 
-const TodoSummary = ({ todo, classes, withCalendar = false }) => {
+import { createStructuredSelector } from "reselect";
+
+const TodoSummary = ({
+  setTodoOnTimer,
+  todo,
+  classes,
+  withCalendar = false,
+  withPriority = false,
+  openTimer,
+  working
+}) => {
   const [open, setOpen] = useState(false);
+
+  const onClickStart = todo => {
+    if (working) {
+      return;
+    }
+    setTodoOnTimer(todo);
+    openTimer();
+  };
+
+  const minutes = getMinutes(todo.timeToComplete);
+  const hours = getHours(todo.timeToComplete);
   return (
     <React.Fragment>
       <SummaryContainer container sm={withCalendar ? 11 : 5} xs={11} item>
@@ -43,15 +69,19 @@ const TodoSummary = ({ todo, classes, withCalendar = false }) => {
           <Grid item>
             <Typography color="primary">{todo.title}</Typography>
             <Typography color="primary">
-              expected to take &nbsp;
-              {todo.hours === " 1"
-                ? todo.hours + " hour"
-                : todo.hours + " hours"}
-              {false
-                ? todo.minutes === "1"
-                  ? todo.minutes + "minute"
-                  : todo.minutes + "minutes"
-                : null}
+              expected &nbsp;
+              {todo.timeToComplete && hours === 0 ? null : hours === 1 ? (
+                <React.Fragment>{hours} hour</React.Fragment>
+              ) : (
+                <React.Fragment>{hours} hours</React.Fragment>
+              )}
+              &nbsp;
+              {todo.timeToComplete && minutes === 0 ? null : minutes === 1 ? (
+                <React.Fragment>{minutes} min</React.Fragment>
+              ) : (
+                <React.Fragment>{minutes} mins</React.Fragment>
+              )}{" "}
+              to complete
             </Typography>
           </Grid>
           <Grid
@@ -63,49 +93,53 @@ const TodoSummary = ({ todo, classes, withCalendar = false }) => {
             item
           >
             <Grid item>
-              {todo.importance === 1 ? (
-                <React.Fragment>
-                  <StarRoundedIcon />
+              {withPriority ? null : (
+                <>
+                  {todo.importance === 1 ? (
+                    <React.Fragment>
+                      <StarRoundedIcon />
 
-                  <StarBorderRoundedIcon />
-                  <StarBorderRoundedIcon />
-                  <StarBorderRoundedIcon />
-                  <StarBorderRoundedIcon />
-                </React.Fragment>
-              ) : todo.importance === 2 ? (
-                <React.Fragment>
-                  <StarRoundedIcon />
-                  <StarRoundedIcon />
-                  <StarBorderRoundedIcon />
-                  <StarBorderRoundedIcon />
-                  <StarBorderRoundedIcon />
-                </React.Fragment>
-              ) : todo.importance === 3 ? (
-                <React.Fragment>
-                  <StarRoundedIcon />
-                  <StarRoundedIcon />
-                  <StarRoundedIcon />
-                  <StarBorderRoundedIcon />
+                      <StarBorderRoundedIcon />
+                      <StarBorderRoundedIcon />
+                      <StarBorderRoundedIcon />
+                      <StarBorderRoundedIcon />
+                    </React.Fragment>
+                  ) : todo.importance === 2 ? (
+                    <React.Fragment>
+                      <StarRoundedIcon />
+                      <StarRoundedIcon />
+                      <StarBorderRoundedIcon />
+                      <StarBorderRoundedIcon />
+                      <StarBorderRoundedIcon />
+                    </React.Fragment>
+                  ) : todo.importance === 3 ? (
+                    <React.Fragment>
+                      <StarRoundedIcon />
+                      <StarRoundedIcon />
+                      <StarRoundedIcon />
+                      <StarBorderRoundedIcon />
 
-                  <StarBorderRoundedIcon />
-                </React.Fragment>
-              ) : todo.importance === 4 ? (
-                <React.Fragment>
-                  <StarRoundedIcon />
-                  <StarRoundedIcon />
-                  <StarRoundedIcon />
-                  <StarRoundedIcon />
-                  <StarBorderRoundedIcon />
-                </React.Fragment>
-              ) : todo.importance === 5 ? (
-                <React.Fragment>
-                  <StarRoundedIcon />
-                  <StarRoundedIcon />
-                  <StarRoundedIcon />
-                  <StarRoundedIcon />
-                  <StarRoundedIcon />
-                </React.Fragment>
-              ) : null}
+                      <StarBorderRoundedIcon />
+                    </React.Fragment>
+                  ) : todo.importance === 4 ? (
+                    <React.Fragment>
+                      <StarRoundedIcon />
+                      <StarRoundedIcon />
+                      <StarRoundedIcon />
+                      <StarRoundedIcon />
+                      <StarBorderRoundedIcon />
+                    </React.Fragment>
+                  ) : todo.importance === 5 ? (
+                    <React.Fragment>
+                      <StarRoundedIcon />
+                      <StarRoundedIcon />
+                      <StarRoundedIcon />
+                      <StarRoundedIcon />
+                      <StarRoundedIcon />
+                    </React.Fragment>
+                  ) : null}
+                </>
+              )}
             </Grid>
             <Grid item>
               <Button
@@ -113,6 +147,7 @@ const TodoSummary = ({ todo, classes, withCalendar = false }) => {
                 color="primary"
                 className={classes.summaryButton}
                 variant="outlined"
+                onClick={() => onClickStart(todo)}
               >
                 start
               </Button>
@@ -128,9 +163,24 @@ const TodoSummary = ({ todo, classes, withCalendar = false }) => {
           </Grid>
         </Grid>
       </SummaryContainer>
-      <MyTodoDetailedPage todo={todo} open={open} setOpen={setOpen} />
+      <MyTodoDetailedPage
+        onClickStart={onClickStart}
+        setTodoOnTimer={setTodoOnTimer}
+        todo={todo}
+        open={open}
+        setOpen={setOpen}
+      />
     </React.Fragment>
   );
 };
 
-export default TodoSummary;
+const mapStateToProps = createStructuredSelector({
+  working: selectWorking
+});
+
+const mapDispatchToProps = dispatch => ({
+  setTodoOnTimer: todo => dispatch(setTodoOnTimer(todo)),
+  openTimer: () => dispatch(openTimer())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoSummary);

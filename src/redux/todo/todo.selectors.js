@@ -11,3 +11,18 @@ export const selectWeeklyTodo = createSelector(
   [selectTodoReducer],
   todoList => todoList.weeklyTodo
 );
+
+export const selectTimer = createSelector(
+  [selectTodoReducer],
+  todoList => todoList.timer
+);
+
+export const selectCurrentTask = createSelector(
+  [selectTodoReducer],
+  todoList => todoList.currentTask
+);
+
+export const selectWorking = createSelector(
+  [selectTodoReducer],
+  todoList => todoList.working
+);

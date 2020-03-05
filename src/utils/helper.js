@@ -58,6 +58,20 @@ export const getPercentageOfCompletedTodo = todos => {
   };
 };
 
+export const getMinutes = seconds => {
+  if (!seconds) {
+    return;
+  }
+  return Math.floor((seconds / 60) % 60);
+};
+
+export const getHours = seconds => {
+  if (!seconds) {
+    return;
+  }
+  return Math.floor(seconds / 3600);
+};
+
 // export const pickUpYearMonthAndDate = date => {
 //   const year = date.toString().slice(11, 15);
 //   const month = date.toString().slice(4, 7);

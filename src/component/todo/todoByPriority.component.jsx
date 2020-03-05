@@ -1,14 +1,13 @@
 import React from "react";
-import { Grid, } from "@material-ui/core";
-import {
-  RoundedBigIcon,
-  BorderRoundedBigIcon,
-} from "./dailyTodo.styles";
+import { Grid } from "@material-ui/core";
+import { RoundedBigIcon, BorderRoundedBigIcon } from "./dailyTodo.styles";
 import TodoSummary from "./todoSummary.component";
 
 const importance = ["5", "4", "3", "2", "1"];
 
 const TodoByPriority = ({ dailyTodo, classes, withCalendar }) => {
+  const withPriority = true;
+
   const getTodosByPriority = () => {
     const initPriorities = importance.reduce(
       (importanceOftodos, importance) => ({
@@ -105,8 +104,13 @@ const TodoByPriority = ({ dailyTodo, classes, withCalendar }) => {
 
             <Grid className={classes.todosContainer} container>
               {todos.map(todo => (
-                         <TodoSummary  key={todo.id} todo={todo} classes={classes} withCalendar={withCalendar}   />
-
+                <TodoSummary
+                  withPriority={withPriority}
+                  key={todo.id}
+                  todo={todo}
+                  classes={classes}
+                  withCalendar={withCalendar}
+                />
               ))}
             </Grid>
           </React.Fragment>

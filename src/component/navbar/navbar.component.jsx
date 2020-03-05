@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AppBar, Avatar, Paper } from "@material-ui/core";
+import { AppBar, Avatar, Paper, Fab } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
@@ -38,20 +38,37 @@ import TodayPage from "../../pages/todayPage/todayPage.component";
 import { format } from "date-fns";
 import CalendarPage from "./../../pages/calendarPage/calendarPage.component";
 import LoadingComponent from "./../loader/loadingCompoent";
-import { selectMonthlyTodo } from "./../../redux/todo/todo.selectors";
+import {
+  selectMonthlyTodo,
+  selectTimer,
+  selectCurrentTask
+} from "./../../redux/todo/todo.selectors";
 import ThisWeekPage from "../../pages/thisWeekPage/thisWeekPage.component";
 import { getThisWeek } from "../../utils/helper";
-import { getWeeklyTodoStart } from "../../redux/todo/todo.actions";
+import {
+  getWeeklyTodoStart,
+  openTimer,
+  closeTimer
+} from "../../redux/todo/todo.actions";
 import { selectLoading } from "./../../redux/async/async.selectors";
 import SmallLoader from "./../loader/SmallLoader";
-import StartTaskPage from "./../../pages/startTaskPage/StartTaskPage";
+import Timer from "../timer/Timer";
 
 const Navbar = props => {
-  const { container, loading, user, todos, getWeeklyTodo } = props;
+  const {
+    container,
+    loading,
+    user,
+    todos,
+    currentTask,
+    openTimer,
+    closeTimer,
+    timer,
+    getWeeklyTodo
+  } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
-  console.log("object", user);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -97,16 +114,6 @@ const Navbar = props => {
             <PlaylistAddCheckIcon />
           </ListItemIcon>
           <ListItemText primary="Calendar" />
-        </ListItem>
-
-        <ListItem
-          button
-          onClick={() => props.history.push(`/startTask/${user.id}`)}
-        >
-          <ListItemIcon>
-            <PlayCircleOutlineIcon />
-          </ListItemIcon>
-          <ListItemText primary="Start Task" />
         </ListItem>
 
         <ListItem button>
@@ -234,11 +241,7 @@ const Navbar = props => {
                   path="/start"
                   render={() => (user ? <TodoPage /> : <StartPage />)}
                 />
-                <Route
-                  exact
-                  path={`/startTask/:userId/`}
-                  component={StartTaskPage}
-                />
+
                 <Route
                   exact
                   path="/todo/thisWeek/:thisWeek"
@@ -255,6 +258,12 @@ const Navbar = props => {
               <TodoForm />
 
               <SignUpForm />
+              {currentTask ? (
+                <Timer openTimer={timer} closeTimer={closeTimer} />
+              ) : null}
+              <Fab className={classes.timerContainer} onClick={openTimer}>
+                hello
+              </Fab>
             </React.Fragment>
           ) : (
             <SmallLoader />
@@ -269,12 +278,16 @@ const mapStateToProps = createStructuredSelector({
   loading: selectLoading,
   user: selectCurrentUser,
   activeStep: selectStep,
-  todos: selectMonthlyTodo
+  todos: selectMonthlyTodo,
+  timer: selectTimer,
+  currentTask: selectCurrentTask
 });
 
 const mapDispatchToProps = dispatch => ({
   setStepToZero: () => dispatch(setTodoFormStepToZero()),
-  getWeeklyTodo: formattedWeek => dispatch(getWeeklyTodoStart(formattedWeek))
+  getWeeklyTodo: formattedWeek => dispatch(getWeeklyTodoStart(formattedWeek)),
+  openTimer: () => dispatch(openTimer()),
+  closeTimer: () => dispatch(closeTimer())
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

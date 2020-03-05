@@ -29,13 +29,6 @@ const ThisWeekPage = ({ getWeeklyTodo, weeklyTodo, match, location }) => {
         setTodo(weeklyTodo);
       }
     }
-    return () => {
-      if (location.pathname.indexOf("th") !== 6) {
-        const week = format(new Date(), "ww");
-        console.log(match, "");
-        console.log(location, "");
-      }
-    };
   }, [weeklyTodo, week]);
 
   const startDay = startOfWeek(week);

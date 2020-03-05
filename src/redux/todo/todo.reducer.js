@@ -4,11 +4,23 @@ import { checkIfTodoExist, isTodoThisWeek } from "./todo.utils";
 const INITIAL_STATE = {
   monthlyTodo: [],
   weeklyTodo: [],
-  dailyTodo: []
+  currentTask: null,
+  timer: false,
+  working: false
 };
 
 const todoReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case todoActionTypes.OPEN_TIMER:
+      return {
+        ...state,
+        timer: true
+      };
+    case todoActionTypes.CLOSE_TIMER:
+      return {
+        ...state,
+        timer: false
+      };
     case todoActionTypes.ADD_TODO_SUCCESS:
       return {
         ...state,
@@ -39,10 +51,25 @@ const todoReducer = (state = INITIAL_STATE, action) => {
         ...state,
         monthlyTodo: checkIfTodoExist(action.payload)
       };
-    case todoActionTypes.SET_TODO_ON_START_TASK:
+    case todoActionTypes.SET_TODO_ON_TIMTER:
       return {
         ...state,
-        dailyTodo: [action.payload]
+        currentTask: {
+          timeToComplete: action.payload.timeToComplete,
+          task: action.payload
+        },
+        working: false
+      };
+
+    case todoActionTypes.STARTED_WORKING:
+      return {
+        ...state,
+        working: true
+      };
+    case todoActionTypes.STORE_TIME_TO_COMPLETE_FINISH:
+      return {
+        ...state,
+        working: false
       };
     default:
       return state;

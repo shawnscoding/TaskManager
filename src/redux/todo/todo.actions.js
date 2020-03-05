@@ -39,8 +39,8 @@ export const setAnotherTodoSuccess = todoList => ({
   payload: todoList
 });
 
-export const setTodoOnStartTask = todo => ({
-  type: todoActionTypes.SET_TODO_ON_START_TASK,
+export const setTodoOnTimer = todo => ({
+  type: todoActionTypes.SET_TODO_ON_TIMTER,
   payload: todo
 });
 
@@ -52,4 +52,30 @@ export const getWeeklyTodoStart = week => ({
 export const getWeeklyTodoSuccess = todoList => ({
   type: todoActionTypes.GET_WEEKLY_TODO_SUCCESS,
   payload: todoList
+});
+
+export const openTimer = () => ({
+  type: todoActionTypes.OPEN_TIMER
+});
+
+export const closeTimer = () => ({
+  type: todoActionTypes.CLOSE_TIMER
+});
+
+export const stoppedWork = () => ({
+  type: todoActionTypes.STOPPED_WORKING
+});
+
+export const startedWork = () => ({
+  type: todoActionTypes.STARTED_WORKING
+});
+
+export const storeTimeToCompleteStart = task => ({
+  type: todoActionTypes.STORE_TIME_TO_COMPLETE_START,
+  payload: task
+});
+
+export const storeTimeToCompleteFinish = task => ({
+  type: todoActionTypes.STORE_TIME_TO_COMPLETE_FINISH,
+  payload: task
 });

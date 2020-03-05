@@ -10,23 +10,13 @@ import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { selectCurrentUser } from "../../redux/auth/auth.selectors";
-import { setTodoOnStartTask } from "./../../redux/todo/todo.actions";
+import { openTimer } from "../../redux/todo/todo.actions";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const MyTodoDetailedPage = ({
-  setTodoOnStartTask,
-  open,
-  todo,
-  setOpen,
-  user
-}) => {
-  const clickStart = () => {
-    setTodoOnStartTask(todo);
-    console.log("object", todo);
-  };
+const MyTodoDetailedPage = ({ onClickStart, open, todo, setOpen, user }) => {
   return (
     <div>
       <Dialog
@@ -69,7 +59,7 @@ const MyTodoDetailedPage = ({
         </DialogContent>
         <DialogActions>
           <Button oolor="primary">Edit</Button>
-          <Button onClick={clickStart} color="primary">
+          <Button onClick={() => onClickStart(todo)} color="primary">
             Start
           </Button>
         </DialogActions>
@@ -82,10 +72,4 @@ const mapStateToProps = createStructuredSelector({
   user: selectCurrentUser
 });
 
-const mapDispatchToProps = dispatch => ({
-  setTodoOnStartTask: todo => dispatch(setTodoOnStartTask(todo))
-});
-
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(MyTodoDetailedPage)
-);
+export default withRouter(connect(mapStateToProps)(MyTodoDetailedPage));

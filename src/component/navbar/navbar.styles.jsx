@@ -52,5 +52,12 @@ export const useStyles = makeStyles(theme => ({
   },
   paper: {
     height: "81vh"
+  },
+  timerContainer: {
+    position: "fixed",
+    bottom: "11rem",
+    right: "5rem",
+    width: "4rem",
+    height: "4rem"
   }
 }));
