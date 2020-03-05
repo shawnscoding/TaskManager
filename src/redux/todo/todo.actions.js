@@ -39,9 +39,9 @@ export const setAnotherTodoSuccess = todoList => ({
   payload: todoList
 });
 
-export const setTodoOnRouting = month => ({
-  type: todoActionTypes.SET_TODO_ON_ROUTING,
-  payload: month
+export const setTodoOnStartTask = todo => ({
+  type: todoActionTypes.SET_TODO_ON_START_TASK,
+  payload: todo
 });
 
 export const getWeeklyTodoStart = week => ({

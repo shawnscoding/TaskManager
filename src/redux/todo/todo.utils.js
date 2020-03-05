@@ -77,7 +77,7 @@ export const categories = [
 export const createNewTodo = (form, date, userId) => {
   const {
     title,
-    discription,
+    description,
     category,
     hours,
     minutes,
@@ -90,7 +90,7 @@ export const createNewTodo = (form, date, userId) => {
   return {
     userId,
     title,
-    discription,
+    description,
     category,
     hours,
     minutes,

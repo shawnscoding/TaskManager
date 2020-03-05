@@ -1,11 +1,10 @@
 import React from "react";
 import { CircularProgress, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { ToolbarHeight } from "../navbar/navbar.styles";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    height: `calc(100% - ${ToolbarHeight}rem)`
+    height: `calc(100%)`
   }
 }));
 

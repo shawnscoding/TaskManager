@@ -3,7 +3,8 @@ import { checkIfTodoExist, isTodoThisWeek } from "./todo.utils";
 
 const INITIAL_STATE = {
   monthlyTodo: [],
-  weeklyTodo: []
+  weeklyTodo: [],
+  dailyTodo: []
 };
 
 const todoReducer = (state = INITIAL_STATE, action) => {
@@ -37,6 +38,11 @@ const todoReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         monthlyTodo: checkIfTodoExist(action.payload)
+      };
+    case todoActionTypes.SET_TODO_ON_START_TASK:
+      return {
+        ...state,
+        dailyTodo: [action.payload]
       };
     default:
       return state;

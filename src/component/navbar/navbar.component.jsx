@@ -43,12 +43,15 @@ import ThisWeekPage from "../../pages/thisWeekPage/thisWeekPage.component";
 import { getThisWeek } from "../../utils/helper";
 import { getWeeklyTodoStart } from "../../redux/todo/todo.actions";
 import { selectLoading } from "./../../redux/async/async.selectors";
+import SmallLoader from "./../loader/SmallLoader";
+import StartTaskPage from "./../../pages/startTaskPage/StartTaskPage";
 
 const Navbar = props => {
-  const { container, loading, currentUser, todos, getWeeklyTodo } = props;
+  const { container, loading, user, todos, getWeeklyTodo } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
+  console.log("object", user);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -96,7 +99,10 @@ const Navbar = props => {
           <ListItemText primary="Calendar" />
         </ListItem>
 
-        <ListItem button onClick={() => props.history.push("/startTask")}>
+        <ListItem
+          button
+          onClick={() => props.history.push(`/startTask/${user.id}`)}
+        >
           <ListItemIcon>
             <PlayCircleOutlineIcon />
           </ListItemIcon>
@@ -163,7 +169,7 @@ const Navbar = props => {
             <MenuIcon />
           </IconButton>
 
-          {currentUser ? (
+          {user ? (
             <Typography
               style={{
                 fontSize: "1.1rem"
@@ -171,7 +177,7 @@ const Navbar = props => {
               variant="h6"
               noWrap
             >
-              Welcome ! {currentUser.displayName}
+              Welcome ! {user.displayName}
             </Typography>
           ) : (
             <Typography
@@ -184,7 +190,7 @@ const Navbar = props => {
               Welcome !
             </Typography>
           )}
-          {currentUser ? <ProfileIcon classes={classes} /> : <SignInForm />}
+          {user ? <ProfileIcon classes={classes} /> : <SignInForm />}
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
@@ -220,15 +226,19 @@ const Navbar = props => {
       </nav>
       <Paper className={classes.content}>
         <React.Fragment>
-          {currentUser && (
+          {user ? (
             <React.Fragment>
               <Switch>
                 <Route
                   exact
                   path="/start"
-                  render={() => (currentUser ? <TodoPage /> : <StartPage />)}
+                  render={() => (user ? <TodoPage /> : <StartPage />)}
                 />
-                <Route exact path="/startTask" component={StartPage} />
+                <Route
+                  exact
+                  path={`/startTask/:userId/`}
+                  component={StartTaskPage}
+                />
                 <Route
                   exact
                   path="/todo/thisWeek/:thisWeek"
@@ -246,6 +256,8 @@ const Navbar = props => {
 
               <SignUpForm />
             </React.Fragment>
+          ) : (
+            <SmallLoader />
           )}
         </React.Fragment>
       </Paper>
@@ -255,7 +267,7 @@ const Navbar = props => {
 
 const mapStateToProps = createStructuredSelector({
   loading: selectLoading,
-  currentUser: selectCurrentUser,
+  user: selectCurrentUser,
   activeStep: selectStep,
   todos: selectMonthlyTodo
 });

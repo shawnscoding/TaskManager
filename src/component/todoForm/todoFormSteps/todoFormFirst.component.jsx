@@ -48,7 +48,7 @@ const TodoFormFirst = ({ classes, form, onChange }) => {
         type="text"
         value={form.discription}
         label="Description"
-        onChange={onChange("discription")}
+        onChange={onChange("description")}
         fullWidth
         multiline
         rows="3"

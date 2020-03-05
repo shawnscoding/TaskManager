@@ -205,7 +205,9 @@ export const useStyles = makeStyles(theme => ({
   headerText: {
     color: theme.palette.primary.light
   },
-
+  summaryButton: {
+    width: "2.5rem"
+  },
   tdPanelContainer: {
     padding: "9.5rem 1.5rem 0 1.5rem"
   },

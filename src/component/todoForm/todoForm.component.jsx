@@ -67,7 +67,7 @@ const TodoForm = ({
   const [date, setDate] = useState(new Date());
   const [form, setForm] = useState({
     title: "",
-    discription: "",
+    description: "",
     category: "",
     hours: "",
     minutes: "0",
@@ -108,7 +108,7 @@ const TodoForm = ({
   const onUserLeave = () => {
     setForm({
       title: "",
-      discription: "",
+      description: "",
       category: "",
       hours: "",
       minutes: "",
@@ -122,7 +122,6 @@ const TodoForm = ({
     if (form.reward === "") {
       delete form.reward;
     }
-    console.log(Object.values(form), "form");
     const formArray = Object.values(form);
 
     for (let i = 0; i < formArray.length; i++) {
