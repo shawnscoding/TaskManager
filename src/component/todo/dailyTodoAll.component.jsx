@@ -19,7 +19,7 @@ const DailyTodoAll = ({ dailyTodo, classes, withCalendar }) => {
   };
 
   return (
-    <React.Fragment>
+    <div>
       {dailyTodo.length !== 0 && typeof dailyTodo[0].date !== typeof "" ? (
         allHours.map((hour, index) => (
           <Grid className={classes.todoAllContainer} key={index} container>
@@ -127,7 +127,7 @@ const DailyTodoAll = ({ dailyTodo, classes, withCalendar }) => {
       ) : (
         <div>no todo for you</div>
       )}
-    </React.Fragment>
+    </div>
   );
 };
 

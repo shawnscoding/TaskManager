@@ -23,8 +23,8 @@ export const SummaryContainer = styled(Grid)`
   margin-right: 3rem;
   border-radius: 10px;
   background-color: #fff;
-  border: 4px solid #f5f5f5;
-  box-shadow: 0 0 10px 10px #f5f5f5;
+  border: 1px solid #eee;
+  box-shadow: 0 0 3px 3px #eee;
 `;
 
 export const WorkTitle = styled(Typography)`
@@ -153,7 +153,7 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: "blue"
   },
   root: {
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: "#fafafa"
   },
   tdAppBar: {
     top: "9.4rem",
@@ -183,7 +183,7 @@ export const useStyles = makeStyles(theme => ({
     top: "3.3rem",
     left: `${drawerWidth}px`,
     width: `calc(100% - ${drawerWidth}px)`,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
     padding: "2rem 3rem 0.5rem 3rem"
   },
   todoAllContainer: {

@@ -56,6 +56,7 @@ import Timer from "../timer/Timer";
 import { selectTimerWarning } from "./../../redux/warning/warning.selectors";
 import { toggleTimerWarning } from "./../../redux/warning/warning.actions";
 import Warning from "./../warning/TimerWarning";
+import HistoryPage from "./../../pages/historyPage/HistoryPage";
 
 const Navbar = props => {
   const {
@@ -90,80 +91,85 @@ const Navbar = props => {
   };
 
   const drawer = (
-    <div>
-      <div className={classes.toolbar}>
+    <div className={classes.sidebar}>
+      <div className={classes.sidebarLogoBox}>
         <Avatar alt="logo" src="/assets/logo.png" className={classes.logo} />
         <Typography variant="h6" style={{ margin: "1vw 0 0 4vw" }}>
           My Motivator
         </Typography>
       </div>
       <Divider />
-      <List>
-        <ListItem button>
-          <ListItemIcon>
-            <PlayCircleOutlineIcon />
-          </ListItemIcon>
-          <ListItemText
+      <div>
+        <List>
+          <ListItem
             onClick={() => props.history.push(`/todo/dailyTodo/${today}`)}
-            primary="Today"
-          />
-        </ListItem>
-        <ListItem onClick={onClickThisWeek} button>
-          <ListItemIcon>
-            <PlaylistAddCheckIcon />
-          </ListItemIcon>
-          <ListItemText primary="This week" />
-        </ListItem>
-        <ListItem onClick={() => props.history.push("/todo/calendar")} button>
-          <ListItemIcon>
-            <PlaylistAddCheckIcon />
-          </ListItemIcon>
-          <ListItemText primary="Calendar" />
-        </ListItem>
+            button
+          >
+            <ListItemIcon>
+              <PlayCircleOutlineIcon className={classes.icon} />
+            </ListItemIcon>
+            <Typography>Today</Typography>
+          </ListItem>
+          <ListItem onClick={onClickThisWeek} button>
+            <ListItemIcon>
+              <PlaylistAddCheckIcon className={classes.icon} />
+            </ListItemIcon>
+            <Typography>This week</Typography>
+          </ListItem>
+          <ListItem onClick={() => props.history.push("/todo/calendar")} button>
+            <ListItemIcon>
+              <PlaylistAddCheckIcon className={classes.icon} />
+            </ListItemIcon>
+            <Typography>Calendar</Typography>
+          </ListItem>
 
-        <ListItem button>
-          <ListItemIcon>
-            <HistoryIcon />
-          </ListItemIcon>
-          <ListItemText primary="History" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <ForumIcon />
-          </ListItemIcon>
-          <ListItemText primary="Chat" />
-        </ListItem>
-      </List>
-      <Divider />
-      <List>
-        <ListItem button>
-          <ListItemIcon>
-            <PeopleOutlineIcon />
-          </ListItemIcon>
-          <ListItemText primary="People" />
-        </ListItem>
-      </List>
-      <Divider />
-      <List>
-        <ListItem button>
-          <ListItemIcon>
-            <SettingsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Setting" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <InfoIcon />
-          </ListItemIcon>
-          <ListItemText primary="About Us" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <TimeToLeaveIcon color="secondary" />
-          </ListItemIcon>
-          <ListItemText primary="Log Out" />
-        </ListItem>
-      </List>
+          <ListItem
+            onClick={() => props.history.push(`/history/${user.id}`)}
+            button
+          >
+            <ListItemIcon>
+              <HistoryIcon className={classes.icon} />
+            </ListItemIcon>
+            <Typography>History</Typography>
+          </ListItem>
+          {/* <ListItem button>
+            <ListItemIcon>
+              <ForumIcon className={classes.icon} />
+            </ListItemIcon>
+            <ListItemText primary="Chat" />
+          </ListItem> */}
+        </List>
+        <Divider />
+        <List>
+          {/* <ListItem button>
+            <ListItemIcon>
+              <PeopleOutlineIcon className={classes.icon} />
+            </ListItemIcon>
+            <ListItemText primary="People" />
+          </ListItem>
+        </List>
+        <Divider />
+        <List>
+          <ListItem button>
+            <ListItemIcon>
+              <SettingsIcon className={classes.icon} />
+            </ListItemIcon>
+            <ListItemText primary="Setting" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <InfoIcon className={classes.icon} />
+            </ListItemIcon>
+            <ListItemText primary="About Us" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <TimeToLeaveIcon className={classes.icon} color="secondary" />
+            </ListItemIcon>
+            <ListItemText primary="Log Out" />
+          </ListItem> */}
+        </List>
+      </div>
     </div>
   );
   return (
@@ -258,6 +264,11 @@ const Navbar = props => {
                   exact
                   path="/todo/dailyTodo/:monthAndDate"
                   component={TodayPage}
+                />
+                <Route
+                  exact
+                  path={`/history/:userId`}
+                  component={HistoryPage}
                 />
               </Switch>
               <TodoForm />

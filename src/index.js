@@ -13,6 +13,9 @@ import store from "./redux/store";
 
 const theme = createMuiTheme({
   palette: {
+    common: {
+      black: "#2f323e"
+    },
     primary: {
       main: "#3949ab"
     },
@@ -21,7 +24,7 @@ const theme = createMuiTheme({
     },
     background: {
       papar: "#fff",
-      default: "f5f5f5"
+      default: "#fafafa"
     }
   },
   typography: {

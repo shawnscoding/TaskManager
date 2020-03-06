@@ -276,7 +276,12 @@ const TodoDashBoard = ({
             withCalendar ? classes.caPanelContainer : classes.tdPanelContainer
           }
         >
-          <TabPanel value={value} index={0} dir={theme.direction}>
+          <TabPanel
+            style={{ backgroundColor: "#fff", marginTop: "1.5rem" }}
+            value={value}
+            index={0}
+            dir={theme.direction}
+          >
             <DailyTodoAll
               withCalendar={withCalendar}
               classes={classes}

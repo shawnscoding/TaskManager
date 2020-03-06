@@ -12,7 +12,7 @@ export const HeaderDay = styled(Grid)`
 export const useStyles = makeStyles(theme => ({
   header: {
     padding: "0.8rem 0",
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
     position: "fixed",
     top: "3.3rem",
     zIndex: "100",

@@ -27,8 +27,23 @@ export const useStyles = makeStyles(theme => ({
       display: "none"
     }
   },
+  sidebar: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.background.paper,
+    height: "100%"
+  },
+  icon: {
+    color: "#fff"
+  },
+  sidebarLogoBox: {
+    minHeight: `${ToolbarHeight}rem`,
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.background.paper
+  },
   toolbar: {
-    minHeight: `${ToolbarHeight}rem`
+    minHeight: `${ToolbarHeight}rem`,
+    backgroundColor: theme.palette.background.paper,
+    color: theme.palette.common.black
   },
   drawerPaper: {
     width: drawerWidth
@@ -36,7 +51,8 @@ export const useStyles = makeStyles(theme => ({
   content: {
     paddingTop: "3.3rem",
     flexGrow: 1,
-    height: "96vh"
+    backgroundColor: theme.palette.background.default,
+    height: "100vh"
   },
   logo: {
     width: 40,
