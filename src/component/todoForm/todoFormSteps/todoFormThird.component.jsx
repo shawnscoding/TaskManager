@@ -25,8 +25,7 @@ const TodoFormThird = ({ onChange, form, onRatingChange, classes }) => {
           varient="subtitle1"
           component="legend"
         >
-          Give yourself a small reward when you have completed. It will help you
-          to stay motivated :) (Obtional)
+          You can set a reward for yourself if you want :) (Obtional)
         </Typography>
         <TextField
           variant="outlined"

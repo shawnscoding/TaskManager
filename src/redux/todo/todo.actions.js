@@ -70,12 +70,12 @@ export const startedWork = () => ({
   type: todoActionTypes.STARTED_WORKING
 });
 
-export const storeTimeToCompleteStart = task => ({
-  type: todoActionTypes.STORE_TIME_TO_COMPLETE_START,
+export const storeUpdatedTodoStart = task => ({
+  type: todoActionTypes.STORE_UPDATED_TODO_START,
   payload: task
 });
 
-export const storeTimeToCompleteFinish = task => ({
-  type: todoActionTypes.STORE_TIME_TO_COMPLETE_FINISH,
+export const storeUpdatedTodoFinish = task => ({
+  type: todoActionTypes.STORE_UPDATED_TODO_FINISH,
   payload: task
 });

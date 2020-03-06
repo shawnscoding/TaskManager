@@ -17,7 +17,7 @@ import { createStructuredSelector } from "reselect";
 import {
   startedWork,
   stoppedWork,
-  storeTimeToCompleteStart
+  storeUpdatedTodoStart
 } from "./../../redux/todo/todo.actions";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -72,25 +72,42 @@ class Timer extends Component {
   }
 
   componentDidUpdate(prev) {
-    const { currentTask } = this.props;
+    const { currentTask, storeUpdatedTodo } = this.props;
+    const { task } = currentTask;
     if (currentTask.timeToComplete !== prev.currentTask.timeToComplete) {
       this.setState({
         ...this.state,
-        counter: currentTask.timeToComplete
+        counter: currentTask.timeToComplete,
+        started: false
+      });
+    }
+    console.log(this.state.counter);
+    if (this.state.counter === 1) {
+      task.timeToComplete = this.state.counter;
+      task.completed = true;
+      console.log("task", task);
+      clearInterval(this.myInterval);
+      storeUpdatedTodo(task);
+      console.log(this.state.counter, "succeed");
+      this.setState({
+        counter: 0,
+        started: true,
+        stopped: true,
+        disableFinish: true
       });
     }
   }
 
   onClickFinish = () => {
-    const { storeTimeStart, currentTask } = this.props;
+    const { storeUpdatedTodo, currentTask } = this.props;
     const { task } = currentTask;
     clearInterval(this.myInterval);
     this.props.stoppedWork();
     task.timeToComplete = this.state.counter;
-    storeTimeStart(task);
+    storeUpdatedTodo(task);
     this.setState({
       counter: 0,
-      started: false,
+      started: true,
       stopped: true,
       disableFinish: true
     });
@@ -153,13 +170,13 @@ class Timer extends Component {
             direction="column"
           >
             <Grid item>
-              <Typography>
-                {this.displayNone() ? null : (
-                  <React.Fragment>
-                    {this.getHours()} : {this.getMinutes()} :{this.getSecond()}
-                  </React.Fragment>
-                )}
-              </Typography>
+              {this.displayNone() ? (
+                <Typography>Set Next task</Typography>
+              ) : (
+                <Typography>
+                  {this.getHours()} : {this.getMinutes()} :{this.getSecond()}
+                </Typography>
+              )}
             </Grid>
             <Grid item>
               <CircularProgress
@@ -213,7 +230,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
   startedWork: () => dispatch(startedWork()),
   stoppedWork: () => dispatch(stoppedWork()),
-  storeTimeStart: todo => dispatch(storeTimeToCompleteStart(todo))
+  storeUpdatedTodo: todo => dispatch(storeUpdatedTodoStart(todo))
 });
 
 export default withStyles(styles)(

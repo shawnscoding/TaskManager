@@ -119,13 +119,19 @@ const TodoDashBoard = ({
             </Grid>
             <Grid xs={8} container direction="column" justify="center" item>
               <Grid item>
-                {formattedDate.month} &nbsp;
-                {formattedDate.startDay} ~ &nbsp; {formattedDate.endDay}
+                <Typography>
+                  {formattedDate.month} &nbsp;
+                  {formattedDate.startDay} ~ &nbsp; {formattedDate.endDay}
+                </Typography>
               </Grid>
-              <Grid item>Completed Tasks </Grid>
               <Grid item>
-                {getPercentageOfCompletedTodo(dailyTodo).completedTodo.length} /{" "}
-                {dailyTodo.length}{" "}
+                <Typography>Completed Tasks </Typography>
+              </Grid>
+              <Grid item>
+                <Typography>
+                  {getPercentageOfCompletedTodo(dailyTodo).completedTodo.length}{" "}
+                  / {dailyTodo.length}{" "}
+                </Typography>
               </Grid>
               <Grid item>
                 <Button

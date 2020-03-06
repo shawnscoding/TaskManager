@@ -66,9 +66,10 @@ const todoReducer = (state = INITIAL_STATE, action) => {
         ...state,
         working: true
       };
-    case todoActionTypes.STORE_TIME_TO_COMPLETE_FINISH:
+    case todoActionTypes.STORE_UPDATED_TODO_FINISH:
       return {
         ...state,
+
         working: false
       };
     default:

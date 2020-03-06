@@ -8,7 +8,7 @@ import {
   setTodoFromFirebase,
   setAnotherTodoSuccess,
   getWeeklyTodoSuccess,
-  storeTimeToCompleteFinish
+  storeUpdatedTodoFinish
 } from "./todo.actions";
 import { createNewTodo } from "./todo.utils";
 import authActionTypes from "../auth/auth.types";
@@ -43,14 +43,13 @@ export function* addTodoToFirebase({ payload }) {
   }
 }
 
-export function* setNewTimeToFb({ payload }) {
+export function* updateTodoInFb({ payload }) {
   try {
-    console.log("payload", payload);
     yield put(asyncActionStart());
     let todoDocRef = yield firestore.collection("todo_list").doc(payload.id);
     yield todoDocRef.update(payload);
 
-    yield put(storeTimeToCompleteFinish(payload));
+    yield put(storeUpdatedTodoFinish(payload));
 
     yield put(asyncActionFinish());
   } catch (err) {
@@ -160,10 +159,7 @@ export function* onSetAnotherTodo() {
 }
 
 export function* onStoreTimeToComplete() {
-  yield takeLatest(
-    todoActionTypes.STORE_TIME_TO_COMPLETE_START,
-    setNewTimeToFb
-  );
+  yield takeLatest(todoActionTypes.STORE_UPDATED_TODO_START, updateTodoInFb);
 }
 
 // compose

@@ -70,21 +70,31 @@ const TodoSummary = ({
         >
           <Grid item>
             <Typography color="primary">{todo.title}</Typography>
-            <Typography color="primary">
-              expected &nbsp;
-              {todo.timeToComplete && hours === 0 ? null : hours === 1 ? (
-                <React.Fragment>{hours} hour</React.Fragment>
-              ) : (
-                <React.Fragment>{hours} hours</React.Fragment>
-              )}
-              &nbsp;
-              {todo.timeToComplete && minutes === 0 ? null : minutes === 1 ? (
-                <React.Fragment>{minutes} min</React.Fragment>
-              ) : (
-                <React.Fragment>{minutes} mins</React.Fragment>
-              )}{" "}
-              to complete
-            </Typography>
+            {todo.timeToComplete < 60 ? null : (
+              <React.Fragment>
+                <Typography color="primary">
+                  expected &nbsp;
+                  {todo.timeToComplete && hours === 0 ? null : hours === 1 ? (
+                    <React.Fragment>{hours} hour</React.Fragment>
+                  ) : (
+                    <React.Fragment>{hours} hours</React.Fragment>
+                  )}
+                  &nbsp;
+                  {todo.timeToComplete && minutes === 0 ? null : minutes ===
+                    1 ? (
+                    <React.Fragment>{minutes} min</React.Fragment>
+                  ) : (
+                    <React.Fragment>{minutes} mins</React.Fragment>
+                  )}{" "}
+                  to complete
+                </Typography>
+              </React.Fragment>
+            )}
+            {todo.timeToComplete < 60 && todo.timeToComplete !== 1 ? (
+              <Typography color="primary">
+                you've got Only 1 min left !
+              </Typography>
+            ) : null}
           </Grid>
           <Grid
             direction="row"

@@ -3,7 +3,7 @@ import { format } from "date-fns";
 export const hoursArray = [];
 export const minutesArray = [];
 
-for (let i = 1; i < 11; i++) {
+for (let i = 0; i < 11; i++) {
   hoursArray.push(`${i}`);
 }
 

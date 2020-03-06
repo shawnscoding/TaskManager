@@ -28,7 +28,8 @@ const theme = createMuiTheme({
     }
   },
   typography: {
-    fontSize: 14,
+    fontSize: 10,
+    htmlFontSize: 10,
     fontFamily: "'Google Sans','Noto Sans Myanmar UI',arial,sans-serif"
   }
 });
