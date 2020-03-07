@@ -295,7 +295,9 @@ export const useStyles = makeStyles(theme => ({
     width: "2.5rem"
   },
   tdPanelContainer: {
-    padding: "9.5rem 1.5rem 0 1.5rem"
+    boxSizing: "border-box",
+
+    margin: "13rem 1.5rem 0 1.5rem"
   },
   twPanelContainer: {
     padding: "13rem  1.5rem 0 1.5rem "

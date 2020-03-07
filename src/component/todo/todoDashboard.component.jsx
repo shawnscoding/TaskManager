@@ -26,6 +26,8 @@ import SmallLoader from "./../loader/SmallLoader";
 import { connect } from "react-redux";
 import { selectLoading } from "./../../redux/async/async.selectors";
 import { createStructuredSelector } from "reselect";
+import Completion from "./../completion/Completion";
+import DailyTodoHeader from "../dailyTodoHeader/dailyTodoHeader.component";
 
 const TabPanel = props => {
   const { children, value, index, ...other } = props;
@@ -62,9 +64,12 @@ const TodoDashBoard = ({
   dailyTodo,
   handleNextWeek,
   loading,
+  withToday = false,
   handlePreWeek,
   withCalendar = false,
-  formattedDate = false
+  formattedDate = false,
+  onDayClick = false,
+  monthAndDate = false
 }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -230,7 +235,105 @@ const TodoDashBoard = ({
       </div>
     );
   }
+  if (withToday) {
+    if (loading) return <SmallLoader />;
+    return (
+      <div className={classes.root}>
+        <Grid
+          justify="flex-end"
+          className={classes.twAppBarContainer}
+          container
+        >
+          <Grid xs={5} item container>
+            <Completion classes={classes} dailyTodo={dailyTodo} />
+          </Grid>
+          <Grid xs={7} container direction="column" justify="flex-end" item>
+            <DailyTodoHeader
+              dailyTodo={dailyTodo}
+              monthAndDate={monthAndDate}
+              onDayClick={onDayClick}
+            />
+            <AppBar className={classes.twAppBar} position="static">
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                indicatorColor="primary"
+                textColor="primary"
+                variant="fullWidth"
+                aria-label="full width tabs example"
+              >
+                <Tab
+                  style={withCalendar ? { minWidth: "8rem" } : null}
+                  label="ALL"
+                  {...a11yProps(0)}
+                  disabled={beforeRenderTodo(dailyTodo) === false}
+                />
+                <Tab
+                  style={withCalendar ? { minWidth: "8rem" } : null}
+                  label="Category"
+                  {...a11yProps(1)}
+                  disabled={beforeRenderTodo(dailyTodo) === false}
+                />
+                <Tab
+                  style={withCalendar ? { minWidth: "8rem" } : null}
+                  label="Priority"
+                  {...a11yProps(2)}
+                  disabled={beforeRenderTodo(dailyTodo) === false}
+                />
+                <Tab
+                  style={withCalendar ? { minWidth: "8rem" } : null}
+                  label="Completed"
+                  {...a11yProps(3)}
+                  disabled={beforeRenderTodo(dailyTodo) === false}
+                />
+              </Tabs>
+            </AppBar>
+          </Grid>
+        </Grid>
 
+        {beforeRenderTodo(dailyTodo) ? (
+          <SwipeableViews
+            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+            index={value}
+            onChangeIndex={handleChangeIndex}
+            className={classes.tdPanelContainer}
+          >
+            <TabPanel
+              style={{ backgroundColor: "#fff", marginTop: "1.5rem" }}
+              value={value}
+              index={0}
+              dir={theme.direction}
+            >
+              <DailyTodoAll classes={classes} dailyTodo={dailyTodo} />
+            </TabPanel>
+            <TabPanel value={value} index={1} dir={theme.direction}>
+              <TodoByCategory classes={classes} dailyTodo={dailyTodo} />
+            </TabPanel>
+            <TabPanel value={value} index={2} dir={theme.direction}>
+              <TodoByPriority dailyTodo={dailyTodo} classes={classes} />
+            </TabPanel>
+            <TabPanel value={value} index={3} dir={theme.direction}>
+              <TodoByCompletion dailyTodo={dailyTodo} classes={classes} />
+            </TabPanel>
+          </SwipeableViews>
+        ) : (
+          <SwipeableViews
+            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+            index={0}
+          >
+            <TabPanel
+              className={classes.tdNoTodoContainer}
+              value={0}
+              index={0}
+              dir={theme.direction}
+            >
+              <NonTodoExist />
+            </TabPanel>
+          </SwipeableViews>
+        )}
+      </div>
+    );
+  }
   return (
     <div className={withCalendar ? null : classes.root}>
       <AppBar

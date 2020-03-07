@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, Button } from "@material-ui/core";
 import {
   format,
   startOfWeek,
@@ -7,25 +7,46 @@ import {
   endOfMonth,
   endOfWeek,
   startOfMonth,
-  isSameMonth
+  isSameMonth,
+  subDays,
+  subMonths
 } from "date-fns";
 import { HeaderDay } from "../../pages/todayPage/todayPage.styles";
 import { withRouter } from "react-router-dom";
 import { DayContainer } from "./../todo/dailyTodo.styles";
 import "./dailyTodoHeader.css";
+import { useStyles } from "./../../pages/todayPage/todayPage.styles";
 
-const DailyTodoHeader = ({ history, match, classes, dailyTodo }) => {
+const DailyTodoHeader = ({ history, match, dailyTodo }) => {
+  const classes = useStyles();
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [moveDays, toggleMoveDays] = useState(null);
-
-  // useEffect(() => {
-  //   toggleMoveDays(null);
-  // }, [dailyTodo]);
+  const [renderBtn, setRenderBtn] = useState(null);
 
   const currentDay = match.params.monthAndDate;
 
+  const monthStart = startOfMonth(currentMonth);
+  const monthEnd = endOfMonth(monthStart);
+  const startDate = startOfWeek(monthStart);
+  const endDate = endOfWeek(monthEnd);
+
+  useEffect(() => {
+    const date = new Date(currentDay);
+    const day = format(date, "d");
+    const endDay = subDays(monthEnd, 2);
+
+    if (Number(day) > Number(format(endDay, "d"))) {
+      setRenderBtn(1);
+      console.log("reddned");
+    } else if (Number(day) <= 2) {
+      setRenderBtn(0);
+      console.log("goooogogogo");
+    } else {
+      setRenderBtn(null);
+    }
+  }, [dailyTodo]);
+
   const onClickDay = (day, currentDay) => {
-    // const selectedDate = format(day, "MMMd");
     let currentDate = currentDay.slice(3);
     let selectedDate = format(day, "d");
     if (currentDate < selectedDate) {
@@ -45,10 +66,6 @@ const DailyTodoHeader = ({ history, match, classes, dailyTodo }) => {
 
   const renderDays = () => {
     if (dailyTodo.length !== 0) {
-      const monthStart = startOfMonth(currentMonth);
-      const monthEnd = endOfMonth(monthStart);
-      const startDate = startOfWeek(monthStart);
-      const endDate = endOfWeek(monthEnd);
       let formattedDate = "";
       let formattedDay = "";
 
@@ -66,11 +83,11 @@ const DailyTodoHeader = ({ history, match, classes, dailyTodo }) => {
         date = format(dailyTodo[0].date.toDate(), "d");
       }
 
-      for (let i = 1; i < 4; i++) {
-        sevenDays.push(Number(date) - 4 + i);
+      for (let i = 1; i < 3; i++) {
+        sevenDays.push(Number(date) - 3 + i);
       }
       sevenDays.push(Number(date));
-      for (let i = 1; i < 4; i++) {
+      for (let i = 1; i < 3; i++) {
         sevenDays.push(Number(date) + i);
       }
 
@@ -93,14 +110,14 @@ const DailyTodoHeader = ({ history, match, classes, dailyTodo }) => {
                 onClick={() => onClickDay(clonedDay, currentDay)}
                 className={
                   moveDays === 0
-                    ? `test`
+                    ? `aniOne`
                     : moveDays === 1
-                    ? `testTwo`
+                    ? `aniTwo`
                     : moveDays === 2
-                    ? "testThree"
+                    ? "aniThree"
                     : moveDays === 3
-                    ? "testFour"
-                    : "testFive"
+                    ? "aniFour"
+                    : "aniFive"
                 }
               >
                 <HeaderDay
@@ -132,20 +149,21 @@ const DailyTodoHeader = ({ history, match, classes, dailyTodo }) => {
         day = addDays(day, 1);
       }
 
+      console.log(moveDays);
       return (
         <Grid
           container
           className={classes.header}
-          justify="space-around"
+          justify="space-between"
           alignItems="center"
         >
+          {renderBtn === 0 && <Button>ddd</Button>}
           {days}
+          {renderBtn === 1 && <Button>ddd</Button>}
         </Grid>
       );
     }
   };
-
-  console.log("tggg", moveDays);
   return <React.Fragment>{renderDays()}</React.Fragment>;
 };
 

@@ -10,6 +10,7 @@ import { format } from "date-fns";
 
 const TodayPage = ({ match, todos }) => {
   const [dailyTodo, setDailyTodo] = React.useState([]);
+  const withToday = true;
   const classes = useStyles();
   const monthAndDate = match.params.monthAndDate;
 
@@ -56,13 +57,12 @@ const TodayPage = ({ match, todos }) => {
 
   return (
     <React.Fragment>
-      <DailyTodoHeader
-        dailyTodo={dailyTodo}
+      <TodoDashBoard
         monthAndDate={monthAndDate}
-        classes={classes}
         onDayClick={onDayClick}
+        withToday={withToday}
+        dailyTodo={dailyTodo}
       />
-      <TodoDashBoard dailyTodo={dailyTodo} />
     </React.Fragment>
   );
 };
