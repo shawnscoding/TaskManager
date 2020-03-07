@@ -1,13 +1,20 @@
 import { makeStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
 import { Grid } from "@material-ui/core";
-import { drawerWidth } from "../../component/navbar/navbar.styles";
-import { moveTexts } from "./../hompage/homepage.styles";
 
 export const HeaderDay = styled(Grid)`
   width: 4.5rem;
   height: 4.5rem;
   border-radius: 10px;
+`;
+
+export const HeaderButton = styled(Grid)`
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 5px 5px rgb(236, 236, 236);
+  padding: 8px 16px;
 `;
 
 export const useStyles = makeStyles(theme => ({

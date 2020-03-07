@@ -55,7 +55,6 @@
 
 .aniOne {
   animation: moveInLeft 0.6s ease-out;
-  color: red;
 }
 
 .aniTwo {
@@ -64,7 +63,6 @@
 
 .aniThree {
   animation: moveInLeftSec 0.6s ease-out;
-  color: red;
 }
 
 .aniFour {

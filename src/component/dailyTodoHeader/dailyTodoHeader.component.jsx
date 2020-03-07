@@ -9,9 +9,13 @@ import {
   startOfMonth,
   isSameMonth,
   subDays,
-  subMonths
+  subMonths,
+  addMonths
 } from "date-fns";
-import { HeaderDay } from "../../pages/todayPage/todayPage.styles";
+import {
+  HeaderDay,
+  HeaderButton
+} from "../../pages/todayPage/todayPage.styles";
 import { withRouter } from "react-router-dom";
 import { DayContainer } from "./../todo/dailyTodo.styles";
 import "./dailyTodoHeader.css";
@@ -30,19 +34,60 @@ const DailyTodoHeader = ({ history, match, dailyTodo }) => {
   const startDate = startOfWeek(monthStart);
   const endDate = endOfWeek(monthEnd);
 
+  const preMonth = subMonths(currentMonth, 1);
+  const preMonthEnd = endOfMonth(preMonth);
+
+  const preDate = format(preMonthEnd, "d");
+  const preDay = format(preMonthEnd, "eee");
+  const PreMonthAndDate = format(preMonthEnd, "MMMd");
+
+  const nextMonth = addMonths(currentMonth, 1);
+  const nextMonthStart = startOfMonth(nextMonth);
+
+  const nextDate = format(nextMonthStart, "d");
+  const nextDay = format(nextMonthStart, "eee");
+  const nextMonthAndDate = format(nextMonthStart, "MMMd");
+
+  const handlePreMonth = () => {
+    // subMonths(currentMonth, 1)
+    const day = new Date(preMonthEnd);
+
+    setCurrentMonth(preMonthEnd);
+    history.push(`/todo/dailyTodo/${PreMonthAndDate}`);
+  };
+
+  const handleNextMonth = () => {
+    // nextMonth(currentMonth)
+    const day = new Date(preMonthEnd);
+
+    setCurrentMonth(nextMonthStart);
+    history.push(`/todo/dailyTodo/${nextMonthAndDate}`);
+  };
+
   useEffect(() => {
-    const date = new Date(currentDay);
+    const clonedCurrentDay = currentDay;
+    const date = new Date(clonedCurrentDay);
+
     const day = format(date, "d");
     const endDay = subDays(monthEnd, 2);
+    console.log(dailyTodo[0].date, " dailytodo runnedd!!");
+    console.log(monthEnd, "monthend");
+    const formattedMonthEnd = format(monthEnd, "d");
 
-    if (Number(day) > Number(format(endDay, "d"))) {
+    // console.log(new Date(clonedCurrentDay), "currentDay dddddddddddddd");
+    // console.log(date, "date ");
+    // console.log(new Date(clonedCurrentDay) === monthEnd, "true");
+
+    if (Number(day) >= Number(format(endDay, "d"))) {
       setRenderBtn(1);
-      console.log("reddned");
     } else if (Number(day) <= 2) {
       setRenderBtn(0);
-      console.log("goooogogogo");
     } else {
       setRenderBtn(null);
+    }
+
+    if (formattedMonthEnd === dailyTodo[0].date) {
+      setRenderBtn(1);
     }
   }, [dailyTodo]);
 
@@ -50,13 +95,13 @@ const DailyTodoHeader = ({ history, match, dailyTodo }) => {
     let currentDate = currentDay.slice(3);
     let selectedDate = format(day, "d");
     if (currentDate < selectedDate) {
-      if (moveDays === 0) {
+      if (moveDays === 0 && moveDays !== 1 && moveDays !== 3) {
         toggleMoveDays(2);
       } else {
         toggleMoveDays(0);
       }
     } else {
-      if (moveDays === 1) {
+      if (moveDays === 1 && moveDays !== 0 && moveDays !== 2) {
         toggleMoveDays(3);
       } else {
         toggleMoveDays(1);
@@ -91,6 +136,8 @@ const DailyTodoHeader = ({ history, match, dailyTodo }) => {
         sevenDays.push(Number(date) + i);
       }
 
+      console.log(sevenDays, "sevenDays");
+
       while (day <= endDate) {
         formattedDate = format(day, dateFormat);
         formattedDay = format(day, dayFormat);
@@ -100,6 +147,7 @@ const DailyTodoHeader = ({ history, match, dailyTodo }) => {
         let monthAndDay = format(day, "MMMd");
 
         for (let i = 0; i < sevenDays.length; i++) {
+          console.log(isSameMonth(day, monthStart));
           if (
             isSameMonth(day, monthStart) &&
             formattedDate === sevenDays[i].toString()
@@ -149,7 +197,8 @@ const DailyTodoHeader = ({ history, match, dailyTodo }) => {
         day = addDays(day, 1);
       }
 
-      console.log(moveDays);
+      console.log(currentMonth);
+      console.log(renderBtn);
       return (
         <Grid
           container
@@ -157,9 +206,55 @@ const DailyTodoHeader = ({ history, match, dailyTodo }) => {
           justify="space-between"
           alignItems="center"
         >
-          {renderBtn === 0 && <Button>ddd</Button>}
+          {renderBtn === 0 && (
+            <DayContainer>
+              <HeaderButton
+                onClick={handlePreMonth}
+                variant="contained"
+                className={
+                  moveDays === 1
+                    ? `aniTwo`
+                    : moveDays === 3
+                    ? "aniFour"
+                    : "aniFive"
+                }
+              >
+                <div>
+                  <Typography className={classes.dayOfMonth}>
+                    {preDate}
+                  </Typography>
+                  <Typography className={classes.dayOfWeek}>
+                    {preDay}
+                  </Typography>
+                </div>
+              </HeaderButton>
+            </DayContainer>
+          )}
           {days}
-          {renderBtn === 1 && <Button>ddd</Button>}
+          {renderBtn === 1 && (
+            <DayContainer>
+              <HeaderButton
+                onClick={handleNextMonth}
+                variant="contained"
+                className={
+                  moveDays === 0
+                    ? `aniOne`
+                    : moveDays === 2
+                    ? "aniThree"
+                    : "aniFive"
+                }
+              >
+                <div>
+                  <Typography className={classes.dayOfMonth}>
+                    {nextDate}
+                  </Typography>
+                  <Typography className={classes.dayOfWeek}>
+                    {nextDay}
+                  </Typography>
+                </div>
+              </HeaderButton>
+            </DayContainer>
+          )}
         </Grid>
       );
     }
