@@ -10,6 +10,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import { withStyles } from "@material-ui/styles";
 
 const theme = createMuiTheme({
   palette: {
@@ -28,8 +29,8 @@ const theme = createMuiTheme({
     }
   },
   typography: {
-    fontSize: 10,
-    htmlFontSize: 10,
+    // fontSize: 14,
+    // htmlFontSize: 10,
     fontFamily: "'Google Sans','Noto Sans Myanmar UI',arial,sans-serif"
   }
 });

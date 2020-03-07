@@ -254,7 +254,7 @@ const TodoDashBoard = ({
           />
           <Tab
             style={withCalendar ? { minWidth: "8rem" } : null}
-            label="By Category"
+            label="Category"
             {...a11yProps(1)}
             disabled={beforeRenderTodo(dailyTodo) === false}
           />
@@ -324,7 +324,12 @@ const TodoDashBoard = ({
             withCalendar ? classes.caPanelContainer : classes.wdPanelContainer
           }
         >
-          <TabPanel value={0} index={0} dir={theme.direction}>
+          <TabPanel
+            className={classes.tdNoTodoContainer}
+            value={0}
+            index={0}
+            dir={theme.direction}
+          >
             <NonTodoExist />
           </TabPanel>
         </SwipeableViews>

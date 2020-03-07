@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
 import { Grid } from "@material-ui/core";
 import { drawerWidth } from "../../component/navbar/navbar.styles";
+import { moveTexts } from "./../hompage/homepage.styles";
 
 export const HeaderDay = styled(Grid)`
   width: 4.5rem;
@@ -26,6 +27,7 @@ export const useStyles = makeStyles(theme => ({
   dayOfWeek: {
     textAlign: "center"
   },
+
   days: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: "0 0 5px 5px rgb(236, 236, 236)",

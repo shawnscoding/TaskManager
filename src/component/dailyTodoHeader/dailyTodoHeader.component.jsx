@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@material-ui/core";
 import {
   format,
@@ -11,9 +11,38 @@ import {
 } from "date-fns";
 import { HeaderDay } from "../../pages/todayPage/todayPage.styles";
 import { withRouter } from "react-router-dom";
+import { DayContainer } from "./../todo/dailyTodo.styles";
+import "./dailyTodoHeader.css";
 
-const DailyTodoHeader = ({ history, classes, dailyTodo }) => {
+const DailyTodoHeader = ({ history, match, classes, dailyTodo }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [moveDays, toggleMoveDays] = useState(null);
+
+  // useEffect(() => {
+  //   toggleMoveDays(null);
+  // }, [dailyTodo]);
+
+  const currentDay = match.params.monthAndDate;
+
+  const onClickDay = (day, currentDay) => {
+    // const selectedDate = format(day, "MMMd");
+    let currentDate = currentDay.slice(3);
+    let selectedDate = format(day, "d");
+    if (currentDate < selectedDate) {
+      if (moveDays === 0) {
+        toggleMoveDays(2);
+      } else {
+        toggleMoveDays(0);
+      }
+    } else {
+      if (moveDays === 1) {
+        toggleMoveDays(3);
+      } else {
+        toggleMoveDays(1);
+      }
+    }
+  };
+
   const renderDays = () => {
     if (dailyTodo.length !== 0) {
       const monthStart = startOfMonth(currentMonth);
@@ -59,29 +88,44 @@ const DailyTodoHeader = ({ history, classes, dailyTodo }) => {
             formattedDate === sevenDays[i].toString()
           ) {
             days.push(
-              <HeaderDay
-                onClick={() => history.push(`/todo/dailyTodo/${monthAndDay}`)}
+              <DayContainer
                 key={day}
+                onClick={() => onClickDay(clonedDay, currentDay)}
                 className={
-                  Number(formattedDate) < Number(date)
-                    ? classes.days
-                    : Number(formattedDate) === Number(date)
-                    ? classes.selectedDay
-                    : Number(formattedDate) > Number(date)
-                    ? classes.days
-                    : null
+                  moveDays === 0
+                    ? `test`
+                    : moveDays === 1
+                    ? `testTwo`
+                    : moveDays === 2
+                    ? "testThree"
+                    : moveDays === 3
+                    ? "testFour"
+                    : "testFive"
                 }
-                item
               >
-                <div>
-                  <Typography className={classes.dayOfMonth}>
-                    {formattedDate}
-                  </Typography>
-                  <Typography className={classes.dayOfWeek}>
-                    {formattedDay}
-                  </Typography>
-                </div>
-              </HeaderDay>
+                <HeaderDay
+                  onClick={() => history.push(`/todo/dailyTodo/${monthAndDay}`)}
+                  className={
+                    Number(formattedDate) < Number(date)
+                      ? classes.days
+                      : Number(formattedDate) === Number(date)
+                      ? classes.selectedDay
+                      : Number(formattedDate) > Number(date)
+                      ? classes.days
+                      : null
+                  }
+                  item
+                >
+                  <div>
+                    <Typography className={classes.dayOfMonth}>
+                      {formattedDate}
+                    </Typography>
+                    <Typography className={classes.dayOfWeek}>
+                      {formattedDay}
+                    </Typography>
+                  </div>
+                </HeaderDay>
+              </DayContainer>
             );
           }
         }
@@ -101,6 +145,7 @@ const DailyTodoHeader = ({ history, classes, dailyTodo }) => {
     }
   };
 
+  console.log("tggg", moveDays);
   return <React.Fragment>{renderDays()}</React.Fragment>;
 };
 

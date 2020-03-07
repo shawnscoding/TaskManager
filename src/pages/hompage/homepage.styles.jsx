@@ -1,7 +1,7 @@
 import { Container, Box, Avatar, Grid, Button } from "@material-ui/core";
 import styled, { css } from "styled-components";
 
-const moveTexts = css`
+export const moveTexts = css`
   @keyframes moveInLeft {
     0% {
       opacity: 0;
@@ -37,6 +37,24 @@ const moveTexts = css`
     }
     100% {
       transform: scale(1);
+    }
+  }
+
+  @keyframes day-prev {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(18px);
+    }
+  }
+
+  @keyframes day-next {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-18px);
     }
   }
 
