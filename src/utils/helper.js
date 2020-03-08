@@ -49,9 +49,9 @@ export const beforeRenderTodo = todos => {
 };
 
 export const getPercentageOfCompletedTodo = todos => {
-  if (todos.length === 0) return;
-  const completedTodo = todos.filter(todo => todo.completed === true);
-  const result = (completedTodo.length / todos.length) * 100;
+  if (todos.length === 0) return 0;
+  const completedTodo = todos.filter(todo => todo.completed !== true);
+  const result = Math.round((completedTodo.length / todos.length) * 100);
   return {
     result,
     completedTodo

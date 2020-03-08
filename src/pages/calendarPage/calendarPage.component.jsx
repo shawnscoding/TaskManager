@@ -10,7 +10,7 @@ import { setAnotherTodoStart } from "../../redux/todo/todo.actions";
 import { selectLoading } from "./../../redux/async/async.selectors";
 import { getThisMonth } from "./../../utils/helper";
 
-const CalendarPage = ({ todos, getAnotherTodoList, loading }) => {
+const CalendarPage = ({ todos, getAnotherTodo, loading }) => {
   const withCalendar = true;
   const [dailyTodo, setDailyTodo] = React.useState([
     {
@@ -57,7 +57,9 @@ const CalendarPage = ({ todos, getAnotherTodoList, loading }) => {
   };
 
   const handleClickAnotherMonth = month => {
-    getAnotherTodoList(month);
+    getAnotherTodo(month);
+    console.log(month);
+    console.log(month + "1");
     const thisMonth = getThisMonth();
     if (month === thisMonth) {
       setMonthAndDate(today);
@@ -114,7 +116,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getAnotherTodoList: month => dispatch(setAnotherTodoStart(month))
+  getAnotherTodo: month => dispatch(setAnotherTodoStart(month))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CalendarPage);

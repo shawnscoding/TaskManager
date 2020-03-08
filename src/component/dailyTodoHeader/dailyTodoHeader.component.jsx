@@ -20,14 +20,18 @@ import { withRouter } from "react-router-dom";
 import { DayContainer } from "./../todo/dailyTodo.styles";
 import "./dailyTodoHeader.css";
 import { useStyles } from "./../../pages/todayPage/todayPage.styles";
+import { setAnotherTodoStart } from "./../../redux/todo/todo.actions";
+import { connect } from "react-redux";
+import { getThisYear } from "../../utils/helper";
 
-const DailyTodoHeader = ({ history, match, dailyTodo }) => {
+const DailyTodoHeader = ({ history, match, dailyTodo, setAnotherTodo }) => {
   const classes = useStyles();
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [moveDays, toggleMoveDays] = useState(null);
   const [renderBtn, setRenderBtn] = useState(null);
 
   const currentDay = match.params.monthAndDate;
+  const fmdMonth = format(currentMonth, "MMMd");
 
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(monthStart);
@@ -49,15 +53,16 @@ const DailyTodoHeader = ({ history, match, dailyTodo }) => {
   const nextMonthAndDate = format(nextMonthStart, "MMMd");
 
   const handlePreMonth = () => {
-    // subMonths(currentMonth, 1)
-    const day = new Date(preMonthEnd);
+    const month = format(preMonth, "MMM");
+    setAnotherTodo(month);
 
     setCurrentMonth(preMonthEnd);
     history.push(`/todo/dailyTodo/${PreMonthAndDate}`);
   };
 
   const handleNextMonth = () => {
-    // nextMonth(currentMonth)
+    const month = format(nextMonth, "MMM");
+    setAnotherTodo(month);
     const day = new Date(preMonthEnd);
 
     setCurrentMonth(nextMonthStart);
@@ -66,17 +71,12 @@ const DailyTodoHeader = ({ history, match, dailyTodo }) => {
 
   useEffect(() => {
     const clonedCurrentDay = currentDay;
-    const date = new Date(clonedCurrentDay);
+    const year = getThisYear();
+    const date = new Date(year + clonedCurrentDay);
 
     const day = format(date, "d");
     const endDay = subDays(monthEnd, 2);
-    console.log(dailyTodo[0].date, " dailytodo runnedd!!");
-    console.log(monthEnd, "monthend");
     const formattedMonthEnd = format(monthEnd, "d");
-
-    // console.log(new Date(clonedCurrentDay), "currentDay dddddddddddddd");
-    // console.log(date, "date ");
-    // console.log(new Date(clonedCurrentDay) === monthEnd, "true");
 
     if (Number(day) >= Number(format(endDay, "d"))) {
       setRenderBtn(1);
@@ -89,7 +89,11 @@ const DailyTodoHeader = ({ history, match, dailyTodo }) => {
     if (formattedMonthEnd === dailyTodo[0].date) {
       setRenderBtn(1);
     }
-  }, [dailyTodo]);
+
+    if (currentDay !== fmdMonth) {
+      setCurrentMonth(date);
+    }
+  }, [dailyTodo, currentDay]);
 
   const onClickDay = (day, currentDay) => {
     let currentDate = currentDay.slice(3);
@@ -136,8 +140,6 @@ const DailyTodoHeader = ({ history, match, dailyTodo }) => {
         sevenDays.push(Number(date) + i);
       }
 
-      console.log(sevenDays, "sevenDays");
-
       while (day <= endDate) {
         formattedDate = format(day, dateFormat);
         formattedDay = format(day, dayFormat);
@@ -147,7 +149,6 @@ const DailyTodoHeader = ({ history, match, dailyTodo }) => {
         let monthAndDay = format(day, "MMMd");
 
         for (let i = 0; i < sevenDays.length; i++) {
-          console.log(isSameMonth(day, monthStart));
           if (
             isSameMonth(day, monthStart) &&
             formattedDate === sevenDays[i].toString()
@@ -196,9 +197,6 @@ const DailyTodoHeader = ({ history, match, dailyTodo }) => {
         }
         day = addDays(day, 1);
       }
-
-      console.log(currentMonth);
-      console.log(renderBtn);
       return (
         <Grid
           container
@@ -262,4 +260,8 @@ const DailyTodoHeader = ({ history, match, dailyTodo }) => {
   return <React.Fragment>{renderDays()}</React.Fragment>;
 };
 
-export default withRouter(DailyTodoHeader);
+const mapDispatchToProps = dispatch => ({
+  setAnotherTodo: month => dispatch(setAnotherTodoStart(month))
+});
+
+export default withRouter(connect(null, mapDispatchToProps)(DailyTodoHeader));

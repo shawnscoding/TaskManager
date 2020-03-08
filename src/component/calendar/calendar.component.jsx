@@ -19,7 +19,6 @@ import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 const Calendar = ({
   handleClickAnotherMonth,
   todos,
-  history,
   loading = true,
 
   handleClickDate

@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Grid,
-  Typography,
-  Dialog,
-  Button,
-  CircularProgress,
-  Slide
-} from "@material-ui/core";
+import { Grid, Typography, Dialog, Button, Slide } from "@material-ui/core";
 import {} from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
 import TimerIcon from "@material-ui/icons/Timer";
@@ -19,14 +12,50 @@ import {
   stoppedWork,
   storeUpdatedTodoStart
 } from "./../../redux/todo/todo.actions";
+import { CircleProgress } from "react-gradient-progress";
+import { makeStyles } from "@material-ui/core/styles";
+import { primaryColor } from "./../completion/Completion";
+import styled from "styled-components";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
 
 const styles = theme => ({
-  container: {}
+  container: {
+    width: "21rem",
+    height: "26rem",
+    position: "relative",
+    marginTop: "4rem"
+  },
+  leftTime: {
+    position: "absolute",
+    top: "7rem",
+    zIndex: "200"
+  },
+  alert: {
+    position: "absolute",
+    top: "-3.5rem",
+    zIndex: "200"
+  },
+  alertTypo: {
+    fontSize: "2rem",
+    color: "#2196f4",
+    textTransform: "uppercase"
+  },
+  button: {
+    border: "2px solid rgba(255, 255, 255, 0.9)",
+    color: "rgba(255, 255, 255, 0.9)",
+    "&:disabled": {
+      border: "2px solid rgba(255, 255, 255, 0.2)"
+    }
+  }
 });
+
+const ButtonContainer = styled(Grid)`
+  padding: 1rem;
+  background: linear-gradient(45deg, #00bbff 30%, #92d7f1 90%);
+`;
 
 class Timer extends Component {
   constructor(props) {
@@ -153,69 +182,75 @@ class Timer extends Component {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <Grid
-          container
-          alignItems="center"
-          justify="center"
-          className={classes.container}
-        >
+        <Grid container alignItems="center" justify="center">
           <Grid
             style={{
-              zIndex: 100,
-              width: "20rem"
+              zIndex: 100
             }}
             item
             container
             alignItems="center"
+            justify="space-between"
             direction="column"
+            className={classes.container}
           >
-            <Grid item>
+            <Grid className={classes.alert} item>
               {this.displayNone() ? (
-                <Typography>Set Next task</Typography>
-              ) : (
-                <Typography>
-                  {this.getHours()} : {this.getMinutes()} :{this.getSecond()}
+                <Typography className={classes.alertTypo}>
+                  Set Next task
                 </Typography>
-              )}
+              ) : null}
             </Grid>
+            <Grid className={classes.leftTime} item>
+              <Typography style={{ fontSize: "3rem" }}>
+                {this.getHours()} : {this.getMinutes()} :{this.getSecond()}
+              </Typography>
+            </Grid>
+
             <Grid item>
-              <CircularProgress
-                style={{
-                  width: "10rem",
-                  height: "10rem"
-                }}
-                variant="static"
-                value={100}
+              <CircleProgress
+                percentage={80}
+                strokeWidth={15}
+                width={300}
+                fontColor="#fff"
+                secondaryColor="#f0f0f0"
               />
             </Grid>
-            <Grid container alignItems="center" justify="space-between" item>
+            <ButtonContainer
+              fullWidth
+              container
+              alignItems="center"
+              justify="space-between"
+              item
+            >
               <Button
                 onClick={this.clickStop}
                 disabled={stopped}
                 variant="outlined"
-                color="secondary"
+                color="contained"
+                className={classes.button}
               >
                 <TimerOffIcon />
               </Button>
               <Button
-                onClick={this.clickStart}
-                variant="outlined"
-                color="secondary"
-                disabled={started}
-              >
-                <TimerIcon />
-              </Button>
-            </Grid>
-            <Grid>
-              <Button
-                color="secondary"
                 onClick={this.onClickFinish}
-                variant="contained"
+                variant="outlined"
                 disabled={disableFinish}
+                color="contained"
+                className={classes.button}
               >
                 Finish
               </Button>
-            </Grid>
+              <Button
+                onClick={this.clickStart}
+                variant="outlined"
+                disabled={started}
+                color="contained"
+                className={classes.button}
+              >
+                <TimerIcon />
+              </Button>
+            </ButtonContainer>
           </Grid>
         </Grid>
       </Dialog>
