@@ -83,8 +83,12 @@ const TodoByCompletion = ({ dailyTodo, classes, withCalendar }) => {
             <Grid className={classes.todosContainer} container>
               {todos.length !== 0 &&
                 todos.map(todo => (
-                  <TodoSummary  key={todo.id} todo={todo} classes={classes} withCalendar={withCalendar}   />
-
+                  <TodoSummary
+                    key={todo.id}
+                    todo={todo}
+                    classes={classes}
+                    withCalendar={withCalendar}
+                  />
                 ))}
 
               {handleTodoIsNotExist(todos, group)}

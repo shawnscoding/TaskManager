@@ -79,3 +79,7 @@ export const storeUpdatedTodoFinish = task => ({
   type: todoActionTypes.STORE_UPDATED_TODO_FINISH,
   payload: task
 });
+
+export const resetMonthlyTodoOnRoute = () => ({
+  type: todoActionTypes.RESET_MONTHLY_TODO_ON_ROUTE
+});

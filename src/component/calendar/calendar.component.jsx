@@ -51,7 +51,12 @@ const Calendar = ({
           >
             <div className="icon">chevron_left</div>
           </Button>
-          <div className="col col-center">
+          <div
+            style={{
+              color: "#28d1ba"
+            }}
+            className="col col-center"
+          >
             <span>{format(currentMonth, "MMMM yyyy")}</span>
           </div>
           <Button

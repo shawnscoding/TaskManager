@@ -31,7 +31,7 @@ const theme = createMuiTheme({
   typography: {
     // fontSize: 14,
     // htmlFontSize: 10,
-    fontFamily: "'Google Sans','Noto Sans Myanmar UI',arial,sans-serif"
+    fontFamily: "'Open Sans Condensed', sans-serif"
   }
 });
 

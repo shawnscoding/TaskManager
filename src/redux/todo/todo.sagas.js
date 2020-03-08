@@ -106,6 +106,7 @@ export function* checkTodoInFirebase(month) {
       .where("month", "==", month)
       .orderBy("date");
     const snapShot = yield query.get();
+
     if (snapShot.docs.length === 0) return;
     const todoList = [];
     for (let i = 0; i < snapShot.docs.length; i++) {
@@ -151,6 +152,13 @@ export function* onUserSignIn() {
   yield takeLatest(authActionTypes.SIGN_IN_SUCCESS, checkThisMonthTodoInFb);
 }
 
+export function* resetTodoOnRoute() {
+  yield takeLatest(
+    todoActionTypes.RESET_MONTHLY_TODO_ON_ROUTE,
+    checkThisMonthTodoInFb
+  );
+}
+
 export function* onSignOutStart() {
   yield takeLatest(authActionTypes.SIGN_OUT_START, clearTodoListOnSignOut);
 }
@@ -172,6 +180,7 @@ export function* onStoreTimeToComplete() {
 export function* todoSagas() {
   yield all([
     call(onAddTodo),
+    call(resetTodoOnRoute),
     call(onGetWeeklyTodo),
     call(onUserSignIn),
     call(onSetAnotherTodo),

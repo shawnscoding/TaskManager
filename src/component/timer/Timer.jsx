@@ -15,7 +15,7 @@ import {
 import { CircleProgress } from "react-gradient-progress";
 import styled from "styled-components";
 import CloseIcon from "@material-ui/icons/Close";
-import { primaryColor } from "./../completion/Completion";
+import { primaryColor } from "../circleProgress/CircleProgress";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -72,7 +72,9 @@ class Timer extends Component {
       counter: 0,
       stopped: true,
       started: false,
-      disableFinish: true
+      disableFinish: true,
+      total: 0,
+      increment: 0
     };
   }
 
@@ -85,25 +87,38 @@ class Timer extends Component {
   };
 
   getHours = () => {
-    return Math.floor(this.state.counter / 3600);
+    return ("0" + Math.floor(this.state.counter / 3600)).slice(-2);
   };
 
   displayNone = () => {
-    console.log(this.state.counter, "ddd");
     if (this.state.counter === 0) {
       return true;
     }
     return false;
   };
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    const { currentTask, storeUpdatedTodo } = this.props;
+    const { task } = currentTask;
+    task.timeToComplete = this.state.counter;
+    clearInterval(this.myInterval);
+    storeUpdatedTodo(task);
+    this.setState({
+      counter: 0,
+      started: false,
+      stopped: true,
+      disableFinish: true,
+      increment: 0
+    });
+  }
 
   componentDidMount() {
     const { currentTask } = this.props;
     if (currentTask !== null) {
       this.setState({
         ...this.state,
-        counter: currentTask.timeToComplete
+        counter: currentTask.timeToComplete,
+        total: currentTask.timeToComplete
       });
     }
   }
@@ -115,22 +130,22 @@ class Timer extends Component {
       this.setState({
         ...this.state,
         counter: currentTask.timeToComplete,
-        started: false
+        started: false,
+        total: currentTask.timeToComplete,
+        increment: 0
       });
     }
-    console.log(this.state.counter);
     if (this.state.counter === 1) {
       task.timeToComplete = this.state.counter;
       task.completed = true;
-      console.log("task", task);
       clearInterval(this.myInterval);
       storeUpdatedTodo(task);
-      console.log(this.state.counter, "succeed");
       this.setState({
         counter: 0,
         started: true,
         stopped: true,
-        disableFinish: true
+        disableFinish: true,
+        increment: 0
       });
     }
   }
@@ -154,7 +169,8 @@ class Timer extends Component {
     this.myInterval = setInterval(() => {
       this.setState(pre => ({
         ...this.state,
-        counter: pre.counter - 1
+        counter: pre.counter - 1,
+        increment: pre.increment + 1
       }));
     }, 1000);
 
@@ -177,10 +193,17 @@ class Timer extends Component {
     });
   };
 
+  getPercentage = () => {
+    const { increment, total } = this.state;
+    const percent = Math.floor((increment / total) * 100);
+    return percent;
+  };
+
   render() {
+    const { started, stopped, disableFinish, total, counter } = this.state;
     const { openTimer, closeTimer } = this.props;
     const { classes } = this.props;
-    const { started, stopped, disableFinish } = this.state;
+    const percent = this.getPercentage();
     return (
       <Dialog
         open={openTimer}
@@ -218,7 +241,7 @@ class Timer extends Component {
               >
                 <CloseIcon />
               </Grid>
-              <Grid className={classes.headerItem} item>
+              <Grid style={{ opacity: 0 }} className={classes.headerItem} item>
                 <TimerIcon />
               </Grid>
               <Grid style={{ opacity: 0 }} className={classes.headerItem} item>
@@ -237,14 +260,14 @@ class Timer extends Component {
               ) : null}
             </Grid>
             <Grid className={classes.leftTime} item>
-              <Typography style={{ fontSize: "3rem" }}>
+              <Typography style={{ fontSize: "2.9rem" }}>
                 {this.getHours()} : {this.getMinutes()} :{this.getSecond()}
               </Typography>
             </Grid>
 
             <Grid item>
               <CircleProgress
-                percentage={80}
+                percentage={percent}
                 strokeWidth={15}
                 width={300}
                 fontColor="#fff"

@@ -37,11 +37,16 @@ const useStyles = makeStyles(theme => ({
     fontSize: "1.7rem"
   },
   typoDate: {
-    fontSize: "1rem"
+    fontSize: "1rem",
+    color: "#00aced"
   },
-  NumberOfCompletion: {
-    margin: "2px 0 0 8px",
-    fontSize: "2rem"
+  tdRateOfCompletion: {
+    margin: "6px 0 0",
+    fontSize: "2.3rem"
+  },
+  twRateOfCompletion: {
+    margin: "5px 0 0 0px",
+    fontSize: "2.5rem"
   },
   twTypeDate: {},
   twTypeMonth: {
@@ -52,7 +57,7 @@ const useStyles = makeStyles(theme => ({
 export const primaryColor = ["#33b7c8", "#08e9dff5"];
 const primaryConlorSecond = ["#00BBFF", "#92d7f1"];
 
-const Completion = ({
+const CcProgressOnCompletion = ({
   todo,
   formattedDate,
   withToday,
@@ -60,24 +65,43 @@ const Completion = ({
   handleNextWeek
 }) => {
   const classes = useStyles();
-  const [circle, setCircle] = useState(null);
+  const [aniPercent, setAniPercent] = useState(0);
+  const [afterAni, setAfterAni] = useState(false);
   const { result, completedTodo } = getPercentageOfCompletedTodo(todo);
 
+  let ani = 0;
+  let test = 0;
+  // const animationPercentage = () => {
+  //   const myInterval = setInterval(() => {
+  //     ani += 1;
+  //     // setAniPercent(aniPercent + 1);
+  //     console.log(ani);
+  //   }, 1000);
+  // };
+
   useEffect(() => {
-    if (result === 100) {
-      setCircle(true);
-    }
-    if (result !== 100) {
-      setCircle(false);
-    }
-  }, [result]);
+    const clear = setInterval(() => {
+      ani += 1;
+
+      setAniPercent(ani);
+    }, 10);
+    setTimeout(() => {
+      console.log("runnned");
+      clearInterval(clear);
+      setAfterAni(true);
+    }, 1000);
+  }, []);
+
+  // const rst = animationPercentage();
+  // console.log(aniPercent);
   return (
     <React.Fragment>
       <Grid xs={4} style={{ position: "relative" }} container item>
         <CircleProgress
-          percentage={result}
+          percentage={afterAni ? result : aniPercent}
           strokeWidth={10}
           width={190}
+          fontColor={afterAni ? "inherit" : "#fafafa"}
           secondaryColor="#f0f0f0"
           primaryColor={primaryColor}
         />
@@ -132,7 +156,14 @@ const Completion = ({
         </Grid>
         <Grid container item>
           <Grid item>
-            <Typography color="primary" className={classes.NumberOfCompletion}>
+            <Typography
+              color="primary"
+              className={
+                withToday
+                  ? classes.tdRateOfCompletion
+                  : classes.twRateOfCompletion
+              }
+            >
               {completedTodo.length} / {todo.length}
             </Typography>
           </Grid>
@@ -167,4 +198,4 @@ const Completion = ({
   );
 };
 
-export default Completion;
+export default CcProgressOnCompletion;

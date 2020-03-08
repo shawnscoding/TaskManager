@@ -6,7 +6,10 @@ import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
 import TodoDashBoard from "../../component/todo/todoDashboard.component";
 import { format } from "date-fns";
-import { setAnotherTodoStart } from "../../redux/todo/todo.actions";
+import {
+  setAnotherTodoStart,
+  resetMonthlyTodoOnRoute
+} from "../../redux/todo/todo.actions";
 import { selectLoading } from "./../../redux/async/async.selectors";
 import { getThisMonth } from "./../../utils/helper";
 

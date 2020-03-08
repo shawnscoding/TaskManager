@@ -49,7 +49,8 @@ import { getThisWeek } from "../../utils/helper";
 import {
   getWeeklyTodoStart,
   openTimer,
-  closeTimer
+  closeTimer,
+  resetMonthlyTodoOnRoute
 } from "../../redux/todo/todo.actions";
 import { selectLoading } from "./../../redux/async/async.selectors";
 import SmallLoader from "./../loader/SmallLoader";
@@ -67,6 +68,7 @@ const Navbar = props => {
     user,
     working,
     todos,
+    resetTodo,
     timerWarning,
     toggleTimerWarning,
     currentTask,
@@ -87,10 +89,19 @@ const Navbar = props => {
 
   const thisWeek = getThisWeek();
 
-  const onClickThisWeek = () => {
-    getWeeklyTodo(thisWeek);
-    console.log(" runneddddd");
+  const onClickCalendar = async () => {
+    await resetTodo();
+    props.history.push("/todo/calendar");
+  };
+
+  const onClickThisWeek = async () => {
+    await getWeeklyTodo(thisWeek);
     props.history.push(`/todo/thisWeek/${thisWeek}`);
+  };
+
+  const onClickToday = async () => {
+    await resetTodo();
+    props.history.push(`/todo/dailyTodo/${today}`);
   };
 
   const drawer = (
@@ -104,10 +115,7 @@ const Navbar = props => {
       <Divider />
       <div>
         <List>
-          <ListItem
-            onClick={() => props.history.push(`/todo/dailyTodo/${today}`)}
-            button
-          >
+          <ListItem onClick={onClickToday} button>
             <ListItemIcon>
               <PlayCircleOutlineIcon className={classes.icon} />
             </ListItemIcon>
@@ -119,7 +127,7 @@ const Navbar = props => {
             </ListItemIcon>
             <Typography>This week</Typography>
           </ListItem>
-          <ListItem onClick={() => props.history.push("/todo/calendar")} button>
+          <ListItem onClick={onClickCalendar} button>
             <ListItemIcon>
               <PlaylistAddCheckIcon className={classes.icon} />
             </ListItemIcon>
@@ -319,7 +327,8 @@ const mapDispatchToProps = dispatch => ({
   getWeeklyTodo: formattedWeek => dispatch(getWeeklyTodoStart(formattedWeek)),
   openTimer: () => dispatch(openTimer()),
   closeTimer: () => dispatch(closeTimer()),
-  toggleTimerWarning: () => dispatch(toggleTimerWarning())
+  toggleTimerWarning: () => dispatch(toggleTimerWarning()),
+  resetTodo: () => dispatch(resetMonthlyTodoOnRoute())
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));
