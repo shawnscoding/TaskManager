@@ -145,7 +145,7 @@ const TodoForm = ({
         onClick={handleOpen}
         aria-label="add"
       >
-        <AddIcon />
+        <AddIcon style={{ fontSize: "2rem" }} />
       </Fab>
       <Dialog
         open={open}

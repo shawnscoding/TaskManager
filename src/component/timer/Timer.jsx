@@ -13,9 +13,9 @@ import {
   storeUpdatedTodoStart
 } from "./../../redux/todo/todo.actions";
 import { CircleProgress } from "react-gradient-progress";
-import { makeStyles } from "@material-ui/core/styles";
-import { primaryColor } from "./../completion/Completion";
 import styled from "styled-components";
+import CloseIcon from "@material-ui/icons/Close";
+import { primaryColor } from "./../completion/Completion";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -24,23 +24,22 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const styles = theme => ({
   container: {
     width: "21rem",
-    height: "26rem",
-    position: "relative",
-    marginTop: "4rem"
+    height: "34rem",
+    position: "relative"
   },
   leftTime: {
     position: "absolute",
-    top: "7rem",
+    top: "13.5rem",
     zIndex: "200"
   },
   alert: {
     position: "absolute",
-    top: "-3.5rem",
+    top: "2.5rem",
     zIndex: "200"
   },
   alertTypo: {
     fontSize: "2rem",
-    color: "#2196f4",
+    color: "#23a49e",
     textTransform: "uppercase"
   },
   button: {
@@ -49,12 +48,21 @@ const styles = theme => ({
     "&:disabled": {
       border: "2px solid rgba(255, 255, 255, 0.2)"
     }
+  },
+  headerItem: {
+    color: "rgba(255, 255, 255, 0.9)",
+    padding: "5px"
+  },
+  header: {
+    height: "2.1rem",
+    width: "100%",
+    background: "linear-gradient(45deg, #33b7c8, 30%, #08e9dff5 90%)"
   }
 });
 
 const ButtonContainer = styled(Grid)`
   padding: 1rem;
-  background: linear-gradient(45deg, #00bbff 30%, #92d7f1 90%);
+  background: linear-gradient(45deg, #33b7c8, 30%, #08e9dff5 90%);
 `;
 
 class Timer extends Component {
@@ -194,10 +202,37 @@ class Timer extends Component {
             direction="column"
             className={classes.container}
           >
+            <Grid
+              container
+              alignItems="flex-end"
+              justify="space-between"
+              direction="row"
+              className={classes.header}
+              item
+            >
+              <Grid
+                className={classes.headerItem}
+                style={{ cursor: "pointer" }}
+                item
+                onClick={closeTimer}
+              >
+                <CloseIcon />
+              </Grid>
+              <Grid className={classes.headerItem} item>
+                <TimerIcon />
+              </Grid>
+              <Grid style={{ opacity: 0 }} className={classes.headerItem} item>
+                <TimerIcon />
+              </Grid>
+            </Grid>
             <Grid className={classes.alert} item>
               {this.displayNone() ? (
                 <Typography className={classes.alertTypo}>
                   Set Next task
+                </Typography>
+              ) : stopped ? (
+                <Typography className={classes.alertTypo}>
+                  Start task
                 </Typography>
               ) : null}
             </Grid>
@@ -214,10 +249,10 @@ class Timer extends Component {
                 width={300}
                 fontColor="#fff"
                 secondaryColor="#f0f0f0"
+                primaryColor={primaryColor}
               />
             </Grid>
             <ButtonContainer
-              fullWidth
               container
               alignItems="center"
               justify="space-between"
@@ -227,7 +262,6 @@ class Timer extends Component {
                 onClick={this.clickStop}
                 disabled={stopped}
                 variant="outlined"
-                color="contained"
                 className={classes.button}
               >
                 <TimerOffIcon />
@@ -236,16 +270,14 @@ class Timer extends Component {
                 onClick={this.onClickFinish}
                 variant="outlined"
                 disabled={disableFinish}
-                color="contained"
                 className={classes.button}
               >
-                Finish
+                Switch
               </Button>
               <Button
                 onClick={this.clickStart}
                 variant="outlined"
                 disabled={started}
-                color="contained"
                 className={classes.button}
               >
                 <TimerIcon />

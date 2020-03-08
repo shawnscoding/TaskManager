@@ -41,7 +41,8 @@ import LoadingComponent from "./../loader/loadingCompoent";
 import {
   selectMonthlyTodo,
   selectTimer,
-  selectCurrentTask
+  selectCurrentTask,
+  selectWorking
 } from "./../../redux/todo/todo.selectors";
 import ThisWeekPage from "../../pages/thisWeekPage/thisWeekPage.component";
 import { getThisWeek } from "../../utils/helper";
@@ -57,12 +58,14 @@ import { selectTimerWarning } from "./../../redux/warning/warning.selectors";
 import { toggleTimerWarning } from "./../../redux/warning/warning.actions";
 import Warning from "./../warning/TimerWarning";
 import HistoryPage from "./../../pages/historyPage/HistoryPage";
+import TimerIcon from "@material-ui/icons/Timer";
 
 const Navbar = props => {
   const {
     container,
     loading,
     user,
+    working,
     todos,
     timerWarning,
     toggleTimerWarning,
@@ -281,9 +284,15 @@ const Navbar = props => {
               {currentTask ? (
                 <Timer openTimer={timer} closeTimer={closeTimer} />
               ) : null}
-              <Fab className={classes.timerContainer} onClick={openTimer}>
-                hello
-              </Fab>
+              {working && !timer ? (
+                <Fab
+                  color="inherit"
+                  className={classes.timerContainer}
+                  onClick={openTimer}
+                >
+                  <TimerIcon style={{ fontSize: "2.7rem" }} />
+                </Fab>
+              ) : null}
             </React.Fragment>
           ) : (
             <SmallLoader />
@@ -301,7 +310,8 @@ const mapStateToProps = createStructuredSelector({
   todos: selectMonthlyTodo,
   timer: selectTimer,
   currentTask: selectCurrentTask,
-  timerWarning: selectTimerWarning
+  timerWarning: selectTimerWarning,
+  working: selectWorking
 });
 
 const mapDispatchToProps = dispatch => ({

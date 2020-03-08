@@ -52,6 +52,11 @@ export function* updateTodoInFb({ payload }) {
     yield put(storeUpdatedTodoFinish(payload));
 
     yield put(asyncActionFinish());
+    if (payload.completed === true) {
+      alert("You've completed a task!! Congratulation!");
+    } else {
+      alert("Your task has been successfully stored !");
+    }
   } catch (err) {
     alert("Sorry,, something went wrong,, try again later");
 

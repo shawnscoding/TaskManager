@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const primaryColor = ["#80FF72", "#7EE8FA"];
+export const primaryColor = ["#33b7c8", "#08e9dff5"];
 const primaryConlorSecond = ["#00BBFF", "#92d7f1"];
 
 const Completion = ({
@@ -79,6 +79,7 @@ const Completion = ({
           strokeWidth={10}
           width={190}
           secondaryColor="#f0f0f0"
+          primaryColor={primaryColor}
         />
       </Grid>
       <Grid

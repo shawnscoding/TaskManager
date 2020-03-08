@@ -74,6 +74,8 @@ export const useStyles = makeStyles(theme => ({
     bottom: "11rem",
     right: "5rem",
     width: "4rem",
-    height: "4rem"
+    height: "4rem",
+    color: "rgba(255, 255, 255, 0.9)",
+    background: "linear-gradient(45deg, #33b7c8, 30%, #08e9dff5 90%)"
   }
 }));
