@@ -26,7 +26,7 @@ import SmallLoader from "./../loader/SmallLoader";
 import { connect } from "react-redux";
 import { selectLoading } from "./../../redux/async/async.selectors";
 import { createStructuredSelector } from "reselect";
-import CcProgressOnCompletion from "../circleProgress/CircleProgress";
+import CircleProgress from "../circleProgress/CircleProgress";
 import DailyTodoHeader from "../dailyTodoHeader/dailyTodoHeader.component";
 
 const TabPanel = props => {
@@ -93,12 +93,13 @@ const TodoDashBoard = ({
           container
         >
           <Grid xs={6} item container>
-            <CcProgressOnCompletion
+            <CircleProgress
               formattedDate={formattedDate}
               classes={classes}
               todo={dailyTodo}
               handleNextWeek={handleNextWeek}
               handlePreWeek={handlePreWeek}
+              withThisWeek={withThisWeekPage}
             />
           </Grid>
           <Grid xs={6} container direction="column" justify="flex-end" item>
@@ -184,7 +185,7 @@ const TodoDashBoard = ({
           container
         >
           <Grid xs={5} item container>
-            <CcProgressOnCompletion
+            <CircleProgress
               formattedDate={formattedDate}
               classes={classes}
               todo={dailyTodo}

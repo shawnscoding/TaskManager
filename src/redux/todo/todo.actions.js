@@ -83,3 +83,13 @@ export const storeUpdatedTodoFinish = task => ({
 export const resetMonthlyTodoOnRoute = () => ({
   type: todoActionTypes.RESET_MONTHLY_TODO_ON_ROUTE
 });
+
+export const fecthFormarTodoStart = year => ({
+  type: todoActionTypes.FETCH_FORMER_TODO_START,
+  payload: year
+});
+
+export const fecthFormarTodoFinish = todos => ({
+  type: todoActionTypes.FETCH_FORMER_TODO_FINISH,
+  payload: todos
+});

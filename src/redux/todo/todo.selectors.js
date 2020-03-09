@@ -26,3 +26,8 @@ export const selectWorking = createSelector(
   [selectTodoReducer],
   todoList => todoList.working
 );
+
+export const selectFormerTodo = createSelector(
+  [selectTodoReducer],
+  todoList => todoList.formerTodo
+);

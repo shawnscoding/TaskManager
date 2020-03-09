@@ -45,7 +45,7 @@ import {
   selectWorking
 } from "./../../redux/todo/todo.selectors";
 import ThisWeekPage from "../../pages/thisWeekPage/thisWeekPage.component";
-import { getThisWeek } from "../../utils/helper";
+import { getThisWeek, getThisYear } from "../../utils/helper";
 import {
   getWeeklyTodoStart,
   openTimer,
@@ -60,6 +60,7 @@ import { toggleTimerWarning } from "./../../redux/warning/warning.actions";
 import Warning from "./../warning/TimerWarning";
 import HistoryPage from "./../../pages/historyPage/HistoryPage";
 import TimerIcon from "@material-ui/icons/Timer";
+import { fecthFormarTodoStart } from "./../../redux/todo/todo.actions";
 
 const Navbar = props => {
   const {
@@ -69,20 +70,34 @@ const Navbar = props => {
     working,
     todos,
     resetTodo,
+    fetchFormerTodo,
     timerWarning,
     toggleTimerWarning,
     currentTask,
+    match,
     openTimer,
     closeTimer,
     timer,
-    getWeeklyTodo
+    getWeeklyTodo,
+    history
   } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const [year, setYear] = useState(new Date());
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const onClickHistory = async () => {
+    // if (!fetchedFormerTodo) {
+    //   const formattedYear = format(year, "yyyy");
+    //   await fetchFormerTodo(formattedYear);
+    //   setFetchedFormerTodo(true);
+    // }
+    history.push(`/history/${user.id}`);
   };
 
   const today = format(new Date(), "MMMd");
@@ -91,17 +106,17 @@ const Navbar = props => {
 
   const onClickCalendar = async () => {
     await resetTodo();
-    props.history.push("/todo/calendar");
+    history.push("/todo/calendar");
   };
 
   const onClickThisWeek = async () => {
     await getWeeklyTodo(thisWeek);
-    props.history.push(`/todo/thisWeek/${thisWeek}`);
+    history.push(`/todo/thisWeek/${thisWeek}`);
   };
 
   const onClickToday = async () => {
     await resetTodo();
-    props.history.push(`/todo/dailyTodo/${today}`);
+    history.push(`/todo/dailyTodo/${today}`);
   };
 
   const drawer = (
@@ -134,10 +149,7 @@ const Navbar = props => {
             <Typography>Calendar</Typography>
           </ListItem>
 
-          <ListItem
-            onClick={() => props.history.push(`/history/${user.id}`)}
-            button
-          >
+          <ListItem onClick={onClickHistory} button>
             <ListItemIcon>
               <HistoryIcon className={classes.icon} />
             </ListItemIcon>
@@ -255,6 +267,13 @@ const Navbar = props => {
       </nav>
       <Paper className={classes.content}>
         <React.Fragment>
+          <Route
+            exact
+            path={"/history/:userId"}
+            render={() => (
+              <HistoryPage year={year} setYear={setYear} user={user} />
+            )}
+          />
           {user ? (
             <React.Fragment>
               <Switch>
@@ -275,11 +294,6 @@ const Navbar = props => {
                   exact
                   path="/todo/dailyTodo/:monthAndDate"
                   component={TodayPage}
-                />
-                <Route
-                  exact
-                  path={`/history/:userId`}
-                  component={HistoryPage}
                 />
               </Switch>
               <TodoForm />
@@ -302,9 +316,7 @@ const Navbar = props => {
                 </Fab>
               ) : null}
             </React.Fragment>
-          ) : (
-            <SmallLoader />
-          )}
+          ) : null}
         </React.Fragment>
       </Paper>
     </div>
@@ -328,7 +340,8 @@ const mapDispatchToProps = dispatch => ({
   openTimer: () => dispatch(openTimer()),
   closeTimer: () => dispatch(closeTimer()),
   toggleTimerWarning: () => dispatch(toggleTimerWarning()),
-  resetTodo: () => dispatch(resetMonthlyTodoOnRoute())
+  resetTodo: () => dispatch(resetMonthlyTodoOnRoute()),
+  fetchFormerTodo: year => dispatch(fecthFormarTodoStart(year))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

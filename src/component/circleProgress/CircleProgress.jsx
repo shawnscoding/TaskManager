@@ -58,11 +58,12 @@ export const primaryColor = ["#33b7c8", "#08e9dff5"];
 const primaryConlorSecond = ["#00BBFF", "#92d7f1"];
 
 const CcProgressOnCompletion = ({
-  todo,
+  todo = [{ date: "0" }],
   formattedDate,
   withToday,
   handlePreWeek,
-  handleNextWeek
+  handleNextWeek,
+  withThisWeek
 }) => {
   const classes = useStyles();
   const [aniPercent, setAniPercent] = useState(0);
@@ -70,14 +71,6 @@ const CcProgressOnCompletion = ({
   const { result, completedTodo } = getPercentageOfCompletedTodo(todo);
 
   let ani = 0;
-  let test = 0;
-  // const animationPercentage = () => {
-  //   const myInterval = setInterval(() => {
-  //     ani += 1;
-  //     // setAniPercent(aniPercent + 1);
-  //     console.log(ani);
-  //   }, 1000);
-  // };
 
   useEffect(() => {
     const clear = setInterval(() => {
@@ -90,10 +83,12 @@ const CcProgressOnCompletion = ({
       clearInterval(clear);
       setAfterAni(true);
     }, 1000);
+    return () => {
+      console.log("runeed! ");
+      clearInterval(clear);
+    };
   }, []);
 
-  // const rst = animationPercentage();
-  // console.log(aniPercent);
   return (
     <React.Fragment>
       <Grid xs={4} style={{ position: "relative" }} container item>
@@ -132,7 +127,7 @@ const CcProgressOnCompletion = ({
                 </Typography>
               </Grid>
             </>
-          ) : (
+          ) : withThisWeek ? (
             <>
               <Grid item>
                 <Typography
@@ -146,6 +141,18 @@ const CcProgressOnCompletion = ({
               <Grid color="primary" style={{ margin: "12px 0 0 12px" }} item>
                 <Typography className={classes.typoDate}>
                   {formattedDate.month}
+                </Typography>
+              </Grid>
+            </>
+          ) : (
+            <>
+              <Grid item>
+                <Typography
+                  gutterBottom
+                  color="primary"
+                  className={classes.typoDay}
+                >
+                  {formattedDate.year}
                 </Typography>
               </Grid>
             </>
@@ -168,7 +175,7 @@ const CcProgressOnCompletion = ({
             </Typography>
           </Grid>
 
-          {withToday ? null : (
+          {withThisWeek ? (
             <Grid style={{ margin: "0 0 0 3rem" }} item>
               <Button
                 color="primary"
@@ -191,7 +198,7 @@ const CcProgressOnCompletion = ({
                 Next Week
               </Button>
             </Grid>
-          )}
+          ) : null}
         </Grid>
       </Grid>
     </React.Fragment>

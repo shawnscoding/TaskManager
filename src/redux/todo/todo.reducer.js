@@ -6,7 +6,8 @@ const INITIAL_STATE = {
   weeklyTodo: [],
   currentTask: null,
   timer: false,
-  working: false
+  working: false,
+  formerTodo: []
 };
 
 const todoReducer = (state = INITIAL_STATE, action) => {
@@ -71,6 +72,12 @@ const todoReducer = (state = INITIAL_STATE, action) => {
         ...state,
 
         working: false
+      };
+
+    case todoActionTypes.FETCH_FORMER_TODO_FINISH:
+      return {
+        ...state,
+        formerTodo: [...action.payload]
       };
     default:
       return state;

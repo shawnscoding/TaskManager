@@ -8,7 +8,8 @@ import {
   setTodoFromFirebase,
   setAnotherTodoSuccess,
   getWeeklyTodoSuccess,
-  storeUpdatedTodoFinish
+  storeUpdatedTodoFinish,
+  fecthFormarTodoFinish
 } from "./todo.actions";
 import { createNewTodo } from "./todo.utils";
 import authActionTypes from "../auth/auth.types";
@@ -97,6 +98,34 @@ export function* getWeeklyTodoFromFb({ payload }) {
   }
 }
 
+export function* fetchFormerTodoFromFb({ payload }) {
+  console.log(payload, "payload");
+  const user = yield select(selectCurrentUser);
+  try {
+    const listsRef = yield firestore.collection("todo_list");
+    const query = yield listsRef
+      .where("userId", "==", user.id)
+      .where("year", "==", payload)
+      .orderBy("date");
+    const snapShot = yield query.get();
+
+    const todoList = [];
+    if (snapShot.docs.length !== 0) {
+      for (let i = 0; i < snapShot.docs.length; i++) {
+        if (!snapShot.docs[i].id) {
+          snapShot.docs[i].id = Math.rendom().toString();
+        }
+        let todo = { ...snapShot.docs[i].data(), id: snapShot.docs[i].id };
+        todoList.push(todo);
+      }
+    }
+    yield put(fecthFormarTodoFinish(todoList));
+  } catch (err) {
+    alert("Sorry,, something went wrong,, try again later");
+    console.log(err);
+  }
+}
+
 export function* checkTodoInFirebase(month) {
   const user = yield select(selectCurrentUser);
   try {
@@ -107,8 +136,8 @@ export function* checkTodoInFirebase(month) {
       .orderBy("date");
     const snapShot = yield query.get();
 
-    if (snapShot.docs.length === 0) return;
     const todoList = [];
+    if (snapShot.docs.length === 0) return todoList;
     for (let i = 0; i < snapShot.docs.length; i++) {
       let todo = { ...snapShot.docs[i].data(), id: snapShot.docs[i].id };
       todoList.push(todo);
@@ -175,11 +204,19 @@ export function* onStoreTimeToComplete() {
   yield takeLatest(todoActionTypes.STORE_UPDATED_TODO_START, updateTodoInFb);
 }
 
+export function* onFetchFormerTodo() {
+  yield takeLatest(
+    todoActionTypes.FETCH_FORMER_TODO_START,
+    fetchFormerTodoFromFb
+  );
+}
+
 // compose
 
 export function* todoSagas() {
   yield all([
     call(onAddTodo),
+    call(onFetchFormerTodo),
     call(resetTodoOnRoute),
     call(onGetWeeklyTodo),
     call(onUserSignIn),

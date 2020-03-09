@@ -49,10 +49,10 @@ export const useStyles = makeStyles(theme => ({
     width: drawerWidth
   },
   content: {
+    minHeight: "100vh",
     paddingTop: "3.3rem",
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    height: "100vh"
+    backgroundColor: theme.palette.background.default
   },
   logo: {
     width: 40,
@@ -67,7 +67,7 @@ export const useStyles = makeStyles(theme => ({
     top: "0.6rem"
   },
   paper: {
-    height: "81vh"
+    minHeight: "100vh"
   },
   timerContainer: {
     position: "fixed",

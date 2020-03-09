@@ -1,4 +1,5 @@
-import { format } from "date-fns";
+import { format, startOfYear, addMonths, addHours } from "date-fns";
+import { categories } from "./../redux/todo/todo.utils";
 
 export const hoursArray = [];
 export const minutesArray = [];
@@ -72,24 +73,77 @@ export const getHours = seconds => {
   return Math.floor(seconds / 3600);
 };
 
-// export const pickUpYearMonthAndDate = date => {
-//   const year = date.toString().slice(11, 15);
-//   const month = date.toString().slice(4, 7);
-//   const newDate = date.toString().slice(8, 10);5//   const timeHour = date.toString().slice(16, 18);
-//   const timeMinutes = date.toString().slice(19, 21);
-//   const time = timeHour + timeMinutes;
-//   return { year, month, newDate, time };
-// };
+export const createRateOfCompletionDataByMonth = (todos, year) => {
+  const monthList = [];
+  if (todos.length === 0) return monthList;
+  let month = startOfYear(year);
 
-// export const getMonthAndDay = day => {
-//   const newDay = day.toString().slice(8, 10);
-//   const month = day.toString().slice(4, 7);
+  for (let i = 0; i < 12; i++) {
+    const march = todos.filter(todo => todo.month === format(month, "MMM"));
+    const completed = march.filter(todo => todo.completed === true);
+    monthList.push({
+      name: format(month, "MMM"),
+      completed: completed.length,
+      total: march.length
+    });
+    month = addMonths(month, 1);
+  }
 
-//   return month + newDay;
-// };
+  return monthList;
+};
 
-// export const getThisMonth = () => {
-//   const date = new Date();
-//   const month = day.toString().slice(4, 7);
-//   return month;
-// };
+export const createRateOfCompletionDataByHour = todos => {
+  const monthList = [];
+  if (todos.length === 0) return monthList;
+  let hour = new Date("2020 1 1 06:01");
+  for (let i = 0; i < 18; i++) {
+    const total = todos.filter(
+      todo => format(todo.date.toDate(), "H") === format(hour, "H")
+    );
+    const completed = total.filter(todo => todo.completed !== true);
+    monthList.push({
+      name: format(hour, "hh"),
+      completed: completed.length,
+      total: total.length
+    });
+
+    hour = addHours(hour, 1);
+  }
+
+  return monthList;
+};
+
+export const createRateOfCompletionDataByCategory = todos => {
+  const monthList = [];
+  if (todos.length === 0) return monthList;
+  const category = categories;
+  for (let i = 0; i < category.length; i++) {
+    const total = todos.filter(todo => todo.category === category[i]);
+    const completed = total.filter(todo => todo.completed !== true);
+    monthList.push({
+      name: category[i],
+      completed: completed.length,
+      total: total.length
+    });
+  }
+
+  return monthList;
+};
+
+export const createRateOfCompletionDataByImportance = todos => {
+  const monthList = [];
+  if (todos.length === 0) return monthList;
+  console.log("object");
+  const importance = [1, 2, 3, 4, 5];
+  for (let i = 0; i < importance.length; i++) {
+    const total = todos.filter(todo => todo.importance === importance[i]);
+    const completed = total.filter(todo => todo.completed !== true);
+    monthList.push({
+      name: importance[i].toString(),
+      completed: completed.length,
+      total: total.length
+    });
+  }
+
+  return monthList;
+};
