@@ -23,6 +23,8 @@ import {
 const GraphContainer = styled(ComposedChart)`
   position: absolute;
   top: -1rem;
+  box-shadow: 0 4px 10px 0 rgba(0,0,0,0.3);
+  
   ${props =>
     props.firleft === "true" &&
     css`

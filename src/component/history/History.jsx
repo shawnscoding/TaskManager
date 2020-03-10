@@ -77,7 +77,7 @@ const HistoryContainer = ({ first, todos, year }) => {
           />
           <TextContainer item>
             {first ? (
-              <Typography gutterBottom>Completion Rate By Time</Typography>
+              <Typography gutterBottom>Completion Rate By Hour</Typography>
             ) : (
               <Typography gutterBottom>
                 Completion Rate By Importance
