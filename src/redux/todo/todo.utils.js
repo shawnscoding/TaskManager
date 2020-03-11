@@ -32,6 +32,7 @@ export const setDailyTodo = (todos, monthAndDate) => {
 
 export const checkIfTodoExist = todoList => {
   if (todoList.length === 0) {
+    console.log("runnneddd in check");
     return [{ date: "" }];
   } else {
     return todoList;
@@ -88,8 +89,8 @@ export const createNewTodo = (form, date, userId) => {
   const mins = Number(minutes) * 60;
   const hour = Number(hours) * 3600;
   const timeToComplete = mins + hour;
-
-  console.log(timeToComplete, "hid dd dd");
+  const totalHour = mins + hour;
+  const workingHour = 0;
 
   const month = format(date, "MMM");
   const year = format(date, "yyyy");
@@ -97,6 +98,8 @@ export const createNewTodo = (form, date, userId) => {
   return {
     userId,
     title,
+    workingHour,
+    totalHour,
     description,
     category,
     timeToComplete,

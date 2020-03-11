@@ -24,20 +24,34 @@ const TodayPage = ({ match, todos }) => {
 
   React.useEffect(() => {
     if (todos.length !== 0) {
-      let newTodos = todos.filter(
-        todo => format(todo.date.toDate(), "MMMd") === monthAndDate
-      );
-      if (newTodos.length === 0) {
-        const mockDate = monthAndDate.slice(3);
+      if (typeof todos[0].date === typeof "") {
+        console.log("runeed dddddddddd in if");
+        const date = format(new Date(), "d");
         setDailyTodo([
           {
             title: "",
             category: "",
-            date: mockDate
+            date: date
           }
         ]);
       } else {
-        setDailyTodo(newTodos);
+        console.log("runeed ddddddddd in else");
+
+        let newTodos = todos.filter(
+          todo => format(todo.date.toDate(), "MMMd") === monthAndDate
+        );
+        if (newTodos.length === 0) {
+          const mockDate = monthAndDate.slice(3);
+          setDailyTodo([
+            {
+              title: "",
+              category: "",
+              date: mockDate
+            }
+          ]);
+        } else {
+          setDailyTodo(newTodos);
+        }
       }
     }
   }, [todos, monthAndDate]);

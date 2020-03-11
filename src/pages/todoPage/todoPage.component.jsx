@@ -8,9 +8,8 @@ import {
   Box
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { createStructuredSelector } from "reselect";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import withWidth from "@material-ui/core/withWidth";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -29,115 +28,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TodoPage = ({ history, setStepToZero, onUserLeave }) => {
-  const classes = useStyles();
+const components = {
+  sm: "em",
+  md: "u",
+  lg: "del"
+};
 
-  const handleGoToCreateTodo = () => {
-    if (onUserLeave) {
-      onUserLeave();
-      setStepToZero();
-    } else {
-      history.push("/todo/createTodo");
-    }
-  };
-
-  const handleGoToCalendar = () => {
-    history.push("/todo/calendar");
-    if (onUserLeave) {
-      onUserLeave();
-      setStepToZero();
-    }
-  };
-
+const TodoPage = props => {
+  const { width } = props;
+  const Component = components[width] || "span";
   return (
     <React.Fragment>
-      <Grid
-        direction="row"
-        justify="space-evenly"
-        alignItems="center"
-        container
-        className={classes.container}
-      >
-        <Grid item>
-          <Card className={classes.card}>
-            <CardContent>
-              <Typography variant="h5" color="textSecondary" gutterBottom>
-                Create new To Do!
-              </Typography>
-              <Typography variant="body2" component="p">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sunt
-                obcaecati architecto sapiente doloribus maxime tenetur numquam
-                nostrum animi illo magnam ex, cum ab reprehenderit, provident
-                excepturi optio vel distinctio temporibus!
-              </Typography>
-              <br />
-
-              <Typography variant="body2" component="p">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sunt
-                obcaecati architecto sapiente doloribus maxime tenetur numquam
-                nostrum animi illo magnam ex, cum ab reprehenderit, provident
-                excepturi optio vel distinctio temporibus!
-              </Typography>
-              <br />
-            </CardContent>
-            <Box width="100%">
-              <Box display="flex" justifyContent="flex-end">
-                <Button
-                  onClick={handleGoToCreateTodo}
-                  size="large"
-                  variant="contained"
-                  color="primary"
-                >
-                  add new todo
-                </Button>
-              </Box>
-            </Box>
-          </Card>
-        </Grid>
-        <Grid item>
-          <Card className={classes.card}>
-            <CardContent>
-              <Typography variant="h5" color="textSecondary" gutterBottom>
-                Check my to do list
-              </Typography>
-              <Typography variant="body2" component="p">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sunt
-                obcaecati architecto sapiente doloribus maxime tenetur numquam
-                nostrum animi illo magnam ex, cum ab reprehenderit, provident
-                excepturi optio vel distinctio temporibus!
-              </Typography>
-              <br />
-              <Typography variant="body2" component="p">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sunt
-                obcaecati architecto sapiente doloribus maxime tenetur numquam
-                nostrum animi illo magnam ex, cum ab reprehenderit, provident
-                excepturi optio vel distinctio temporibus!
-              </Typography>
-              <br />
-            </CardContent>
-            <Box width="100%">
-              <Box display="flex" justifyContent="flex-end">
-                <Button
-                  onClick={handleGoToCalendar}
-                  size="large"
-                  variant="contained"
-                  color="primary"
-                >
-                  view my todos
-                </Button>
-              </Box>
-            </Box>
-          </Card>
-        </Grid>
-      </Grid>
+      <Typography variant="subtitle1">
+        <Component>{`Current width: ${width}`}</Component>
+      </Typography>
     </React.Fragment>
   );
 };
 
-const mapStateToProps = createStructuredSelector({});
-
-const mapDispatchToProps = dispatch => ({});
-
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(TodoPage)
-);
+export default withWidth()(TodoPage);

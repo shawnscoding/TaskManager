@@ -12,8 +12,50 @@ import {
 } from "../../redux/todo/todo.actions";
 import { selectLoading } from "./../../redux/async/async.selectors";
 import { getThisMonth } from "./../../utils/helper";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    padding: "2rem 1.5rem 2rem 2rem",
+    height: "100%",
+    [theme.breakpoints.up("lg")]: {
+      padding: "2rem 1.5rem 2rem 2rem "
+    },
+    [theme.breakpoints.down("lg")]: {
+      padding: "2rem 0rem 2rem 0rem "
+    },
+    "@media (max-width:960px)": {
+      padding: "2rem 0 0 0"
+    }
+
+    // [theme.breakpoints.down("md")]: {
+    // }
+  },
+  box: {
+    backgroundColor: "rgb(249, 249, 249)",
+    padding: "0.7rem 1rem 1.5rem 0.5rem",
+    boxShadow: "0 0 10px 10px rgb(249, 249, 249)",
+    borderRadius: "10px",
+    overflowY: "auto",
+    height: "96%",
+    [theme.breakpoints.down("md")]: {
+      padding: "0 3rem 0 3rem"
+    },
+    [theme.breakpoints.up("md")]: {
+      padding: "0.7rem 1rem 1.5rem 0.5rem"
+    }
+  },
+  container: {
+    overflowY: "auto",
+    height: "95vh",
+    [theme.breakpoints.down("md")]: {
+      height: "unset"
+    }
+  }
+}));
 
 const CalendarPage = ({ todos, getAnotherTodo, loading }) => {
+  const classes = useStyles();
   const withCalendar = true;
   const [dailyTodo, setDailyTodo] = React.useState([
     {
@@ -72,18 +114,9 @@ const CalendarPage = ({ todos, getAnotherTodo, loading }) => {
   };
 
   return (
-    <Grid style={{ overflowY: "auto", height: "100%" }} container>
-      <Grid style={{ padding: "2rem 1.5rem 2rem 2rem" }} xs={6} item>
-        <Box
-          style={{
-            backgroundColor: "rgb(249, 249, 249)",
-            padding: "0.7rem 1rem 1.5rem 0.5rem",
-            boxShadow: "0 0 10px 10px rgb(249, 249, 249)",
-            borderRadius: "10px",
-            overflowY: "auto",
-            height: "96%"
-          }}
-        >
+    <Grid className={classes.container} container>
+      <Grid className={classes.root} md={6} sm={12} item>
+        <Box className={classes.box}>
           <Calendar
             loading={loading}
             handleClickAnotherMonth={handleClickAnotherMonth}
@@ -92,11 +125,7 @@ const CalendarPage = ({ todos, getAnotherTodo, loading }) => {
           />
         </Box>
       </Grid>
-      <Grid
-        style={{ padding: "2rem 2rem 2rem 1.5rem", height: "100%" }}
-        xs={6}
-        item
-      >
+      <Grid className={classes.root} md={6} sm={12} item>
         <Box
           style={{
             backgroundColor: "rgb(249, 249, 249)",

@@ -51,7 +51,7 @@ export const beforeRenderTodo = todos => {
 
 export const getPercentageOfCompletedTodo = todos => {
   if (todos.length === 0) return 0;
-  const completedTodo = todos.filter(todo => todo.completed !== true);
+  const completedTodo = todos.filter(todo => todo.completed === true);
   const result = Math.round((completedTodo.length / todos.length) * 100);
   return {
     result,
@@ -164,19 +164,22 @@ export const getMostFrequentItem = array => {
   return maxEl;
 };
 
-export const getLeastFrequentItem = array => {
-  if (array.length == 0) return null;
-  var modeMap = {};
-  var minEl = array[0],
-    minCount = 100;
-  for (var i = 0; i < array.length; i++) {
-    var el = array[i];
-    if (modeMap[el] == null) modeMap[el] = 100;
-    else modeMap[el]--;
-    if (modeMap[el] < minCount) {
-      minEl = el;
-      minCount = modeMap[el];
-    }
-  }
-  return minEl;
-};
+// solve it later
+// export const getLeastFrequentItem = array => {
+//   if (array.length == 0) return null;
+//   var modeMap = {};
+//   var minEl = array[0],
+//     minCount = 100;
+//   for (var i = 0; i < array.length; i++) {
+//     var el = array[i];
+//     if (modeMap[el] == null) modeMap[el] = 100;
+//     else modeMap[el]--;
+//     if (modeMap[el] < minCount) {
+//       minEl = el;
+//       minCount = modeMap[el];
+//     }
+//     console.log("modeMap", modeMap);
+//   }
+//   console.log("minEl", minEl);
+//   return minEl;
+// };

@@ -2,12 +2,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
 import { Grid } from "@material-ui/core";
 
-export const HeaderDay = styled(Grid)`
-  width: 4.5rem;
-  height: 4.5rem;
-  border-radius: 10px;
-`;
-
 export const HeaderButton = styled(Grid)`
   width: 4.5rem;
   height: 4.5rem;
@@ -35,12 +29,28 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: "0 0 5px 5px rgb(236, 236, 236)",
     padding: theme.spacing(1, 2),
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
+    width: "4.5rem",
+    [theme.breakpoints.down("lg")]: {
+      width: "4rem"
+    },
+    [theme.breakpoints.up("lg")]: {
+      width: "4.5rem"
+    }
   },
   selectedDay: {
     backgroundColor: theme.palette.primary.main,
     boxShadow: "0 0 5px 5px rgb(221, 221, 221)",
     color: "#fff",
-    padding: theme.spacing(1, 2)
+    padding: theme.spacing(1, 2),
+    width: "4.5rem",
+    [theme.breakpoints.down("lg")]: {
+      width: "4rem"
+    }
+  },
+  headerDay: {
+    width: "4.5rem",
+    height: "4.5rem",
+    borderRadius: "10px"
   }
 }));

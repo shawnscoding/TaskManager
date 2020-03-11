@@ -66,40 +66,48 @@ const HistoryHeader = ({ todos }) => {
   const year = getThisYear();
   const formattedDate = { year: year };
 
+  // try reduce on it for practice
+  // getTotal hour
   let totalHour = 0;
-  // fix
-  let workingHour = 0;
 
   for (let i = 0; i < todos.length; i++) {
-    if (todos[i].timeToComplete) {
-      totalHour += todos[i].timeToComplete;
+    if (todos[i].totalHour) {
+      totalHour += todos[i].totalHour;
     }
   }
+
+  console.log(totalHour);
+
+  // get working hour
+  let workingHour = 0;
+  for (let i = 0; i < todos.length; i++) {
+    if (todos[i].workingHour) {
+      workingHour += todos[i].workingHour;
+      console.log(workingHour, "workingHour");
+    }
+  }
+
+  console.log(workingHour);
 
   let arr = [];
   for (let i = 0; i < todos.length; i++) {
     // fix
-    if (todos[i].completed === false) {
+    if (todos[i].completed === true) {
       arr.push(format(todos[i].date.toDate(), "MMMM"));
     }
   }
+  console.log(arr, "arr");
+
   const maxMonth = getMostFrequentItem(arr);
 
-  const minMonth = getLeastFrequentItem(arr);
+  // const minMonth = getLeastFrequentItem(arr);
 
-  //   const my = [1, 2, 3, 4, 5];
-
-  //   const resultSec = my.reduce((acc, val) => {
-  //     return acc + val;
-  //   });
-  //   console.log(resultSec, "dd");
-
-  const getMinutes = totalHour => {
-    return ("0" + Math.floor((totalHour / 60) % 60)).slice(-2);
+  const getMinutes = seconds => {
+    return ("0" + Math.floor((seconds / 60) % 60)).slice(-2);
   };
 
-  const getHours = totalHour => {
-    return Math.floor(totalHour / 3600);
+  const getHours = seconds => {
+    return Math.floor(seconds / 3600);
   };
 
   const getPercentage = (month, todos) => {
@@ -144,9 +152,18 @@ const HistoryHeader = ({ todos }) => {
                 <GreyText>Total Hour:</GreyText>
               </Grid>
               <RightTypo item>
-                <Typography>
-                  {getHours(totalHour)} hour {getMinutes(totalHour)} mins
-                </Typography>
+                {getHours(totalHour) === 0 ? null : getHours(totalHour) ===
+                  1 ? (
+                  <Typography>{getHours(totalHour)} hour</Typography>
+                ) : (
+                  <Typography>{getHours(totalHour)} hours</Typography>
+                )}
+                {getMinutes(totalHour) === 0 ? null : getMinutes(totalHour) ===
+                  1 ? (
+                  <Typography>{getMinutes(totalHour)} min</Typography>
+                ) : (
+                  <Typography>{getMinutes(totalHour)} mins</Typography>
+                )}
               </RightTypo>
             </TypoContainer>
             <TypoContainer
@@ -159,7 +176,19 @@ const HistoryHeader = ({ todos }) => {
                 <GreyText>Working Hour:</GreyText>
               </Grid>
               <RightTypo item>
-                <Typography> 33 mins </Typography>
+                {getHours(workingHour) === 0 ? null : getHours(workingHour) ===
+                  1 ? (
+                  <Typography>{getHours(workingHour)} hour</Typography>
+                ) : (
+                  <Typography>{getHours(workingHour)} hours</Typography>
+                )}
+                {getMinutes(workingHour) === 0 ? null : getMinutes(
+                    workingHour
+                  ) === 1 ? (
+                  <Typography>{getMinutes(workingHour)} min</Typography>
+                ) : (
+                  <Typography>{getMinutes(workingHour)} mins</Typography>
+                )}
               </RightTypo>
             </TypoContainer>
             <TypoContainer
@@ -167,6 +196,7 @@ const HistoryHeader = ({ todos }) => {
               alignItems="center"
               container
               item
+              style={{ paddingBottom: "2rem" }}
             >
               <Grid item>
                 <GreyText> Highest Completion Rate:</GreyText>
@@ -177,7 +207,7 @@ const HistoryHeader = ({ todos }) => {
                 </Typography>
               </RightTypo>
             </TypoContainer>
-            <TypoContainer
+            {/* <TypoContainer
               justify="flex-start"
               alignItems="center"
               container
@@ -192,7 +222,7 @@ const HistoryHeader = ({ todos }) => {
                   {getPercentage(minMonth, todos).toString()}% in {minMonth}
                 </Typography>
               </RightTypo>
-            </TypoContainer>
+            </TypoContainer> */}
           </Grid>
         </RightItem>
       </RightContainer>

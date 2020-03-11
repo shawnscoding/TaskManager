@@ -11,7 +11,6 @@ import {
   Box,
   Typography
 } from "@material-ui/core";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { useStyles } from "./dailyTodo.styles";
 import {
   beforeRenderTodo,
@@ -92,7 +91,7 @@ const TodoDashBoard = ({
           className={classes.twAppBarContainer}
           container
         >
-          <Grid xs={6} item container>
+          <Grid sm={12} md={6} className={classes.progress} item container>
             <CircleProgress
               formattedDate={formattedDate}
               classes={classes}
@@ -102,7 +101,14 @@ const TodoDashBoard = ({
               withThisWeek={withThisWeekPage}
             />
           </Grid>
-          <Grid xs={6} container direction="column" justify="flex-end" item>
+          <Grid
+            sm={12}
+            md={6}
+            container
+            direction="column"
+            justify="flex-end"
+            item
+          >
             <AppBar className={classes.twAppBar} position="static">
               <Tabs
                 value={value}
@@ -114,17 +120,20 @@ const TodoDashBoard = ({
               >
                 <Tab
                   label="By Category"
+                  style={{ minWidth: "0" }}
                   {...a11yProps(0)}
                   disabled={beforeRenderTodo(dailyTodo) === false}
                 />
                 <Tab
                   label="Priority"
+                  style={{ minWidth: "0" }}
                   {...a11yProps(1)}
                   disabled={beforeRenderTodo(dailyTodo) === false}
                 />
                 <Tab
                   label="Completed"
                   {...a11yProps(2)}
+                  style={{ minWidth: "0" }}
                   disabled={beforeRenderTodo(dailyTodo) === false}
                 />
               </Tabs>
@@ -184,7 +193,7 @@ const TodoDashBoard = ({
           className={classes.twAppBarContainer}
           container
         >
-          <Grid xs={5} item container>
+          <Grid sm={12} md={5} item container>
             <CircleProgress
               formattedDate={formattedDate}
               classes={classes}
@@ -192,7 +201,14 @@ const TodoDashBoard = ({
               withToday={withToday}
             />
           </Grid>
-          <Grid xs={7} container direction="column" justify="flex-end" item>
+          <Grid
+            sm={12}
+            md={7}
+            container
+            direction="column"
+            justify="flex-end"
+            item
+          >
             <DailyTodoHeader
               dailyTodo={dailyTodo}
               monthAndDate={monthAndDate}
@@ -208,25 +224,25 @@ const TodoDashBoard = ({
                 aria-label="full width tabs example"
               >
                 <Tab
-                  style={withCalendar ? { minWidth: "8rem" } : null}
+                  style={{ minWidth: "0" }}
                   label="ALL"
                   {...a11yProps(0)}
                   disabled={beforeRenderTodo(dailyTodo) === false}
                 />
                 <Tab
-                  style={withCalendar ? { minWidth: "8rem" } : null}
+                  style={{ minWidth: "0" }}
                   label="Category"
                   {...a11yProps(1)}
                   disabled={beforeRenderTodo(dailyTodo) === false}
                 />
                 <Tab
-                  style={withCalendar ? { minWidth: "8rem" } : null}
+                  style={{ minWidth: "0" }}
                   label="Priority"
                   {...a11yProps(2)}
                   disabled={beforeRenderTodo(dailyTodo) === false}
                 />
                 <Tab
-                  style={withCalendar ? { minWidth: "8rem" } : null}
+                  style={{ minWidth: "0" }}
                   label="Completed"
                   {...a11yProps(3)}
                   disabled={beforeRenderTodo(dailyTodo) === false}
@@ -295,25 +311,25 @@ const TodoDashBoard = ({
           aria-label="full width tabs example"
         >
           <Tab
-            style={withCalendar ? { minWidth: "8rem" } : null}
+            style={{ minWidth: "0" }}
             label="ALL"
             {...a11yProps(0)}
             disabled={beforeRenderTodo(dailyTodo) === false}
           />
           <Tab
-            style={withCalendar ? { minWidth: "8rem" } : null}
+            style={{ minWidth: "0" }}
             label="Category"
             {...a11yProps(1)}
             disabled={beforeRenderTodo(dailyTodo) === false}
           />
           <Tab
-            style={withCalendar ? { minWidth: "8rem" } : null}
+            style={{ minWidth: "0" }}
             label="Priority"
             {...a11yProps(2)}
             disabled={beforeRenderTodo(dailyTodo) === false}
           />
           <Tab
-            style={withCalendar ? { minWidth: "8rem" } : null}
+            style={{ minWidth: "0" }}
             label="Completed"
             {...a11yProps(3)}
             disabled={beforeRenderTodo(dailyTodo) === false}

@@ -19,7 +19,7 @@ const DailyTodoAll = ({ dailyTodo, classes, withCalendar }) => {
   };
 
   return (
-    <div style={{ padding: "0 1rem" }}>
+    <div className={withCalendar ? classes.caBox : classes.box}>
       {dailyTodo.length !== 0 && typeof dailyTodo[0].date !== typeof "" ? (
         allHours.map((hour, index) => (
           <Grid className={classes.todoAllContainer} key={index} container>

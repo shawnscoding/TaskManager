@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Typography, Button } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import {
   format,
   startOfWeek,
@@ -12,17 +12,20 @@ import {
   subMonths,
   addMonths
 } from "date-fns";
-import {
-  HeaderDay,
-  HeaderButton
-} from "../../pages/todayPage/todayPage.styles";
+import { HeaderButton } from "../../pages/todayPage/todayPage.styles";
 import { withRouter } from "react-router-dom";
 import { DayContainer } from "./../todo/dailyTodo.styles";
 import "./dailyTodoHeader.css";
-import { useStyles } from "./../../pages/todayPage/todayPage.styles";
 import { setAnotherTodoStart } from "./../../redux/todo/todo.actions";
 import { connect } from "react-redux";
 import { getThisYear } from "../../utils/helper";
+import styled from "styled-components";
+import { useStyles } from "./../../pages/todayPage/todayPage.styles";
+
+const HeaderDay = styled(Grid)`
+  height: 4.7rem;
+  border-radius: 10px;
+`;
 
 const DailyTodoHeader = ({ history, match, dailyTodo, setAnotherTodo }) => {
   const classes = useStyles();

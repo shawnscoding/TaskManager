@@ -34,7 +34,7 @@ const TodoFormSecond = ({
         fullWidth
         margin="normal"
         id="time-picker"
-        label="you can select the exact time, if you wish ( optional )"
+        label="select the time you will work on"
         value={date}
         onChange={onDateAndTimeChange}
         KeyboardButtonProps={{

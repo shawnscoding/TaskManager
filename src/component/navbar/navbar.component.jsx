@@ -38,6 +38,7 @@ import TodayPage from "../../pages/todayPage/todayPage.component";
 import { format } from "date-fns";
 import CalendarPage from "./../../pages/calendarPage/calendarPage.component";
 import LoadingComponent from "./../loader/loadingCompoent";
+import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 import {
   selectMonthlyTodo,
   selectTimer,
@@ -61,20 +62,18 @@ import Warning from "./../warning/TimerWarning";
 import HistoryPage from "./../../pages/historyPage/HistoryPage";
 import TimerIcon from "@material-ui/icons/Timer";
 import { fecthFormarTodoStart } from "./../../redux/todo/todo.actions";
+import { signOutStart } from "./../../redux/auth/auth.actions";
 
 const Navbar = props => {
   const {
     container,
-    loading,
     user,
+    signOut,
     working,
-    todos,
     resetTodo,
-    fetchFormerTodo,
     timerWarning,
     toggleTimerWarning,
     currentTask,
-    match,
     openTimer,
     closeTimer,
     timer,
@@ -92,11 +91,6 @@ const Navbar = props => {
   };
 
   const onClickHistory = async () => {
-    // if (!fetchedFormerTodo) {
-    //   const formattedYear = format(year, "yyyy");
-    //   await fetchFormerTodo(formattedYear);
-    //   setFetchedFormerTodo(true);
-    // }
     history.push(`/history/${user.id}`);
   };
 
@@ -184,13 +178,13 @@ const Navbar = props => {
               <InfoIcon className={classes.icon} />
             </ListItemIcon>
             <ListItemText primary="About Us" />
-          </ListItem>
-          <ListItem button>
+          </ListItem>*/}
+          <ListItem color="secondary" onClick={() => signOut()} button>
             <ListItemIcon>
-              <TimeToLeaveIcon className={classes.icon} color="secondary" />
+              <TimeToLeaveIcon color="secondary" />
             </ListItemIcon>
             <ListItemText primary="Log Out" />
-          </ListItem> */}
+          </ListItem>
         </List>
       </div>
     </div>
@@ -211,27 +205,37 @@ const Navbar = props => {
           </IconButton>
 
           {user ? (
-            <Typography
-              style={{
-                fontSize: "1.1rem"
-              }}
-              variant="h6"
-              noWrap
-            >
-              Welcome ! {user.displayName}
-            </Typography>
+            <>
+              <Typography variant="h3" noWrap>
+                Welcome !
+              </Typography>
+              <Typography
+                style={{
+                  color: "rgb(89, 205, 208)",
+                  padding: "0 0 0 0.6rem"
+                }}
+                variant="h3"
+                noWrap
+              >
+                {user.displayName}
+              </Typography>
+            </>
           ) : (
-            <Typography
-              style={{
-                fontSize: "1.1rem"
-              }}
-              variant="h6"
-              noWrap
-            >
+            <Typography variant="h3" noWrap>
               Welcome !
             </Typography>
           )}
-          {user ? <ProfileIcon classes={classes} /> : <SignInForm />}
+          {user ? (
+            <AccountCircleRoundedIcon
+              style={{
+                position: "absolute",
+                right: "4rem",
+                top: "16px"
+              }}
+            />
+          ) : (
+            <SignInForm />
+          )}
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
@@ -267,13 +271,7 @@ const Navbar = props => {
       </nav>
       <Paper className={classes.content}>
         <React.Fragment>
-          <Route
-            exact
-            path={"/history/:userId"}
-            render={() => (
-              <HistoryPage year={year} setYear={setYear} user={user} />
-            )}
-          />
+          <SignUpForm />
           {user ? (
             <React.Fragment>
               <Switch>
@@ -295,6 +293,13 @@ const Navbar = props => {
                   path="/todo/dailyTodo/:monthAndDate"
                   component={TodayPage}
                 />
+                <Route
+                  exact
+                  path={"/history/:userId"}
+                  render={() => (
+                    <HistoryPage year={year} setYear={setYear} user={user} />
+                  )}
+                />
               </Switch>
               <TodoForm />
               <Warning
@@ -302,7 +307,6 @@ const Navbar = props => {
                 toggleTimerWarning={toggleTimerWarning}
                 openTimer={openTimer}
               />
-              <SignUpForm />
               {currentTask ? (
                 <Timer openTimer={timer} closeTimer={closeTimer} />
               ) : null}
@@ -341,7 +345,8 @@ const mapDispatchToProps = dispatch => ({
   closeTimer: () => dispatch(closeTimer()),
   toggleTimerWarning: () => dispatch(toggleTimerWarning()),
   resetTodo: () => dispatch(resetMonthlyTodoOnRoute()),
-  fetchFormerTodo: year => dispatch(fecthFormarTodoStart(year))
+  fetchFormerTodo: year => dispatch(fecthFormarTodoStart(year)),
+  signOut: () => dispatch(signOutStart())
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

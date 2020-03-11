@@ -150,7 +150,9 @@ const Calendar = ({
               {dailyTodo.length !== 0 && dailyTodo[0].date !== "" ? (
                 <div className="exist">
                   <span className="number">
-                    <FiberManualRecordIcon style={{ fontSize: "1rem" }} />
+                    <FiberManualRecordIcon
+                      style={{ fontSize: "1rem", color: "#3949abdb" }}
+                    />
                   </span>
                 </div>
               ) : null}

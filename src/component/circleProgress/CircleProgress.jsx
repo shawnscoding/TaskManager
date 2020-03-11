@@ -3,6 +3,7 @@ import { Button, Grid, Typography } from "@material-ui/core";
 import { getPercentageOfCompletedTodo } from "../../utils/helper";
 import { makeStyles } from "@material-ui/core/styles";
 import { CircleProgress } from "react-gradient-progress";
+import withWidth from "@material-ui/core/withWidth";
 
 const useStyles = makeStyles(theme => ({
   percentBig: {
@@ -30,27 +31,65 @@ const useStyles = makeStyles(theme => ({
     color: "#fff"
   },
   dateBox: {
-    paddingLeft: "2rem",
-    color: "#00aced"
+    paddingLeft: "",
+    color: "#00aced",
+    fontSize: "1rem"
   },
   typoDay: {
-    fontSize: "1.7rem"
+    fontSize: "1.7rem",
+    [theme.breakpoints.down("lg")]: {
+      fontSize: "1.3rem"
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "1.7rem"
+    },
+    "@media (max-width:1120px)": {
+      fontSize: "1.2rem"
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.5rem"
+    }
   },
   typoDate: {
     fontSize: "1rem",
-    color: "#00aced"
+    color: "#00aced",
+    [theme.breakpoints.down("lg")]: {
+      fontSize: "0.9rem"
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "1rem"
+    },
+    "@media (max-width:1120px)": {
+      fontSize: "0.7rem"
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.9rem"
+    }
   },
+
   tdRateOfCompletion: {
     margin: "6px 0 0",
-    fontSize: "2.3rem"
+    fontSize: "2rem"
   },
   twRateOfCompletion: {
-    margin: "5px 0 0 0px",
-    fontSize: "2.5rem"
+    fontSize: "2rem",
+    [theme.breakpoints.down("lg")]: {
+      fontSize: "2rem"
+    }
   },
-  twTypeDate: {},
   twTypeMonth: {
     margin: "0 0 0 14px"
+  },
+  leftbutton: {
+    margin: "0 5px 0 0",
+    "@media (max-width:700px)": {
+      fontSize: "0.6rem"
+    }
+  },
+  rightButton: {
+    "@media (max-width:700px)": {
+      fontSize: "0.6rem"
+    }
   }
 }));
 
@@ -63,7 +102,8 @@ const CcProgressOnCompletion = ({
   withToday,
   handlePreWeek,
   handleNextWeek,
-  withThisWeek
+  withThisWeek,
+  width
 }) => {
   const classes = useStyles();
   const [aniPercent, setAniPercent] = useState(0);
@@ -71,7 +111,7 @@ const CcProgressOnCompletion = ({
   const { result, completedTodo } = getPercentageOfCompletedTodo(todo);
 
   let ani = 0;
-
+  console.log(width, "width");
   useEffect(() => {
     const clear = setInterval(() => {
       ani += 1;
@@ -91,67 +131,63 @@ const CcProgressOnCompletion = ({
 
   return (
     <React.Fragment>
-      <Grid xs={4} style={{ position: "relative" }} container item>
+      <Grid
+        lg={6}
+        md={withThisWeek ? 6 : 8}
+        sm={6}
+        style={{ position: "relative" }}
+        container
+        item
+      >
         <CircleProgress
           percentage={afterAni ? result : aniPercent}
-          strokeWidth={10}
-          width={190}
+          strokeWidth={width === "md" ? 8 : width === "lg" ? 10 : 7}
+          width={width === "md" ? 170 : width === "lg" ? 190 : 165}
           fontColor={afterAni ? "inherit" : "#fafafa"}
           secondaryColor="#f0f0f0"
           primaryColor={primaryColor}
         />
       </Grid>
       <Grid
-        xs={8}
+        lg={6}
+        md={withThisWeek ? 6 : 8}
+        sm={6}
         className={withToday ? classes.dateBox : null}
         container
         direction="column"
         justify="center"
         item
       >
-        <Grid container item>
+        <Grid item>
           {withToday ? (
             <>
-              <Grid item>
-                <Typography
-                  gutterBottom
-                  color="primary"
-                  className={classes.typoDay}
-                >
-                  {formattedDate.day}
-                </Typography>
-              </Grid>
-              <Grid color="primary" style={{ margin: "12px 0 0 12px" }} item>
-                <Typography gutterBottom className={classes.typoDate}>
-                  {formattedDate.date} {formattedDate.month}
-                </Typography>
-              </Grid>
+              <Typography className={classes.typoDate}>
+                {formattedDate.date} {formattedDate.month}
+              </Typography>
+              <Typography color="primary" className={classes.typoDay}>
+                {formattedDate.day}
+              </Typography>
             </>
           ) : withThisWeek ? (
             <>
-              <Grid item>
-                <Typography
-                  gutterBottom
-                  color="primary"
-                  className={classes.typoDay}
-                >
-                  {formattedDate.startDay} ~ {formattedDate.endDay}
-                </Typography>
-              </Grid>
-              <Grid color="primary" style={{ margin: "12px 0 0 12px" }} item>
-                <Typography className={classes.typoDate}>
-                  {formattedDate.month}
-                </Typography>
+              <Grid container item>
+                <Grid item>
+                  <Typography color="primary" className={classes.typoDay}>
+                    {formattedDate.startDay} ~ {formattedDate.endDay}
+                  </Typography>
+                </Grid>
+
+                <Grid color="primary" style={{ margin: "12px 0 0 12px" }} item>
+                  <Typography className={classes.typoDate}>
+                    {formattedDate.month}
+                  </Typography>
+                </Grid>
               </Grid>
             </>
           ) : (
             <>
               <Grid item>
-                <Typography
-                  gutterBottom
-                  color="primary"
-                  className={classes.typoDay}
-                >
+                <Typography color="primary" className={classes.typoDay}>
                   {formattedDate.year}
                 </Typography>
               </Grid>
@@ -159,7 +195,9 @@ const CcProgressOnCompletion = ({
           )}
         </Grid>
         <Grid item>
-          <Typography color="primary">Completed Tasks </Typography>
+          <Typography className={classes.typoDate} color="primary">
+            Completed Tasks{" "}
+          </Typography>
         </Grid>
         <Grid container item>
           <Grid item>
@@ -174,35 +212,32 @@ const CcProgressOnCompletion = ({
               {completedTodo.length} / {todo.length}
             </Typography>
           </Grid>
-
-          {withThisWeek ? (
-            <Grid style={{ margin: "0 0 0 3rem" }} item>
-              <Button
-                color="primary"
-                onClick={handlePreWeek}
-                style={{
-                  margin: "10px 10px 10px 0"
-                }}
-                variant="outlined"
-              >
-                Last Week
-              </Button>
-              <Button
-                color="primary"
-                onClick={handleNextWeek}
-                style={{
-                  margin: "10px 0 10px 0"
-                }}
-                variant="contained"
-              >
-                Next Week
-              </Button>
-            </Grid>
-          ) : null}
         </Grid>
+        {withThisWeek ? (
+          <Grid item>
+            <Button
+              color="primary"
+              onClick={handlePreWeek}
+              size={width === "md" ? "small" : "medium"}
+              className={classes.leftbutton}
+              variant="outlined"
+            >
+              Last Week
+            </Button>
+            <Button
+              color="primary"
+              size={width === "md" ? "small" : "medium"}
+              className={classes.rightButton}
+              onClick={handleNextWeek}
+              variant="contained"
+            >
+              Next Week
+            </Button>
+          </Grid>
+        ) : null}
       </Grid>
     </React.Fragment>
   );
 };
 
-export default CcProgressOnCompletion;
+export default withWidth()(CcProgressOnCompletion);

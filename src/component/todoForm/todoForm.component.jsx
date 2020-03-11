@@ -31,6 +31,7 @@ import Dialog from "@material-ui/core/Dialog";
 import Slide from "@material-ui/core/Slide";
 import AddIcon from "@material-ui/icons/Add";
 import TodoFormLast from "./todoFormSteps/todoFormLast.component";
+import { format } from "date-fns";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -71,8 +72,7 @@ const TodoForm = ({
     category: "",
     hours: "",
     minutes: "0",
-    importance: 3,
-    reward: ""
+    importance: 3
   });
 
   const classes = useStyles();
@@ -87,8 +87,14 @@ const TodoForm = ({
     decreaseStep();
   };
 
-  const handleDateChange = async date => {
-    await setDate(date);
+  const handleDateChange = date => {
+    let copyDate = date;
+    const compare = format(copyDate, "H");
+    if (Number(compare) >= 6) {
+      setDate(date);
+    } else {
+      alert("Sorry, we don't support setting a task before 6 AM ");
+    }
   };
 
   const handleRatingChange = (e, value) => {
@@ -112,16 +118,18 @@ const TodoForm = ({
       category: "",
       hours: "",
       minutes: "",
-      importance: 3,
-      reward: ""
+      importance: 3
     });
     setDate(new Date());
   };
 
   const handleSubmit = () => {
-    if (form.reward === "") {
-      delete form.reward;
+    let copyDate = date;
+    const compare = format(copyDate, "H");
+    if (Number(compare) < 6) {
+      alert("Sorry, we don't support task setting before 6 AM ");
     }
+
     const formArray = Object.values(form);
 
     for (let i = 0; i < formArray.length; i++) {

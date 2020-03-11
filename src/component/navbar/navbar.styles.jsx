@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/styles";
 import { Toolbar } from "@material-ui/core/Toolbar";
 
-export const drawerWidth = 220;
+export const drawerWidth = 187;
 
 export const ToolbarHeight = 3.3;
 
@@ -43,7 +43,8 @@ export const useStyles = makeStyles(theme => ({
   toolbar: {
     minHeight: `${ToolbarHeight}rem`,
     backgroundColor: theme.palette.background.paper,
-    color: theme.palette.common.black
+    color: theme.palette.common.black,
+    position: "relative"
   },
   drawerPaper: {
     width: drawerWidth

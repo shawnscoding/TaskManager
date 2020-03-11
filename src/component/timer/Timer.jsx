@@ -156,9 +156,12 @@ class Timer extends Component {
     clearInterval(this.myInterval);
     this.props.stoppedWork();
     task.timeToComplete = this.state.counter;
+    task.workingHour = this.state.increment;
+    task.completed = true;
     storeUpdatedTodo(task);
     this.setState({
       counter: 0,
+      increment: 0,
       started: true,
       stopped: true,
       disableFinish: true
@@ -194,16 +197,17 @@ class Timer extends Component {
   };
 
   getPercentage = () => {
-    const { increment, total } = this.state;
-    const percent = Math.floor((increment / total) * 100);
+    const { counter, total } = this.state;
+    const percent = Math.floor((counter / total) * 100);
     return percent;
   };
 
   render() {
-    const { started, stopped, disableFinish, total, counter } = this.state;
+    const { started, stopped, disableFinish } = this.state;
     const { openTimer, closeTimer } = this.props;
     const { classes } = this.props;
     const percent = this.getPercentage();
+
     return (
       <Dialog
         open={openTimer}

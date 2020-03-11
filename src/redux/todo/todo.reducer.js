@@ -77,7 +77,7 @@ const todoReducer = (state = INITIAL_STATE, action) => {
     case todoActionTypes.FETCH_FORMER_TODO_FINISH:
       return {
         ...state,
-        formerTodo: [...action.payload]
+        formerTodo: checkIfTodoExist(action.payload)
       };
     default:
       return state;

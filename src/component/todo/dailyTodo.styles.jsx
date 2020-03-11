@@ -22,7 +22,6 @@ export const RoundedBigIcon = styled(StarRoundedIcon)`
   margin-bottom: 10px;
   color: #3949ab;
 `;
-
 export const BorderRoundedBigIcon = styled(StarBorderRoundedIcon)`
   font-size: 2.2rem;
   margin-bottom: 10px;
@@ -35,8 +34,14 @@ export const SummaryContainer = styled(Grid)`
   margin-right: 3rem;
   border-radius: 10px;
   background-color: #fff;
-  border: 1px solid #eee;
-  box-shadow: 0 0 3px 3px #eee;
+  border: 2px solid rgba(89, 205, 208, 0.58);
+
+  ${props =>
+    props.completed &&
+    css`
+      background: linear-gradient(60deg, #55e1c8c2, #38cecfd9);
+      border: 2px solid #fff;
+    `}
 `;
 
 export const WorkTitle = styled(Typography)`
@@ -111,43 +116,9 @@ export const useStyles = makeStyles(theme => ({
     margin: "30px 0",
     fontSize: "1.5rem"
   },
-  summaryRightButton: {
-    backgroundColor: theme.palette.secondary.main
-  },
+
   todosContainer: {
     marginBottom: "2rem"
-  },
-
-  summaryTextBox: {
-    backgroundColor: theme.palette.primary.main,
-    borderRadius: 10,
-    padding: "4px 10px"
-  },
-  summaryLeft: {
-    backgroundColor: theme.palette.paper,
-    borderRadius: "10px 0 0 10px",
-    padding: theme.spacing(1),
-    "& p": {
-      color: "#fff"
-    },
-    position: "relative"
-  },
-  summaryRight: {
-    height: "8rem",
-    padding: theme.spacing(1),
-    "& p:nth-child(1)": {
-      fontSize: "1.1rem",
-      fontWeight: "bold",
-      color: "#2c2c2c"
-    },
-    "& p:nth-child(2)": {
-      color: "#6f6f6f"
-    }
-  },
-  rateBox: {
-    color: theme.palette.primary.main,
-    fontSize: "2rem",
-    width: "100%"
   },
 
   red: {
@@ -165,7 +136,7 @@ export const useStyles = makeStyles(theme => ({
     width: `calc(100% - ${drawerWidth + 20}px)`,
     backgroundColor: "#fff",
     border: "4px solid #f5f5f5",
-    boxShadow: "0 0 6px 6px #f5f5f5",
+    boxShadow: "0 0 3px 3px #f5f5f5",
     position: "fixed",
     borderRadius: "10px"
   },
@@ -178,7 +149,7 @@ export const useStyles = makeStyles(theme => ({
   twAppBar: {
     borderRadius: "10px",
     border: "4px solid #f5f5f5",
-    boxShadow: "0 0 10px 10px #f5f5f5",
+    boxShadow: "0 0 2px 2px #f5f5f5",
     backgroundColor: theme.palette.background.paper
   },
   twAppBarContainer: {
@@ -188,7 +159,10 @@ export const useStyles = makeStyles(theme => ({
     left: `${drawerWidth}px`,
     width: `calc(100% - ${drawerWidth}px)`,
     backgroundColor: theme.palette.background.default,
-    padding: "2rem 3rem 0.5rem 3rem"
+    padding: "2rem 3rem 0.5rem 3rem",
+    [theme.breakpoints.down("lg")]: {
+      padding: "1rem 1rem 0.5rem 1rem"
+    }
   },
   todoAllContainer: {
     height: "3.1rem"
@@ -208,20 +182,57 @@ export const useStyles = makeStyles(theme => ({
   headerTextFirst: {
     color: theme.palette.secondary.light
   },
-
+  box: {
+    padding: "0 1rem",
+    [theme.breakpoints.down("md")]: {
+      padding: 0
+    },
+    [theme.breakpoints.up("md")]: {
+      padding: "0 1rem"
+    }
+  },
+  caBox: {
+    [theme.breakpoints.down("lg")]: {
+      padding: 0
+    },
+    [theme.breakpoints.up("lg")]: {
+      padding: "0 1rem"
+    }
+  },
   headerText: {
     color: theme.palette.primary.light
-  },
-  summaryButton: {
-    width: "2.5rem"
   },
   tdPanelContainer: {
     boxSizing: "border-box",
 
-    margin: "13rem 1.5rem 0 1.5rem"
+    [theme.breakpoints.down("lg")]: {
+      margin: "13rem  0 0 0"
+    },
+    [theme.breakpoints.up("lg")]: {
+      margin: "13rem  1.5rem 0 1.5rem "
+    },
+    [theme.breakpoints.down("sm")]: {
+      margin: "21.5rem  1.5rem 0 1.5rem "
+    }
   },
   twPanelContainer: {
-    padding: "13rem  1.5rem 0 1.5rem "
+    [theme.breakpoints.down("lg")]: {
+      padding: "13rem  0 0 0"
+    },
+    [theme.breakpoints.up("lg")]: {
+      padding: "13rem  1.5rem 0 1.5rem "
+    },
+    [theme.breakpoints.down("sm")]: {
+      padding: "14.5rem  1.5rem 0 1.5rem "
+    }
+  },
+  progress: {
+    [theme.breakpoints.down("md")]: {
+      margin: "0 0 13px 0 "
+    },
+    [theme.breakpoints.up("md")]: {
+      margin: 0
+    }
   },
   caPanelContainer: {
     backgroundColor: theme.palette.background.paper,

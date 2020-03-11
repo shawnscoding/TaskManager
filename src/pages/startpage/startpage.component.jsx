@@ -1,34 +1,24 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
+import withWidth from "@material-ui/core/withWidth";
+import Typography from "@material-ui/core/Typography";
 import { Grid } from "@material-ui/core";
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    padding: theme.spacing(5)
-  }
-}));
-
-const StartPage = ({ history }) => {
-  const classes = useStyles();
-  return (
-    <React.Fragment>
-      <Grid
-        className={classes.root}
-        container
-        direction="column"
-        justify="flex-start"
-        alignItems="flex-start"
-      ></Grid>
-    </React.Fragment>
-  );
+const components = {
+  sm: "em",
+  md: "u",
+  lg: "del"
 };
 
-const mapStateToProps = createStructuredSelector({});
+function StartPage(props) {
+  const { width } = props;
+  const Component = components[width] || "span";
 
-// const mapDispatchToProps = dispatch => ({
-//   getTodoForThisMonth: () => dispatch(filterTodoForThisMonth())
-// })
+  return <Grid>dddddddddddddddddddddddddddddddddd</Grid>;
+}
 
-export default connect(mapStateToProps)(StartPage);
+StartPage.propTypes = {
+  width: PropTypes.oneOf(["lg", "md", "sm", "xl", "xs"]).isRequired
+};
+
+export default withWidth()(StartPage);
