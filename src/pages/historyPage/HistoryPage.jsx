@@ -11,6 +11,7 @@ import { withRouter } from "react-router-dom";
 import { format } from "date-fns";
 import { fecthFormarTodoStart } from "./../../redux/todo/todo.actions";
 import NonTodoExistComponent from "../../component/nonTodoExist/nonTodoExist.component";
+import withWidth from "@material-ui/core/withWidth";
 
 const GridContainer = styled(Grid)`
   height: 100%;
@@ -19,6 +20,7 @@ const GridContainer = styled(Grid)`
 const HistoryPage = ({
   history,
   todos,
+  width,
   year,
   setYear,
   user,
@@ -41,9 +43,14 @@ const HistoryPage = ({
 
   return (
     <GridContainer justify="space-around" direction="column" container>
-      <HistoryHeader year={year} setYear={setYear} todos={todos} />
-      <HistoryContainer year={year} todos={todos} first={true} />
-      <HistoryContainer year={year} todos={todos} first={false} />
+      <HistoryHeader
+        width={width}
+        year={year}
+        setYear={setYear}
+        todos={todos}
+      />
+      <HistoryContainer year={year} width={width} todos={todos} first={true} />
+      <HistoryContainer year={year} todos={todos} width={width} first={false} />
     </GridContainer>
   );
 };
@@ -56,6 +63,6 @@ const mapDispatchToProps = dispatch => ({
   fetchFormerTodo: year => dispatch(fecthFormarTodoStart(year))
 });
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(HistoryPage)
+export default withWidth()(
+  withRouter(connect(mapStateToProps, mapDispatchToProps)(HistoryPage))
 );

@@ -21,8 +21,7 @@ import {
 } from "../../utils/helper";
 
 const GraphContainer = styled(ComposedChart)`
-  position: absolute;
-  top: -1rem;
+
   box-shadow: 0 4px 10px 0 rgba(0,0,0,0.3);
   
   ${props =>
@@ -60,8 +59,10 @@ const Graph = ({
   secleft = "false",
   secright = "false",
   todos,
-  year
+  year,
+  width
 }) => {
+  console.log(width);
   const [todoData, setTodoData] = useState(null);
   useEffect(() => {
     if (todos.length !== 0) {
@@ -84,30 +85,38 @@ const Graph = ({
   // need to fix
   if (!todoData) return <div>dd</div>;
   return (
-    <GraphContainer
-      width={500}
-      height={250}
-      data={todoData ? todoData : data}
-      firleft={firleft}
-      firright={firright}
-      secleft={secleft}
-      secright={secright}
-      margin={{
-        top: 20,
-        right: 80,
-        bottom: 20,
-        left: 20
-      }}
-    >
-      <CartesianGrid stroke="#f5f5f5" />
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      <Bar dataKey="total" barSize={15} fill="#ebebeb" />
-      <Line type="monotone" dataKey="completed" stroke="#ff7300" />
-      {/* <Scatter dataKey="cnt" fill="red" /> */}
-    </GraphContainer>
+    <Grid style={{ margin: "-1.5rem 0 0 1rem" }} item>
+      <GraphContainer
+        width={width === "md" ? 300 : 370}
+        height={width === "md" ? 180 : 240}
+        data={todoData ? todoData : data}
+        firleft={firleft}
+        firright={firright}
+        secleft={secleft}
+        secright={secright}
+        margin={
+          width === "md"
+            ? { top: 10, right: 40, bottom: 10 }
+            : {
+                top: 20,
+                right: 40,
+                bottom: 20
+              }
+        }
+      >
+        <CartesianGrid stroke="#f5f5f5" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar
+          dataKey="total"
+          barSize={width === "md" ? 10 : 15}
+          fill="#ebebeb"
+        />
+        <Line type="monotone" dataKey="completed" stroke="#ff7300" />
+      </GraphContainer>
+    </Grid>
   );
 };
 

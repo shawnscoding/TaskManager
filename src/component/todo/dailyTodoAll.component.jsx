@@ -31,25 +31,49 @@ const DailyTodoAll = ({ dailyTodo, classes, withCalendar }) => {
             >
               {index < 6 ? (
                 <React.Fragment>
-                  <Typography color="textSecondary">
+                  <Typography
+                    className={classes.allTimeText}
+                    color="textSecondary"
+                  >
                     {hour.toString()}
                   </Typography>
 
-                  <Typography color="textSecondary">AM</Typography>
+                  <Typography
+                    className={classes.allTimeText}
+                    color="textSecondary"
+                  >
+                    AM
+                  </Typography>
                 </React.Fragment>
               ) : hour === 12 ? (
                 <React.Fragment>
-                  <Typography color="textSecondary">
+                  <Typography
+                    className={classes.allTimeText}
+                    color="textSecondary"
+                  >
                     {hour.toString()}
                   </Typography>
-                  <Typography color="textSecondary">PM</Typography>
+                  <Typography
+                    className={classes.allTimeText}
+                    color="textSecondary"
+                  >
+                    PM
+                  </Typography>
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  <Typography color="textSecondary">
+                  <Typography
+                    className={classes.allTimeText}
+                    color="textSecondary"
+                  >
                     {substract12(hour).toString()}
                   </Typography>
-                  <Typography color="textSecondary">PM</Typography>
+                  <Typography
+                    className={classes.allTimeText}
+                    color="textSecondary"
+                  >
+                    PM
+                  </Typography>
                 </React.Fragment>
               )}
             </Grid>

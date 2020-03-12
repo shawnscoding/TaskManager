@@ -30,6 +30,7 @@ const theme = createMuiTheme({
       default: "#fafafa"
     }
   },
+
   typography: {
     fontSize: 14,
     // htmlFontSize: 10,
@@ -40,11 +41,14 @@ const theme = createMuiTheme({
 // theme = responsiveFontSizes(theme);
 theme.typography.body1 = {
   fontSize: "0.9rem",
+  [theme.breakpoints.up("md")]: {
+    fontSize: "0.9rem"
+  },
   "@media (max-width:650px)": {
     fontSize: "0.8rem"
   },
-  [theme.breakpoints.up("md")]: {
-    fontSize: "0.9rem"
+  "@media (max-width:550px)": {
+    fontSize: "0.7rem"
   }
 };
 

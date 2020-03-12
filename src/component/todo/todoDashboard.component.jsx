@@ -342,9 +342,7 @@ const TodoDashBoard = ({
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={value}
           onChangeIndex={handleChangeIndex}
-          className={
-            withCalendar ? classes.caPanelContainer : classes.tdPanelContainer
-          }
+          className={classes.caPanelContainer}
         >
           <TabPanel
             style={{ backgroundColor: "#fff", marginTop: "1.5rem" }}
@@ -384,9 +382,7 @@ const TodoDashBoard = ({
         <SwipeableViews
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={0}
-          className={
-            withCalendar ? classes.caPanelContainer : classes.wdPanelContainer
-          }
+          className={classes.caPanelContainer}
         >
           <TabPanel
             className={classes.tdNoTodoContainer}

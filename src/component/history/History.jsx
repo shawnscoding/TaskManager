@@ -1,27 +1,31 @@
 import React from "react";
-import { CircleProgress } from "react-gradient-progress";
 import { Grid, Typography } from "@material-ui/core";
 import styled from "styled-components";
 import Graph from "../graph/Graph";
 
-const GridContainer = styled(Grid)`
+const Container = styled(Grid)`
   border-radius: 6px;
-  padding: 20px 3rem;
+  padding: 20px 1.5rem;
 `;
 
 const SubContainer = styled(Grid)`
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
   background-color: #fff;
   position: relative;
+
+  @media (max-width: 830px) {
+    background-color: transparent;
+    box-shadow: unset;
+  }
 `;
 
 const TextContainer = styled(Grid)`
   width: 500px;
   text-align: flex-start;
-  margin-bottom: 2rem;
+  margin: 2rem;
 `;
 
-const HistoryContainer = ({ first, todos, year }) => {
+const HistoryContainer = ({ first, todos, year, width }) => {
   let firleft;
   let firright;
   let secleft;
@@ -35,15 +39,16 @@ const HistoryContainer = ({ first, todos, year }) => {
   }
   return (
     <Grid style={{ margin: "3rem 0" }} item justify="space-around" container>
-      <GridContainer sm={6} xs={12} item>
+      <Container md={6} sm={12} item>
         <SubContainer
           justify="center"
           direction="column"
-          alignItems="center"
+          alignItems="flex-start"
           container
           item
         >
           <Graph
+            width={width}
             year={year}
             todos={todos}
             firleft={firleft}
@@ -60,17 +65,18 @@ const HistoryContainer = ({ first, todos, year }) => {
             )}
           </TextContainer>
         </SubContainer>
-      </GridContainer>
-      <GridContainer sm={6} xs={12} item>
+      </Container>
+      <Container md={6} sm={12} item>
         <SubContainer
           justify="center"
           direction="column"
-          alignItems="center"
+          alignItems="flex-start"
           container
           item
         >
           <Graph
             year={year}
+            width={width}
             todos={todos}
             secright={secright}
             firright={firright}
@@ -85,7 +91,7 @@ const HistoryContainer = ({ first, todos, year }) => {
             )}
           </TextContainer>
         </SubContainer>
-      </GridContainer>
+      </Container>
     </Grid>
   );
 };

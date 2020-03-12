@@ -132,13 +132,21 @@ export const useStyles = makeStyles(theme => ({
   },
   tdAppBar: {
     top: "9.4rem",
-    left: `${drawerWidth + 10}px`,
-    width: `calc(100% - ${drawerWidth + 20}px)`,
+    left: `${drawerWidth() + 10}px`,
+    width: `calc(100% - ${drawerWidth() + 20}px)`,
     backgroundColor: "#fff",
     border: "4px solid #f5f5f5",
     boxShadow: "0 0 3px 3px #f5f5f5",
     position: "fixed",
-    borderRadius: "10px"
+    borderRadius: "10px",
+    [theme.breakpoints.down("sm")]: {
+      left: 0,
+      width: "100%"
+    },
+    [theme.breakpoints.up("sm")]: {
+      left: `${drawerWidth() + 10}px`,
+      width: `calc(100% - ${drawerWidth() + 20}px)`
+    }
   },
   caAppBar: {
     borderRadius: "10px",
@@ -156,12 +164,29 @@ export const useStyles = makeStyles(theme => ({
     zIndex: 100,
     position: "fixed",
     top: "3.3rem",
-    left: `${drawerWidth}px`,
-    width: `calc(100% - ${drawerWidth}px)`,
+    left: `${drawerWidth()}px`,
+    width: `calc(100% - ${drawerWidth()}px)`,
     backgroundColor: theme.palette.background.default,
     padding: "2rem 3rem 0.5rem 3rem",
     [theme.breakpoints.down("lg")]: {
       padding: "1rem 1rem 0.5rem 1rem"
+    },
+    [theme.breakpoints.down("sm")]: {
+      left: 0,
+      width: "100%"
+    },
+    [theme.breakpoints.up("sm")]: {
+      left: `${drawerWidth() + 10}px`,
+      width: `calc(100% - ${drawerWidth() + 20}px)`
+    }
+  },
+  allTimeText: {
+    fontSize: "1rem",
+    [theme.breakpoints.down("md")]: {
+      fontSize: "0.8rem"
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1rem"
     }
   },
   todoAllContainer: {
@@ -250,7 +275,14 @@ export const useStyles = makeStyles(theme => ({
       float: "left"
     },
     "& p:nth-child(1)": {
-      minWidth: "1.5rem"
+      minWidth: "1.5rem",
+
+      [theme.breakpoints.down("md")]: {
+        minWidth: "unset"
+      },
+      [theme.breakpoints.up("md")]: {
+        minWidth: "1.5rem"
+      }
     }
   },
   Work: {

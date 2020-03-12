@@ -20,15 +20,34 @@ const RightItem = styled(Grid)`
   background-color: #fff;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
   border-radius: 6px;
-  width: 25rem;
+  width: 23rem;
+
+  @media (max-width: 960px) {
+    width: 100%;
+  }
+`;
+
+const ItemColumn = styled(Grid)`
+  justify-content: center;
+  @media (max-width: 800px) {
+    justify-content: flex-start;
+  }
 `;
 
 const LeftContainer = styled(Grid)`
-  padding: 3rem;
+  padding: 2rem;
+
+  @media (max-width: 960px) {
+    padding: 0 0 1rem 0;
+  }
 `;
 
 const RightContainer = styled(Grid)`
-  padding: 3rem 7rem 3rem 3rem;
+  padding: 2rem 1.5rem 2rem 1.5rem;
+
+  @media (max-width: 800px) {
+    padding: 2rem 0;
+  }
 `;
 
 const SubContainer = styled(Grid)`
@@ -76,8 +95,6 @@ const HistoryHeader = ({ todos }) => {
     }
   }
 
-  console.log(totalHour);
-
   // get working hour
   let workingHour = 0;
   for (let i = 0; i < todos.length; i++) {
@@ -87,8 +104,6 @@ const HistoryHeader = ({ todos }) => {
     }
   }
 
-  console.log(workingHour);
-
   let arr = [];
   for (let i = 0; i < todos.length; i++) {
     // fix
@@ -96,7 +111,6 @@ const HistoryHeader = ({ todos }) => {
       arr.push(format(todos[i].date.toDate(), "MMMM"));
     }
   }
-  console.log(arr, "arr");
 
   const maxMonth = getMostFrequentItem(arr);
 
@@ -121,16 +135,15 @@ const HistoryHeader = ({ todos }) => {
 
   return (
     <Grid item container direction="row">
-      <LeftContainer sm={6} item>
+      <LeftContainer xs={12} sm={12} md={6} item>
         <LeftItem container item>
           <CircleProgress todo={todos} formattedDate={formattedDate} />
         </LeftItem>
       </LeftContainer>
-      <RightContainer sm={6} item>
+      <RightContainer xs={12} sm={12} md={6} item>
         <RightItem>
-          <Grid
+          <ItemColumn
             style={{ position: "relative" }}
-            justify="center"
             direction="column"
             alignItems="center"
             container
@@ -223,7 +236,7 @@ const HistoryHeader = ({ todos }) => {
                 </Typography>
               </RightTypo>
             </TypoContainer> */}
-          </Grid>
+          </ItemColumn>
         </RightItem>
       </RightContainer>
     </Grid>

@@ -15,7 +15,10 @@ export const useStyles = makeStyles(theme => ({
   header: {
     padding: "1rem 0.5rem",
     backgroundColor: theme.palette.background.default,
-    zIndex: "100"
+    zIndex: "100",
+    [theme.breakpoints.down("sm")]: {
+      padding: "1rem 0"
+    }
   },
   dayOfMonth: {
     fontSize: "1.5rem",
@@ -36,6 +39,12 @@ export const useStyles = makeStyles(theme => ({
     },
     [theme.breakpoints.up("lg")]: {
       width: "4.5rem"
+    },
+    "@media (max-width:760px)": {
+      width: "3.7rem"
+    },
+    "@media (max-width:600px)": {
+      width: "4rem"
     }
   },
   selectedDay: {
@@ -45,6 +54,12 @@ export const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1, 2),
     width: "4.5rem",
     [theme.breakpoints.down("lg")]: {
+      width: "4rem"
+    },
+    "@media (max-width:760px)": {
+      width: "3.7rem"
+    },
+    "@media (max-width:600px)": {
       width: "4rem"
     }
   },

@@ -65,7 +65,7 @@ const SignInForm = ({ signUpOpen, signInWithEmail }) => {
   return (
     <div>
       <Button
-        style={{ position: "absolute", right: "3vw", top: "2.1vh" }}
+        style={{ position: "absolute", right: "3vw", top: "10px" }}
         variant="outlined"
         color="inherit"
         onClick={handleClickOpen}

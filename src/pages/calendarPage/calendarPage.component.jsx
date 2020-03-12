@@ -26,10 +26,10 @@ const useStyles = makeStyles(theme => ({
     },
     "@media (max-width:960px)": {
       padding: "2rem 0 0 0"
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "100%"
     }
-
-    // [theme.breakpoints.down("md")]: {
-    // }
   },
   box: {
     backgroundColor: "rgb(249, 249, 249)",
@@ -43,6 +43,9 @@ const useStyles = makeStyles(theme => ({
     },
     [theme.breakpoints.up("md")]: {
       padding: "0.7rem 1rem 1.5rem 0.5rem"
+    },
+    [theme.breakpoints.down("sm")]: {
+      padding: "0.7rem 2rem 1.5rem 2rem"
     }
   },
   container: {
@@ -50,6 +53,9 @@ const useStyles = makeStyles(theme => ({
     height: "95vh",
     [theme.breakpoints.down("md")]: {
       height: "unset"
+    },
+    [theme.breakpoints.up("md")]: {
+      height: "95vh"
     }
   }
 }));
@@ -114,7 +120,7 @@ const CalendarPage = ({ todos, getAnotherTodo, loading }) => {
   };
 
   return (
-    <Grid className={classes.container} container>
+    <Grid justify="center" className={classes.container} container>
       <Grid className={classes.root} md={6} sm={12} item>
         <Box className={classes.box}>
           <Calendar
@@ -126,16 +132,7 @@ const CalendarPage = ({ todos, getAnotherTodo, loading }) => {
         </Box>
       </Grid>
       <Grid className={classes.root} md={6} sm={12} item>
-        <Box
-          style={{
-            backgroundColor: "rgb(249, 249, 249)",
-            padding: "0 1rem 1.5rem 0.4rem",
-            boxShadow: "0 0 10px 10px rgb(249, 249, 249)",
-            borderRadius: "10px",
-            overflowY: "auto",
-            height: "96%"
-          }}
-        >
+        <Box className={classes.box}>
           <TodoDashBoard withCalendar={withCalendar} dailyTodo={dailyTodo} />
         </Box>
       </Grid>

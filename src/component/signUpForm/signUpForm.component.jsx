@@ -14,10 +14,9 @@ import { connect } from "react-redux";
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(1.5),
-    padding: theme.spacing(0, 4),
+    padding: "20px",
     overflowY: "auto",
-    height: "55vh",
-    width: "30vw"
+    height: "55vh"
   },
   googleIcon: {
     marginRight: theme.spacing(1)

@@ -84,10 +84,16 @@ const useStyles = makeStyles(theme => ({
     margin: "0 5px 0 0",
     "@media (max-width:700px)": {
       fontSize: "0.6rem"
+    },
+    "@media (max-width:1150px)": {
+      fontSize: "0.6rem"
     }
   },
   rightButton: {
     "@media (max-width:700px)": {
+      fontSize: "0.6rem"
+    },
+    "@media (max-width:1150px)": {
       fontSize: "0.6rem"
     }
   }
@@ -135,6 +141,7 @@ const CcProgressOnCompletion = ({
         lg={6}
         md={withThisWeek ? 6 : 8}
         sm={6}
+        xs={6}
         style={{ position: "relative" }}
         container
         item
@@ -150,8 +157,9 @@ const CcProgressOnCompletion = ({
       </Grid>
       <Grid
         lg={6}
-        md={withThisWeek ? 6 : 8}
+        md={withThisWeek ? 6 : 4}
         sm={6}
+        xs={6}
         className={withToday ? classes.dateBox : null}
         container
         direction="column"
@@ -218,7 +226,6 @@ const CcProgressOnCompletion = ({
             <Button
               color="primary"
               onClick={handlePreWeek}
-              size={width === "md" ? "small" : "medium"}
               className={classes.leftbutton}
               variant="outlined"
             >
@@ -226,7 +233,6 @@ const CcProgressOnCompletion = ({
             </Button>
             <Button
               color="primary"
-              size={width === "md" ? "small" : "medium"}
               className={classes.rightButton}
               onClick={handleNextWeek}
               variant="contained"

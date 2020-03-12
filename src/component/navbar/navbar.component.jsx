@@ -63,6 +63,7 @@ import HistoryPage from "./../../pages/historyPage/HistoryPage";
 import TimerIcon from "@material-ui/icons/Timer";
 import { fecthFormarTodoStart } from "./../../redux/todo/todo.actions";
 import { signOutStart } from "./../../redux/auth/auth.actions";
+import withWidth from "@material-ui/core/withWidth";
 
 const Navbar = props => {
   const {
@@ -82,6 +83,7 @@ const Navbar = props => {
   } = props;
   const classes = useStyles();
   const theme = useTheme();
+
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const [year, setYear] = useState(new Date());
@@ -106,6 +108,10 @@ const Navbar = props => {
   const onClickThisWeek = async () => {
     await getWeeklyTodo(thisWeek);
     history.push(`/todo/thisWeek/${thisWeek}`);
+  };
+  const handleSignOut = () => {
+    signOut();
+    history.push("/");
   };
 
   const onClickToday = async () => {
@@ -179,7 +185,7 @@ const Navbar = props => {
             </ListItemIcon>
             <ListItemText primary="About Us" />
           </ListItem>*/}
-          <ListItem color="secondary" onClick={() => signOut()} button>
+          <ListItem color="secondary" onClick={handleSignOut} button>
             <ListItemIcon>
               <TimeToLeaveIcon color="secondary" />
             </ListItemIcon>
@@ -189,6 +195,7 @@ const Navbar = props => {
       </div>
     </div>
   );
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -349,4 +356,6 @@ const mapDispatchToProps = dispatch => ({
   signOut: () => dispatch(signOutStart())
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));
+export default withWidth()(
+  withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar))
+);
