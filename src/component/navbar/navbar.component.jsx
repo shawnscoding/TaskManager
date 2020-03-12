@@ -233,13 +233,7 @@ const Navbar = props => {
             </Typography>
           )}
           {user ? (
-            <AccountCircleRoundedIcon
-              style={{
-                position: "absolute",
-                right: "4rem",
-                top: "16px"
-              }}
-            />
+            <AccountCircleRoundedIcon className={classes.loginIcon} />
           ) : (
             <SignInForm />
           )}
@@ -279,55 +273,55 @@ const Navbar = props => {
       <Paper className={classes.content}>
         <React.Fragment>
           <SignUpForm />
-          {user ? (
-            <React.Fragment>
-              <Switch>
-                <Route
-                  exact
-                  path="/start"
-                  render={() => (user ? <TodoPage /> : <StartPage />)}
-                />
-
-                <Route
-                  exact
-                  path="/todo/thisWeek/:thisWeek"
-                  component={ThisWeekPage}
-                />
-
-                <Route exact path="/todo/calendar" component={CalendarPage} />
-                <Route
-                  exact
-                  path="/todo/dailyTodo/:monthAndDate"
-                  component={TodayPage}
-                />
-                <Route
-                  exact
-                  path={"/history/:userId"}
-                  render={() => (
-                    <HistoryPage year={year} setYear={setYear} user={user} />
-                  )}
-                />
-              </Switch>
-              <TodoForm />
-              <Warning
-                timerWarning={timerWarning}
-                toggleTimerWarning={toggleTimerWarning}
-                openTimer={openTimer}
+          {/* {user ? ( */}
+          <React.Fragment>
+            <Switch>
+              <Route
+                exact
+                path="/start"
+                render={() => (user ? <StartPage /> : <TodoPage />)}
               />
-              {currentTask ? (
-                <Timer openTimer={timer} closeTimer={closeTimer} />
-              ) : null}
-              {working && !timer ? (
-                <Fab
-                  color="inherit"
-                  className={classes.timerContainer}
-                  onClick={openTimer}
-                >
-                  <TimerIcon style={{ fontSize: "2.7rem" }} />
-                </Fab>
-              ) : null}
-            </React.Fragment>
-          ) : null}
+
+              <Route
+                exact
+                path="/todo/thisWeek/:thisWeek"
+                component={ThisWeekPage}
+              />
+
+              <Route exact path="/todo/calendar" component={CalendarPage} />
+              <Route
+                exact
+                path="/todo/dailyTodo/:monthAndDate"
+                component={TodayPage}
+              />
+              <Route
+                exact
+                path={"/history/:userId"}
+                render={() => (
+                  <HistoryPage year={year} setYear={setYear} user={user} />
+                )}
+              />
+            </Switch>
+            <TodoForm />
+            <Warning
+              timerWarning={timerWarning}
+              toggleTimerWarning={toggleTimerWarning}
+              openTimer={openTimer}
+            />
+            {currentTask ? (
+              <Timer openTimer={timer} closeTimer={closeTimer} />
+            ) : null}
+            {working && !timer ? (
+              <Fab
+                color="inherit"
+                className={classes.timerContainer}
+                onClick={openTimer}
+              >
+                <TimerIcon style={{ fontSize: "2.7rem" }} />
+              </Fab>
+            ) : null}
+          </React.Fragment>
+          {/* ) : null} */}
         </React.Fragment>
       </Paper>
     </div>

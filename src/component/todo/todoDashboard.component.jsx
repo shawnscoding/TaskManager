@@ -119,7 +119,7 @@ const TodoDashBoard = ({
                 aria-label="full width tabs example"
               >
                 <Tab
-                  label="By Category"
+                  label="Category"
                   style={{ minWidth: "0" }}
                   {...a11yProps(0)}
                   disabled={beforeRenderTodo(dailyTodo) === false}

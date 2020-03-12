@@ -65,19 +65,40 @@ export const useStyles = makeStyles(theme => ({
 
   loginIcon: {
     position: "absolute",
-    right: "3rem",
-    top: "0.6rem"
+    right: "4rem",
+    top: "16px",
+    [theme.breakpoints.down("sm")]: {
+      right: "2rem"
+    }
   },
   paper: {
     minHeight: "100vh"
   },
   timerContainer: {
     position: "fixed",
-    bottom: "11rem",
-    right: "5rem",
+    bottom: "10rem",
+    right: "4rem",
     width: "4rem",
     height: "4rem",
     color: "rgba(255, 255, 255, 0.9)",
-    background: "linear-gradient(45deg, #33b7c8, 30%, #08e9dff5 90%)"
+    background: "linear-gradient(45deg, #33b7c8, 30%, #08e9dff5 90%)",
+    [theme.breakpoints.up("md")]: {
+      bottom: "10rem",
+      right: "4rem",
+      width: "4rem",
+      height: "4rem"
+    },
+    [theme.breakpoints.down("md")]: {
+      bottom: "9rem",
+      right: "4rem",
+      width: "3rem",
+      height: "3rem"
+    },
+    [theme.breakpoints.down("sm")]: {
+      bottom: "7.5rem",
+      right: "1.5rem",
+      width: "3rem",
+      height: "3rem"
+    }
   }
 }));

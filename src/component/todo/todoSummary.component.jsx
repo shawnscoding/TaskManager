@@ -227,7 +227,7 @@ const TodoSummary = ({
                         <StarRoundedIcon className={classes.starIcon} />
                         <StarBorderRoundedIcon className={classes.starIcon} />
 
-                        <StarBorderRoundedIcon />
+                        <StarBorderRoundedIcon className={classes.starIcon} />
                       </React.Fragment>
                     ) : todo.importance === 4 ? (
                       <React.Fragment>
@@ -285,6 +285,8 @@ const TodoSummary = ({
         openTimer={openTimer}
         setOpen={setOpen}
         working={working}
+        minutes={minutes}
+        hours={hours}
       />
     </React.Fragment>
   );

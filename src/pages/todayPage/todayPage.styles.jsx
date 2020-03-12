@@ -44,7 +44,12 @@ export const useStyles = makeStyles(theme => ({
       width: "3.7rem"
     },
     "@media (max-width:600px)": {
-      width: "4rem"
+      width: "4rem",
+      boxShadow: "0 0 2px 2px rgb(236, 236, 236)"
+    },
+    "@media (max-width:400px)": {
+      width: "3.7rem",
+      boxShadow: "0 0 2px 2px rgb(236, 236, 236)"
     }
   },
   selectedDay: {
@@ -60,7 +65,12 @@ export const useStyles = makeStyles(theme => ({
       width: "3.7rem"
     },
     "@media (max-width:600px)": {
-      width: "4rem"
+      width: "4rem",
+      boxShadow: "0 0 3px 3px rgb(236, 236, 236)"
+    },
+    "@media (max-width:400px)": {
+      width: "3.7rem",
+      boxShadow: "0 0 2px 2px rgb(236, 236, 236)"
     }
   },
   headerDay: {

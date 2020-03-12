@@ -38,14 +38,17 @@ const useStyles = makeStyles(theme => ({
     borderRadius: "10px",
     overflowY: "auto",
     height: "96%",
+    [theme.breakpoints.down("sm")]: {
+      padding: "0.7rem 2rem 1.5rem 2rem"
+    },
     [theme.breakpoints.down("md")]: {
       padding: "0 3rem 0 3rem"
     },
     [theme.breakpoints.up("md")]: {
       padding: "0.7rem 1rem 1.5rem 0.5rem"
     },
-    [theme.breakpoints.down("sm")]: {
-      padding: "0.7rem 2rem 1.5rem 2rem"
+    [theme.breakpoints.up("lg")]: {
+      padding: "0.7rem 2rem 1.5rem 2rem;"
     }
   },
   container: {

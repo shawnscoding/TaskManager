@@ -11,7 +11,25 @@ const useStyles = makeStyles(theme => ({
     bottom: "5rem",
     right: "5rem",
     width: "4rem",
-    height: "4rem"
+    height: "4rem",
+    [theme.breakpoints.up("md")]: {
+      bottom: "4rem",
+      right: "4rem",
+      width: "4rem",
+      height: "4rem"
+    },
+    [theme.breakpoints.down("md")]: {
+      bottom: "4rem",
+      right: "4rem",
+      width: "3rem",
+      height: "3rem"
+    },
+    [theme.breakpoints.down("sm")]: {
+      bottom: "2rem",
+      right: "1.5rem",
+      width: "3rem",
+      height: "3rem"
+    }
   },
   wrapper: {
     position: "relative"
