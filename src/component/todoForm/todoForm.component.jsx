@@ -6,8 +6,7 @@ import {
   Button,
   Typography,
   Grid,
-  Fab,
-  CircularProgress
+  Fab
 } from "@material-ui/core";
 import TodoFormFirst from "./todoFormSteps/todoFormFirst.component";
 import TodoFormSecond from "./todoFormSteps/todoFormSecond.component";
@@ -16,7 +15,6 @@ import { connect } from "react-redux";
 import { addTodoStart } from "./../../redux/todo/todo.actions";
 import { createStructuredSelector } from "reselect";
 import {
-  selectLoading,
   selectStep,
   selectTodoFormOpen
 } from "../../redux/async/async.selectors";
@@ -32,6 +30,7 @@ import Slide from "@material-ui/core/Slide";
 import AddIcon from "@material-ui/icons/Add";
 import TodoFormLast from "./todoFormSteps/todoFormLast.component";
 import { format } from "date-fns";
+import ProgressButton from "./../progress/ProgressButton";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -56,7 +55,6 @@ const getStepContent = stepIndex => {
 
 const TodoForm = ({
   addTodo,
-  loading,
   activeStep,
   increaseStep,
   decreaseStep,
@@ -123,7 +121,7 @@ const TodoForm = ({
     setDate(new Date());
   };
 
-  const handleSubmit = () => {
+  const onSubmit = () => {
     let copyDate = date;
     const compare = format(copyDate, "H");
     if (Number(compare) < 6) {
@@ -247,23 +245,7 @@ const TodoForm = ({
                     Back
                   </Button>
                   {activeStep === steps.length - 1 ? (
-                    <div className={classes.wrapper}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        className={classes.buttonSuccess}
-                        disabled={loading}
-                        onClick={handleSubmit}
-                      >
-                        Submit
-                      </Button>
-                      {loading && (
-                        <CircularProgress
-                          size={24}
-                          className={classes.buttonProgress}
-                        />
-                      )}
-                    </div>
+                    <ProgressButton onTodo={true} onSubmit={onSubmit} />
                   ) : (
                     <Button
                       variant="contained"
@@ -284,7 +266,6 @@ const TodoForm = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  loading: selectLoading,
   activeStep: selectStep,
   open: selectTodoFormOpen
 });

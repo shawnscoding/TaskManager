@@ -108,7 +108,7 @@ const TodoPage = ({ toggleOpen, history }) => {
               </Typography>
             </Grid>
             <Grid className={classes.addIconBox} item>
-              <DateRangeIcon className={classes.addIcon} />
+              <NoteAddIcon className={classes.addIcon} />
             </Grid>
             <Grid item>
               <Button
@@ -141,7 +141,7 @@ const TodoPage = ({ toggleOpen, history }) => {
               </Typography>
             </Grid>
             <Grid className={classes.addIconBox} item>
-              <NoteAddIcon className={classes.addIcon} />
+              <DateRangeIcon className={classes.addIcon} />
             </Grid>
             <Grid item>
               <Button

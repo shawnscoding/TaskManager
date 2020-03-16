@@ -31,9 +31,7 @@ const useStyles = makeStyles(theme => ({
       height: "3rem"
     }
   },
-  wrapper: {
-    position: "relative"
-  },
+
   button: {
     margin: theme.spacing(4, 0)
   },
@@ -50,14 +48,6 @@ const useStyles = makeStyles(theme => ({
     fontSize: "2.2rem"
   },
 
-  buttonProgress: {
-    color: green[500],
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    marginTop: -12,
-    marginLeft: -12
-  },
   backButton: {
     marginRight: theme.spacing(1)
   },
@@ -74,13 +64,6 @@ const useStyles = makeStyles(theme => ({
 
   stepper: {
     width: "80%"
-  },
-
-  buttonSuccess: {
-    backgroundColor: green[500],
-    "&:hover": {
-      backgroundColor: green[700]
-    }
   }
 }));
 

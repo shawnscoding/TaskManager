@@ -1,16 +1,25 @@
 import React, { useEffect } from "react";
 import Navbar from "./component/navbar/navbar.component";
-import { Route } from "react-router-dom";
-import HomePage from "./pages/hompage/homepage.component";
+import { Route, withRouter } from "react-router-dom";
+import HomePage from "./pages/hompage/Homepage";
 import { checkUserSession } from "./redux/auth/auth.actions";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { selectCurrentUser } from "./redux/auth/auth.selectors";
+import {
+  selectCurrentUser,
+  selectDirectAfterLogAct
+} from "./redux/auth/auth.selectors";
 
-const App = ({ checkUserSession, currentUser }) => {
+const App = ({ checkUserSession, loggedIn, history }) => {
   useEffect(() => {
-    checkUserSession();
-  }, [checkUserSession]);
+    if (loggedIn === false) {
+      checkUserSession();
+    }
+    console.log(loggedIn);
+    if (loggedIn === true) {
+      history.push("/start");
+    }
+  }, [checkUserSession, loggedIn]);
   return (
     <React.Fragment>
       <Route path="/" exact component={HomePage} />
@@ -27,11 +36,12 @@ const App = ({ checkUserSession, currentUser }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
+  loggedIn: selectDirectAfterLogAct
 });
 
 const mapDispatchToProps = dispatch => ({
   checkUserSession: () => dispatch(checkUserSession())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

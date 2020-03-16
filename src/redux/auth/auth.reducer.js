@@ -3,7 +3,8 @@ import authActionTypes from "./auth.types";
 const INITIAL_STATE = {
   open: false,
   currentUser: null,
-  error: null
+  error: null,
+  directAfterLogAct: false
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
@@ -12,6 +13,11 @@ const authReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         open: !state.open
+      };
+    case authActionTypes.DIRECT_USER_AFTER_LOG_ACT:
+      return {
+        ...state,
+        directAfterLogAct: action.payload
       };
     case authActionTypes.SIGN_IN_SUCCESS:
       return {

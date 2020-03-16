@@ -53,7 +53,7 @@ const Calendar = ({
           </Button>
           <div
             style={{
-              color: "#28d1ba"
+              color: "rgb(89, 205, 208)"
             }}
             className="col col-center"
           >

@@ -1,17 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { AppBar, Avatar, Paper, Fab } from "@material-ui/core";
+import React, { useState } from "react";
+import {
+  AppBar,
+  Paper,
+  Fab,
+  Typography,
+  Toolbar,
+  Drawer,
+  Divider,
+  Grid,
+  IconButton
+} from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Divider from "@material-ui/core/Divider";
-import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
-import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import MenuIcon from "@material-ui/icons/Menu";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import { useTheme } from "@material-ui/core/styles";
 import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
 import HistoryIcon from "@material-ui/icons/History";
@@ -21,13 +26,10 @@ import ForumIcon from "@material-ui/icons/Forum";
 import TimeToLeaveIcon from "@material-ui/icons/TimeToLeave";
 import SettingsIcon from "@material-ui/icons/Settings";
 import { useStyles } from "./navbar.styles";
-import StartPage from "../../pages/startpage/startpage.component";
 import { Route, Switch, withRouter } from "react-router-dom";
-import SignInForm from "../signInForm/signInForm.component";
 import TodoPage from "../../pages/todoPage/todoPage.component";
 import TodoForm from "../todoForm/todoForm.component";
 import InfoIcon from "@material-ui/icons/Info";
-import SignUpForm from "../signUpForm/signUpForm.component";
 import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "../../redux/auth/auth.selectors";
 import { connect } from "react-redux";
@@ -37,7 +39,6 @@ import { setTodoFormStepToZero } from "../../redux/async/async.actions";
 import TodayPage from "../../pages/todayPage/todayPage.component";
 import { format } from "date-fns";
 import CalendarPage from "./../../pages/calendarPage/calendarPage.component";
-import LoadingComponent from "./../loader/loadingCompoent";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 import {
   selectMonthlyTodo,
@@ -54,7 +55,6 @@ import {
   resetMonthlyTodoOnRoute
 } from "../../redux/todo/todo.actions";
 import { selectLoading } from "./../../redux/async/async.selectors";
-import SmallLoader from "./../loader/SmallLoader";
 import Timer from "../timer/Timer";
 import { selectTimerWarning } from "./../../redux/warning/warning.selectors";
 import { toggleTimerWarning } from "./../../redux/warning/warning.actions";
@@ -62,8 +62,13 @@ import Warning from "./../warning/TimerWarning";
 import HistoryPage from "./../../pages/historyPage/HistoryPage";
 import TimerIcon from "@material-ui/icons/Timer";
 import { fecthFormarTodoStart } from "./../../redux/todo/todo.actions";
-import { signOutStart } from "./../../redux/auth/auth.actions";
+import {
+  signOutStart,
+  directUserAfterLogAct
+} from "./../../redux/auth/auth.actions";
 import withWidth from "@material-ui/core/withWidth";
+import InsertInvitationIcon from "@material-ui/icons/InsertInvitation";
+import DateRangeIcon from "@material-ui/icons/DateRange";
 
 const Navbar = props => {
   const {
@@ -76,6 +81,7 @@ const Navbar = props => {
     toggleTimerWarning,
     currentTask,
     openTimer,
+    directAfterLogOut,
     closeTimer,
     timer,
     getWeeklyTodo,
@@ -111,6 +117,7 @@ const Navbar = props => {
   };
   const handleSignOut = () => {
     signOut();
+    directAfterLogOut(false);
     history.push("/");
   };
 
@@ -121,12 +128,21 @@ const Navbar = props => {
 
   const drawer = (
     <div className={classes.sidebar}>
-      <div className={classes.sidebarLogoBox}>
-        <Avatar alt="logo" src="/assets/logo.png" className={classes.logo} />
-        <Typography variant="h6" style={{ margin: "1vw 0 0 4vw" }}>
-          My Motivator
-        </Typography>
-      </div>
+      <Grid
+        justify="flex-start"
+        alignItems="center"
+        container
+        className={classes.sidebarLogoBox}
+      >
+        <Grid style={{ padding: "8px 5px 0 10px" }} item>
+          <InsertInvitationIcon
+            style={{ color: "  rgb(89, 205, 208)", fontSize: "1.8rem" }}
+          />
+        </Grid>
+        <Grid item>
+          <Typography variant="h3">Task Manager</Typography>
+        </Grid>
+      </Grid>
       <Divider />
       <div>
         <List>
@@ -144,7 +160,7 @@ const Navbar = props => {
           </ListItem>
           <ListItem onClick={onClickCalendar} button>
             <ListItemIcon>
-              <PlaylistAddCheckIcon className={classes.icon} />
+              <DateRangeIcon className={classes.icon} />
             </ListItemIcon>
             <Typography>Calendar</Typography>
           </ListItem>
@@ -232,11 +248,7 @@ const Navbar = props => {
               Welcome !
             </Typography>
           )}
-          {user ? (
-            <AccountCircleRoundedIcon className={classes.loginIcon} />
-          ) : (
-            <SignInForm />
-          )}
+          <AccountCircleRoundedIcon className={classes.loginIcon} />
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
@@ -272,15 +284,10 @@ const Navbar = props => {
       </nav>
       <Paper className={classes.content}>
         <React.Fragment>
-          <SignUpForm />
           {/* {user ? ( */}
           <React.Fragment>
             <Switch>
-              <Route
-                exact
-                path="/start"
-                render={() => (user ? <StartPage /> : <TodoPage />)}
-              />
+              <Route exact path="/start" render={() => <TodoPage />} />
 
               <Route
                 exact
@@ -321,7 +328,7 @@ const Navbar = props => {
               </Fab>
             ) : null}
           </React.Fragment>
-          {/* ) : null} */}
+          {/* : null}  */}
         </React.Fragment>
       </Paper>
     </div>
@@ -347,7 +354,8 @@ const mapDispatchToProps = dispatch => ({
   toggleTimerWarning: () => dispatch(toggleTimerWarning()),
   resetTodo: () => dispatch(resetMonthlyTodoOnRoute()),
   fetchFormerTodo: year => dispatch(fecthFormarTodoStart(year)),
-  signOut: () => dispatch(signOutStart())
+  signOut: () => dispatch(signOutStart()),
+  directAfterLogOut: () => dispatch(directUserAfterLogAct())
 });
 
 export default withWidth()(

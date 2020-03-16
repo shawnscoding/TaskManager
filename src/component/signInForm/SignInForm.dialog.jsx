@@ -7,10 +7,10 @@ import Slide from "@material-ui/core/Slide";
 import { TextField, Paper, Divider } from "@material-ui/core";
 import GTranslateIcon from "@material-ui/icons/GTranslate";
 import { createStructuredSelector } from "reselect";
-import { selectToggleSignUpForm } from "./../../redux/auth/auth.selectors";
-import { toggleSignUpForm } from "./../../redux/auth/auth.actions";
+import { selectToggleSignUpForm } from "../../redux/auth/auth.selectors";
+import { toggleSignUpForm } from "../../redux/auth/auth.actions";
 import { connect } from "react-redux";
-import { emailSignInStart } from "./../../redux/auth/auth.actions";
+import { emailSignInStart } from "../../redux/auth/auth.actions";
 
 import { makeStyles } from "@material-ui/styles";
 

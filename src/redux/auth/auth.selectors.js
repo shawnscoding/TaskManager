@@ -15,3 +15,8 @@ export const selectSignInAndSignUpError = createSelector(
   [selectAuth],
   auth => auth.error
 );
+
+export const selectDirectAfterLogAct = createSelector(
+  [selectAuth],
+  auth => auth.directAfterLogAct
+);

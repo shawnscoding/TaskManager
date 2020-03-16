@@ -50,3 +50,8 @@ export const signOutFailure = error => ({
   type: authActionTypes.SIGN_OUT_FAILURE,
   payload: error
 });
+
+export const directUserAfterLogAct = bool => ({
+  type: authActionTypes.DIRECT_USER_AFTER_LOG_ACT,
+  payload: bool
+});

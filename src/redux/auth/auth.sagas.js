@@ -7,7 +7,8 @@ import {
   signUpSuccess,
   signUpFailure,
   signOutFailure,
-  signOutSuccess
+  signOutSuccess,
+  directUserAfterLogAct
 } from "./auth.actions";
 import {
   createUserProfileDocument,
@@ -23,6 +24,7 @@ export function* getSnapshotFromUserAuth(userAuth, additionalData) {
     );
     const snapShot = yield userRef.get();
     yield put(signInSuccess({ id: snapShot.id, ...snapShot.data() }));
+    return;
   } catch (err) {
     yield put(signInFailure(err));
   }
@@ -40,6 +42,7 @@ export function* isUserAuthenticated() {
 
 export function* signInAfterSignUp({ payload: { user, additionalData } }) {
   yield getSnapshotFromUserAuth(user, additionalData);
+  yield put(directUserAfterLogAct(true));
 }
 
 export function* signUp({ payload: { displayName, email, password } }) {
@@ -57,6 +60,7 @@ export function* signInWithEmail({ payload: { email, password } }) {
   try {
     const { user } = yield auth.signInWithEmailAndPassword(email, password);
     yield getSnapshotFromUserAuth(user);
+    yield put(directUserAfterLogAct(true));
   } catch (err) {
     alert(err.message);
     yield put(signInFailure(err));

@@ -22,9 +22,7 @@ const theme = createMuiTheme({
     primary: {
       main: "#3949ab"
     },
-    text: {
-      secondary: "#000"
-    },
+
     background: {
       papar: "#fff",
       default: "#fafafa"
@@ -58,6 +56,11 @@ theme.typography.h3 = {
   "@media (max-width:600px)": {
     fontSize: "1rem"
   }
+};
+
+theme.typography.h1 = {
+  fontSize: "2.5rem",
+  fontFamily: "'Open Sans Condensed', sans-serif"
 };
 
 ReactDOM.render(

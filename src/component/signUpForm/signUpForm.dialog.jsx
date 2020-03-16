@@ -6,9 +6,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import { TextField, Paper, Divider } from "@material-ui/core";
-import { toggleSignUpForm, signUpStart } from "./../../redux/auth/auth.actions";
+import { toggleSignUpForm, signUpStart } from "../../redux/auth/auth.actions";
 import { createStructuredSelector } from "reselect";
-import { selectToggleSignUpForm } from "./../../redux/auth/auth.selectors";
+import { selectToggleSignUpForm } from "../../redux/auth/auth.selectors";
 import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
