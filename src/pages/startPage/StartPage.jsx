@@ -6,8 +6,11 @@ import NoteAddIcon from "@material-ui/icons/NoteAdd";
 import { withRouter } from "react-router-dom";
 import { format } from "date-fns";
 import { connect } from "react-redux";
-import { toggleTodoFormOpen } from "./../../redux/async/async.actions";
+import { toggleTodoFormOpen } from "../../redux/async/async.actions";
 import { createBrowserHistory } from "history";
+import { createStructuredSelector } from "reselect";
+import { selectMonthlyTodo } from "../../redux/todo/todo.selectors";
+import LoadingCompoent from "../../component/loader/loadingCompoent";
 const useStyles = makeStyles(theme => ({
   container: {
     height: "100%"
@@ -72,15 +75,10 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }));
-const TodoPage = ({ toggleOpen, history }) => {
-  const today = format(new Date(), "MMMd");
+const StartPage = ({ toggleOpen, history, todos }) => {
   const classes = useStyles();
 
-  // const history = createBrowserHistory();
-  // const location = history.location;
-
-  // console.log("createBrowserHistory", history);
-  // console.log("createBrowserHistory", location);
+  if (todos.length === 0) return <LoadingCompoent />;
   return (
     <React.Fragment>
       <Grid
@@ -161,8 +159,14 @@ const TodoPage = ({ toggleOpen, history }) => {
   );
 };
 
+const mapStateToProps = createStructuredSelector({
+  todos: selectMonthlyTodo
+});
+
 const mapDispatchToProps = dispatch => ({
   toggleOpen: () => dispatch(toggleTodoFormOpen())
 });
 
-export default withRouter(connect(null, mapDispatchToProps)(TodoPage));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(StartPage)
+);

@@ -18,7 +18,7 @@ const TodoFormLast = ({ toggleOpen, onUserLeave, setStepToZero }) => {
   return (
     <React.Fragment>
       <Grid item>
-        <Typography gutterBottom color="primary" variant="h4">
+        <Typography gutterBottom color="primary" variant="h3">
           Added Successfully!
         </Typography>
       </Grid>

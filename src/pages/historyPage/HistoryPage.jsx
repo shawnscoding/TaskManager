@@ -39,7 +39,8 @@ const HistoryPage = ({
   }, [user]);
 
   if (todos.length === 0) return <SmallLoader />;
-  if (typeof todos[0].date === typeof "") return <NonTodoExistComponent />;
+  if (typeof todos[0].date === typeof "")
+    return <NonTodoExistComponent onHistory={true} />;
 
   return (
     <GridContainer justify="space-around" direction="column" container>

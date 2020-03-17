@@ -7,11 +7,16 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center"
   },
   todoFormButton: {
+    backgroundColor: theme.palette.info.main,
     position: "fixed",
+    color: "#fff",
     bottom: "5rem",
     right: "5rem",
     width: "4rem",
     height: "4rem",
+    "&:hover": {
+      backgroundColor: theme.palette.info.dark
+    },
     [theme.breakpoints.up("md")]: {
       bottom: "4rem",
       right: "4rem",
@@ -21,8 +26,8 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("md")]: {
       bottom: "4rem",
       right: "4rem",
-      width: "3rem",
-      height: "3rem"
+      width: "3.2rem",
+      height: "3.2rem"
     },
     [theme.breakpoints.down("sm")]: {
       bottom: "2rem",

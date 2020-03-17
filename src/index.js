@@ -22,6 +22,9 @@ const theme = createMuiTheme({
     primary: {
       main: "#3949ab"
     },
+    secondary: {
+      main: "rgb(89, 205, 208)"
+    },
 
     background: {
       papar: "#fff",
@@ -55,6 +58,14 @@ theme.typography.h3 = {
   fontFamily: "'Open Sans Condensed', sans-serif",
   "@media (max-width:600px)": {
     fontSize: "1rem"
+  }
+};
+
+theme.typography.h4 = {
+  fontSize: "1rem",
+  fontFamily: "'Open Sans Condensed', sans-serif",
+  "@media (max-width:900px)": {
+    fontSize: "0.9rem"
   }
 };
 

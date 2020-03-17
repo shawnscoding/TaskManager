@@ -7,8 +7,9 @@ import { selectWeeklyTodo } from "../../redux/todo/todo.selectors";
 import { format, startOfWeek, endOfWeek, addWeeks, subWeeks } from "date-fns";
 import { withRouter } from "react-router-dom";
 import { getWeeklyTodoStart } from "../../redux/todo/todo.actions";
+import { selectCurrentUser } from "../../redux/auth/auth.selectors";
 
-const ThisWeekPage = ({ getWeeklyTodo, weeklyTodo, match, location }) => {
+const ThisWeekPage = ({ getWeeklyTodo, weeklyTodo, match, user }) => {
   const [week, setWeek] = React.useState(new Date());
   const [todo, setTodo] = React.useState(null);
   React.useEffect(() => {
@@ -18,7 +19,11 @@ const ThisWeekPage = ({ getWeeklyTodo, weeklyTodo, match, location }) => {
 
     const formattedWeek = format(week, "ww");
 
-    if (weeklyTodo.length === 0 && formattedWeek === match.params.thisWeek) {
+    if (
+      user &&
+      weeklyTodo.length === 0 &&
+      formattedWeek === match.params.thisWeek
+    ) {
       getWeeklyTodo(formattedWeek);
     }
 
@@ -29,7 +34,7 @@ const ThisWeekPage = ({ getWeeklyTodo, weeklyTodo, match, location }) => {
         setTodo(weeklyTodo);
       }
     }
-  }, [weeklyTodo, week]);
+  }, [weeklyTodo, week, user]);
 
   const startDay = startOfWeek(week);
   const endDay = endOfWeek(week);
@@ -71,7 +76,8 @@ const ThisWeekPage = ({ getWeeklyTodo, weeklyTodo, match, location }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  weeklyTodo: selectWeeklyTodo
+  weeklyTodo: selectWeeklyTodo,
+  user: selectCurrentUser
 });
 
 const mapDispatchToProps = dispatch => ({

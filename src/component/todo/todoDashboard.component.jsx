@@ -283,7 +283,7 @@ const TodoDashBoard = ({
             index={0}
           >
             <TabPanel
-              className={classes.tdNoTodoContainer}
+              className={classes.tdNonTodoContainer}
               value={0}
               index={0}
               dir={theme.direction}
@@ -385,12 +385,12 @@ const TodoDashBoard = ({
           className={classes.caPanelContainer}
         >
           <TabPanel
-            className={classes.tdNoTodoContainer}
+            className={classes.caNonTodoContainer}
             value={0}
             index={0}
             dir={theme.direction}
           >
-            <NonTodoExist />
+            <NonTodoExist withCalendar={true} />
           </TabPanel>
         </SwipeableViews>
       )}

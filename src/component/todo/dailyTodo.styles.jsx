@@ -193,10 +193,22 @@ export const useStyles = makeStyles(theme => ({
     height: "3.1rem"
   },
   twNoTodoContainer: {
-    padding: "13rem 0 0 0"
+    padding: "13rem 0 0 0",
+
+    [theme.breakpoints.down("sm")]: {
+      padding: "15.5rem  0 0 0 "
+    }
   },
-  tdNoTodoContainer: {
-    padding: "13rem 0 0 0"
+  tdNonTodoContainer: {
+    padding: "13rem 0 0 0",
+
+    [theme.breakpoints.down("sm")]: {
+      padding: "22rem  0 0 0 "
+    }
+  },
+
+  caNonTodoContainer: {
+    padding: "2rem 0"
   },
   transparentCircleBox: {
     left: "16.75rem",

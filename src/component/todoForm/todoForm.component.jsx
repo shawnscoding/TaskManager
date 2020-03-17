@@ -4,6 +4,7 @@ import {
   Stepper,
   StepLabel,
   Button,
+  Box,
   Typography,
   Grid,
   Fab
@@ -147,7 +148,6 @@ const TodoForm = ({
     <React.Fragment>
       <Fab
         className={classes.todoFormButton}
-        color="secondary"
         onClick={handleOpen}
         aria-label="add"
       >
@@ -196,7 +196,7 @@ const TodoForm = ({
           ) : (
             <React.Fragment>
               <Grid item>
-                <Typography gutterBottom color="primary" variant="h4">
+                <Typography gutterBottom color="primary" variant="h2">
                   {getStepContent(activeStep)}
                 </Typography>
               </Grid>

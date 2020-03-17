@@ -18,22 +18,17 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useTheme } from "@material-ui/core/styles";
-import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
 import HistoryIcon from "@material-ui/icons/History";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
-import ForumIcon from "@material-ui/icons/Forum";
 import TimeToLeaveIcon from "@material-ui/icons/TimeToLeave";
-import SettingsIcon from "@material-ui/icons/Settings";
 import { useStyles } from "./navbar.styles";
 import { Route, Switch, withRouter } from "react-router-dom";
-import TodoPage from "../../pages/todoPage/todoPage.component";
+import StartPage from "../../pages/startPage/StartPage";
 import TodoForm from "../todoForm/todoForm.component";
-import InfoIcon from "@material-ui/icons/Info";
 import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "../../redux/auth/auth.selectors";
 import { connect } from "react-redux";
-import ProfileIcon from "./navbarMaterials/profileIcon.component";
 import { selectStep } from "../../redux/async/async.selectors";
 import { setTodoFormStepToZero } from "../../redux/async/async.actions";
 import TodayPage from "../../pages/todayPage/todayPage.component";
@@ -201,9 +196,9 @@ const Navbar = props => {
             </ListItemIcon>
             <ListItemText primary="About Us" />
           </ListItem>*/}
-          <ListItem color="secondary" onClick={handleSignOut} button>
+          <ListItem onClick={handleSignOut} button>
             <ListItemIcon>
-              <TimeToLeaveIcon color="secondary" />
+              <TimeToLeaveIcon style={{ color: "#f50057" }} />
             </ListItemIcon>
             <ListItemText primary="Log Out" />
           </ListItem>
@@ -287,7 +282,7 @@ const Navbar = props => {
           {/* {user ? ( */}
           <React.Fragment>
             <Switch>
-              <Route exact path="/start" render={() => <TodoPage />} />
+              <Route exact path="/start" render={() => <StartPage />} />
 
               <Route
                 exact
