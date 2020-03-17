@@ -179,8 +179,6 @@ export const getMostFrequentItem = array => {
 //       minEl = el;
 //       minCount = modeMap[el];
 //     }
-//     console.log("modeMap", modeMap);
 //   }
-//   console.log("minEl", minEl);
 //   return minEl;
 // };

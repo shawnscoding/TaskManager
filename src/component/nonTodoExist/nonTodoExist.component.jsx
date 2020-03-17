@@ -13,7 +13,6 @@ const useStyles = makeStyles(theme => ({
     background: "#fff",
     maxWidth: "570px",
     borderRadius: "10px",
-    border: "2px solid rgba(190, 190, 190, 0.58)",
     [theme.breakpoints.down("sm")]: {
       padding: "1rem",
       width: "80%"
@@ -23,8 +22,7 @@ const useStyles = makeStyles(theme => ({
     padding: "2rem 0",
     background: "#fff",
     maxWidth: "570px",
-    borderRadius: "10px",
-    border: "2px solid rgba(190, 190, 190, 0.58)"
+    borderRadius: "10px"
   },
   hsContainer: {
     width: "60%",
@@ -32,8 +30,7 @@ const useStyles = makeStyles(theme => ({
     margin: "6rem 0 0 0",
     background: "#fff",
     maxWidth: "570px",
-    borderRadius: "10px",
-    border: "2px solid rgba(190, 190, 190, 0.58)"
+    borderRadius: "10px"
   },
   logo: {
     color: "rgba(215, 217, 217, 0.95)",

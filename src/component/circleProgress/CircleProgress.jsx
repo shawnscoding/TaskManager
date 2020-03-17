@@ -117,7 +117,6 @@ const CcProgressOnCompletion = ({
   const { result, completedTodo } = getPercentageOfCompletedTodo(todo);
 
   let ani = 0;
-  console.log(width, "width");
   useEffect(() => {
     const clear = setInterval(() => {
       ani += 1;
@@ -125,12 +124,10 @@ const CcProgressOnCompletion = ({
       setAniPercent(ani);
     }, 10);
     setTimeout(() => {
-      console.log("runnned");
       clearInterval(clear);
       setAfterAni(true);
     }, 1000);
     return () => {
-      console.log("runeed! ");
       clearInterval(clear);
     };
   }, []);

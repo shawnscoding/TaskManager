@@ -79,6 +79,8 @@ const Navbar = props => {
     directAfterLogOut,
     closeTimer,
     timer,
+    userSignOut,
+    setUserSignOut,
     getWeeklyTodo,
     history
   } = props;
@@ -110,10 +112,15 @@ const Navbar = props => {
     await getWeeklyTodo(thisWeek);
     history.push(`/todo/thisWeek/${thisWeek}`);
   };
-  const handleSignOut = () => {
-    signOut();
-    directAfterLogOut(false);
-    history.push("/");
+  const handleSignOut = async () => {
+    if (working === true) {
+      toggleTimerWarning();
+    } else {
+      await setUserSignOut(true);
+      await signOut();
+      await directAfterLogOut(false);
+      history.push("/");
+    }
   };
 
   const onClickToday = async () => {
@@ -247,7 +254,6 @@ const Navbar = props => {
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
           <Drawer
             container={container}
@@ -259,7 +265,7 @@ const Navbar = props => {
               paper: classes.drawerPaper
             }}
             ModalProps={{
-              keepMounted: true // Better open performance on mobile.
+              keepMounted: true
             }}
           >
             {drawer}
@@ -311,7 +317,11 @@ const Navbar = props => {
               openTimer={openTimer}
             />
             {currentTask ? (
-              <Timer openTimer={timer} closeTimer={closeTimer} />
+              <Timer
+                openTimer={timer}
+                userSignOut={userSignOut}
+                closeTimer={closeTimer}
+              />
             ) : null}
             {working && !timer ? (
               <Fab

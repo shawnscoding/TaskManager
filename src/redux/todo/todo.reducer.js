@@ -45,7 +45,9 @@ const todoReducer = (state = INITIAL_STATE, action) => {
     case todoActionTypes.CLEAR_TODO_LIST:
       return {
         ...state,
-        monthlyTodo: []
+        monthlyTodo: [],
+        weeklyTodo: [],
+        currentTask: null
       };
     case todoActionTypes.SET_ANOTHER_TODO_SUCCESS:
       return {

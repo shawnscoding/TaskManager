@@ -10,85 +10,43 @@ import {
 } from "@material-ui/core";
 import InsertInvitationIcon from "@material-ui/icons/InsertInvitation";
 import { makeStyles } from "@material-ui/styles";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles(theme => ({
-  container: {
-    padding: "2rem",
-    height: "40vh"
-  },
-  logo: {
-    color: "rgb(245, 0, 87)",
-    fontSize: "3rem",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "1.6rem"
-    }
-  },
-  title: {
-    fontSize: "1.3rem",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "0.8rem"
+  root: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2)
     }
   }
 }));
 
-const Warning = ({ toggleTimerWarning, timerWarning, openTimer }) => {
+function Warning({ toggleTimerWarning, timerWarning, openTimer }) {
   const classes = useStyles();
-  const onClickTimerOpen = () => {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
     toggleTimerWarning();
     openTimer();
   };
+
   return (
-    <Dialog open={timerWarning} onClose={() => toggleTimerWarning()}>
-      <Grid
-        className={classes.container}
-        justify="space-between"
-        direction="column"
-        container
-      >
-        <Grid container item>
-          <Grid item>
-            <Typography className={classes.title}>
-              You're already working on the Task
-            </Typography>
-          </Grid>
-          <Grid style={{ padding: "0 0 0 10px" }} item>
-            <InsertInvitationIcon className={classes.logo} />
-          </Grid>
-        </Grid>
-        <Grid item>
-          <Typography>
-            You need to finish current task to switch to this one
-          </Typography>
-        </Grid>
-
-        <Grid container item>
-          <Grid item>
-            <Typography>Want to open timer to stop?</Typography>
-          </Grid>
-          <Grid item>
-            <Button onClick={() => onClickTimerOpen()} color="primary">
-              open
-            </Button>
-          </Grid>
-        </Grid>
-
-        <Grid container item>
-          <Grid item>
-            <Typography>Want to go back?</Typography>
-          </Grid>
-          <Grid item>
-            <Button
-              onClick={() => toggleTimerWarning()}
-              color="primary"
-              autoFocus
-            >
-              cancle
-            </Button>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Dialog>
+    <div className={classes.root}>
+      <Snackbar open={timerWarning} onClose={() => handleClose()}>
+        <Alert onClose={() => handleClose()} severity="warning">
+          You need to either finish or store current task first !
+        </Alert>
+      </Snackbar>
+    </div>
   );
-};
+}
 
 export default Warning;

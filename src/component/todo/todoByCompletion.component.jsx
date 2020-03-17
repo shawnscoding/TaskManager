@@ -14,8 +14,6 @@ const TodoByCompletion = ({ dailyTodo, classes, withCalendar }) => {
       {}
     );
 
-    console.log(initIsTodoCompleted, "initIsTodoCompleted");
-
     return Object.entries(
       dailyTodo.reduce((todos, todo) => {
         const { completed } = todo;
@@ -31,7 +29,6 @@ const TodoByCompletion = ({ dailyTodo, classes, withCalendar }) => {
 
   if (typeof dailyTodo[0].date !== typeof "") {
     isTodoCompleted = runIsTodoCompleted();
-    console.log(isTodoCompleted);
   }
 
   const handleTodoIsNotExist = (todos, group) => {

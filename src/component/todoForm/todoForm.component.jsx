@@ -4,7 +4,6 @@ import {
   Stepper,
   StepLabel,
   Button,
-  Box,
   Typography,
   Grid,
   Fab
@@ -32,6 +31,7 @@ import AddIcon from "@material-ui/icons/Add";
 import TodoFormLast from "./todoFormSteps/todoFormLast.component";
 import { format } from "date-fns";
 import ProgressButton from "./../progress/ProgressButton";
+import { FormTitle } from "./../todo/dailyTodo.styles";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -63,7 +63,6 @@ const TodoForm = ({
   open,
   toggleOpen
 }) => {
-  // const [openReady, setOpenReady] = useState(false);
   const [date, setDate] = useState(new Date());
   const [form, setForm] = useState({
     title: "",
@@ -115,8 +114,8 @@ const TodoForm = ({
       title: "",
       description: "",
       category: "",
-      hours: "",
-      minutes: "",
+      hours: "1",
+      minutes: "0",
       importance: 3
     });
     setDate(new Date());
@@ -197,9 +196,9 @@ const TodoForm = ({
           ) : (
             <React.Fragment>
               <Grid item>
-                <Typography gutterBottom color="primary" variant="h2">
+                <FormTitle gutterBottom variant="h2">
                   {getStepContent(activeStep)}
-                </Typography>
+                </FormTitle>
               </Grid>
               <Grid
                 container

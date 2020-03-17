@@ -61,7 +61,6 @@ const Graph = ({
   year,
   width
 }) => {
-  console.log(width);
   const [todoData, setTodoData] = useState(null);
   useEffect(() => {
     if (todos.length !== 0) {
@@ -81,7 +80,7 @@ const Graph = ({
       }
     }
   }, [todos]);
-  // need to fix
+  // need to fix // make a good empty compo
   if (!todoData) return <div>dd</div>;
   return (
     <Grid style={{ margin: "-1.5rem 0 0 1rem" }} item>

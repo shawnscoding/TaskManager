@@ -6,10 +6,7 @@ import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
 import TodoDashBoard from "../../component/todo/todoDashboard.component";
 import { format } from "date-fns";
-import {
-  setAnotherTodoStart,
-  resetMonthlyTodoOnRoute
-} from "../../redux/todo/todo.actions";
+import { setAnotherTodoStart } from "../../redux/todo/todo.actions";
 import { selectLoading } from "./../../redux/async/async.selectors";
 import { getThisMonth } from "./../../utils/helper";
 import { makeStyles } from "@material-ui/core/styles";
@@ -112,8 +109,6 @@ const CalendarPage = ({ todos, getAnotherTodo, loading }) => {
 
   const handleClickAnotherMonth = month => {
     getAnotherTodo(month);
-    console.log(month);
-    console.log(month + "1");
     const thisMonth = getThisMonth();
     if (month === thisMonth) {
       setMonthAndDate(today);

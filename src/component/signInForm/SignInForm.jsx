@@ -1,18 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { makeStyles } from "@material-ui/styles";
-import {
-  CircularProgress,
-  TextField,
-  Button,
-  Typography,
-  Grid
-} from "@material-ui/core";
+import { TextField, Button, Typography, Grid } from "@material-ui/core";
 
 import { emailSignInStart } from "./../../redux/auth/auth.actions";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import InsertInvitationIcon from "@material-ui/icons/InsertInvitation";
 import ProgressButton from "../progress/ProgressButton";
 

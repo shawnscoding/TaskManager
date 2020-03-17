@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { selectCurrentUser } from "../../redux/auth/auth.selectors";
 import { makeStyles } from "@material-ui/core/styles";
+import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -199,15 +200,16 @@ const MyTodoDetailedPage = ({
 
           {todo.completed === true ? null : (
             <DialogActions>
-              <Button variant="outlined" color="primary">
+              {/* <Button variant="outlined" color="primary">
                 Edit
-              </Button>
+              </Button> */}
               <Button
                 variant="outlined"
                 onClick={() => onClickStart(todo)}
                 color="primary"
               >
                 Start
+                <PlayCircleOutlineIcon style={{ padding: "0 0 0 4px" }} />
               </Button>
             </DialogActions>
           )}

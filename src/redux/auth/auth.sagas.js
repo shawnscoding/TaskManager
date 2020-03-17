@@ -73,6 +73,8 @@ export function* signInWithEmail({ payload: { email, password } }) {
     yield put(directUserAfterLogAct(true));
   } catch (err) {
     alert(err.message);
+    yield put(asyncActionFinish());
+
     yield put(signInFailure(err));
   }
 }

@@ -53,6 +53,12 @@ export const WorkTitle = styled(Typography)`
   -webkit-text-fill-color: transparent;
 `;
 
+export const FormTitle = styled(Typography)`
+  background: -webkit-linear-gradient(45deg, #2e70c2e0 30%, #1d37d3d1 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+`;
+
 export const HealthTitle = styled(Typography)`
   font-size: 2.5rem;
   font-weight: bold;

@@ -13,10 +13,6 @@ const ThisWeekPage = ({ getWeeklyTodo, weeklyTodo, match, user }) => {
   const [week, setWeek] = React.useState(new Date());
   const [todo, setTodo] = React.useState(null);
   React.useEffect(() => {
-    // if (thisWeek !== week) {
-    //   setWeek(thisWeek);
-    // }
-
     const formattedWeek = format(week, "ww");
 
     if (

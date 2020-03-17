@@ -43,7 +43,6 @@ const DailyTodoAll = ({
     setTodo({ todo, hours, minutes });
     setOpen(!open);
   };
-  console.log(working, "working");
 
   return (
     <div className={withCalendar ? classes.caBox : classes.box}>

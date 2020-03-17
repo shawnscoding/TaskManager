@@ -25,7 +25,6 @@ const TodayPage = ({ match, todos }) => {
   React.useEffect(() => {
     if (todos.length !== 0) {
       if (typeof todos[0].date === typeof "") {
-        console.log("runeed dddddddddd in if");
         const date = format(new Date(), "d");
         setDailyTodo([
           {
@@ -35,8 +34,6 @@ const TodayPage = ({ match, todos }) => {
           }
         ]);
       } else {
-        console.log("runeed ddddddddd in else");
-
         let newTodos = todos.filter(
           todo => format(todo.date.toDate(), "MMMd") === monthAndDate
         );

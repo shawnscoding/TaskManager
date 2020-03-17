@@ -32,38 +32,11 @@ export const setDailyTodo = (todos, monthAndDate) => {
 
 export const checkIfTodoExist = todoList => {
   if (todoList.length === 0) {
-    console.log("runnneddd in check");
     return [{ date: "" }];
   } else {
     return todoList;
   }
 };
-
-// export const onChageWeeklyTodo = todos => {
-//   if (todos.length === 0) {
-//     return [{ date: "" }];
-//   } else {
-//     return [...todos];
-//   }
-// };
-
-// export const isTodoThisWeek = (todos, newTodo) => {
-//   if(todos.length === 0){
-//     todos
-//   }
-
-//   // if(week !== null){
-//   //   format(week, "ww")
-//   // }
-//   // if (todos.length === 0 && week !== 0) {
-//   //   return [...newTodo];
-//   // }
-//   // if (newTodo.week === todos[0].week) {
-//   //   return [newTodo, ...todos];
-//   // } else {
-//   //   return [...todos];
-//   // }
-// };
 
 export const categories = [
   "Work",

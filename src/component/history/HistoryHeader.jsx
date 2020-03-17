@@ -106,7 +106,6 @@ const HistoryHeader = ({ todos }) => {
 
   let arr = [];
   for (let i = 0; i < todos.length; i++) {
-    // fix
     if (todos[i].completed === true) {
       arr.push(format(todos[i].date.toDate(), "MMMM"));
     }
@@ -114,6 +113,7 @@ const HistoryHeader = ({ todos }) => {
 
   const maxMonth = getMostFrequentItem(arr);
 
+  // fix
   // const minMonth = getLeastFrequentItem(arr);
 
   const getMinutes = seconds => {

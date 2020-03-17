@@ -48,14 +48,10 @@ export function* updateTodoInFb({ payload }) {
   try {
     yield put(asyncActionStart());
     let todoDocRef = yield firestore.collection("todo_list").doc(payload.id);
-    console.log("object runned! ! !! !! ");
 
     yield todoDocRef.update(payload);
-    console.log("object runned!!! ");
 
     yield put(storeUpdatedTodoFinish(payload));
-
-    console.log("object runned!!! ! !  ");
 
     yield put(asyncActionFinish());
     if (payload.completed === true) {
@@ -76,7 +72,6 @@ export function* getWeeklyTodoFromFb({ payload }) {
 
     const user = yield select(selectCurrentUser);
     const year = getThisYear();
-    console.log(payload, "week in saga");
 
     const listsRef = yield firestore.collection("todo_list");
     const query = yield listsRef
@@ -104,7 +99,6 @@ export function* getWeeklyTodoFromFb({ payload }) {
 }
 
 export function* fetchFormerTodoFromFb({ payload }) {
-  console.log(payload, "payload");
   const user = yield select(selectCurrentUser);
   try {
     const listsRef = yield firestore.collection("todo_list");
@@ -155,7 +149,6 @@ export function* checkTodoInFirebase(month) {
 }
 
 export function* checkMonthlyTodo({ payload }) {
-  console.log("run");
   yield put(asyncActionStart());
 
   const todoList = yield checkTodoInFirebase(payload);

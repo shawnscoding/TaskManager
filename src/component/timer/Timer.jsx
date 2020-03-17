@@ -100,7 +100,10 @@ class Timer extends Component {
   };
 
   componentWillUnmount() {
-    const { currentTask, storeUpdatedTodo } = this.props;
+    const { currentTask, storeUpdatedTodo, userSignOut } = this.props;
+    if (userSignOut === true) {
+      return;
+    }
     const { task } = currentTask;
     task.timeToComplete = this.state.counter;
     task.workingHour = task.workingHour + this.state.increment;
@@ -118,7 +121,6 @@ class Timer extends Component {
   componentDidMount() {
     const { currentTask } = this.props;
     if (currentTask !== null) {
-      console.log(currentTask);
       this.setState({
         ...this.state,
         counter: currentTask.timeToComplete,

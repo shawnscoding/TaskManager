@@ -31,7 +31,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const SignUpForm = ({ open, setOpen, signUp }) => {
-  console.log(open);
   const classes = useStyles();
 
   const [form, setForm] = React.useState({
@@ -45,7 +44,6 @@ const SignUpForm = ({ open, setOpen, signUp }) => {
       ...form,
       [name]: value
     });
-    console.log(form);
   };
 
   const handleSubmit = () => {

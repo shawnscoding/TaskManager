@@ -28,10 +28,6 @@ const Calendar = ({
 
   const [dayOpen, setDayOpen] = useState(null);
 
-  const handleDayOpen = index => {
-    setDayOpen(index);
-  };
-
   useEffect(() => {
     if (todos.length !== 0) {
       setCalendarTodos(todos);
