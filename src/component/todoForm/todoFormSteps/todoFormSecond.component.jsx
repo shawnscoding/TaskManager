@@ -5,7 +5,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { hoursArray, minutesArray } from "../../../utils/helper";
-import { Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 
 const TodoFormSecond = ({
   classes,
@@ -21,7 +21,7 @@ const TodoFormSecond = ({
         fullWidth
         margin="normal"
         id="date-picker-dialog"
-        label="please select the date"
+        label="select the date"
         format="MM/dd/yyyy"
         value={date}
         onChange={onDateAndTimeChange}
@@ -41,6 +41,13 @@ const TodoFormSecond = ({
           "aria-label": "change time"
         }}
       />
+      <Grid container>
+        <Typography
+          style={{ fontSize: "0.7rem", color: "rgba(0, 0, 0, 0.54)" }}
+        >
+          How long does it take ?
+        </Typography>
+      </Grid>
       <Grid
         direction="row"
         justify="space-between"
@@ -49,9 +56,7 @@ const TodoFormSecond = ({
       >
         <Grid style={{ width: "49%" }} item>
           <FormControl className={classes.formControlSecond}>
-            <InputLabel htmlFor="hours-native-simple">
-              How long does this takes?
-            </InputLabel>
+            <InputLabel htmlFor="hours-native-simple">Hour</InputLabel>
             <Select
               native
               value={form.hours}

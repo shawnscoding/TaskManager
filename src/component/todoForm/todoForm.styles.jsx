@@ -7,7 +7,8 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center"
   },
   todoFormButton: {
-    backgroundColor: theme.palette.info.main,
+    background:
+      "linear-gradient( 45deg,rgba(8, 72, 202, 0.85) , rgba(28, 148, 234, 0.82) )",
     position: "fixed",
     color: "#fff",
     bottom: "5rem",
@@ -26,8 +27,8 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("md")]: {
       bottom: "4rem",
       right: "4rem",
-      width: "3.2rem",
-      height: "3.2rem"
+      width: "3.5rem",
+      height: "3.5rem"
     },
     [theme.breakpoints.down("sm")]: {
       bottom: "2rem",
@@ -36,14 +37,19 @@ const useStyles = makeStyles(theme => ({
       height: "3rem"
     }
   },
-
+  container: {
+    padding: "2rem",
+    [theme.breakpoints.down("sm")]: {
+      padding: "1.5rem 1rem"
+    }
+  },
   button: {
-    margin: theme.spacing(4, 0)
+    padding: "1rem 0 1.5rem 0"
   },
 
   thirdTextFirst: {
-    fontSize: "1.5rem",
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
+    fontSize: "1.4rem"
   },
   thirdTextSecond: {
     fontSize: "1.3rem",

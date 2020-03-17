@@ -7,8 +7,8 @@ import StarRoundedIcon from "@material-ui/icons/StarRounded";
 import MyTodoDetailedPage from "./../../pages/myTodoDetailedPage/myTodoDetailedPage.component";
 import { setTodoOnTimer, openTimer } from "../../redux/todo/todo.actions";
 import { connect } from "react-redux";
-import { getMinutes } from "../../utils/helper";
-import { getHours } from "./../../utils/helper";
+import { getMinutes, getHours } from "../../utils/helper";
+
 import { selectWorking } from "../../redux/todo/todo.selectors";
 import { createStructuredSelector } from "reselect";
 import { toggleTimerWarning } from "./../../redux/warning/warning.actions";

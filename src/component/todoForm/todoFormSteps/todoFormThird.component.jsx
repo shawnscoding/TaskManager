@@ -10,11 +10,7 @@ const TodoFormThird = ({ onChange, form, onRatingChange, classes }) => {
           sm={9}
           item
         >
-          <Typography
-            className={classes.thirdTextFirst}
-            varient="h5"
-            component="legend"
-          >
+          <Typography className={classes.thirdTextFirst}>
             How important is it?
           </Typography>
         </Grid>
@@ -28,25 +24,6 @@ const TodoFormThird = ({ onChange, form, onRatingChange, classes }) => {
           />
         </Grid>
       </Grid>
-      {/* <Box m={1}>
-        <Typography
-          className={classes.thirdTextSecond}
-          varient="subtitle1"
-          component="legend"
-        >
-          You can set a reward for yourself if you want :) (Obtional)
-        </Typography>
-        <TextField
-          variant="outlined"
-          id="todoTitle"
-          type="text"
-          value={form.reward}
-          label="Title"
-          onChange={onChange("reward")}
-          fullWidth
-          className={classes.formControl}
-        />
-      </Box> */}
     </React.Fragment>
   );
 };

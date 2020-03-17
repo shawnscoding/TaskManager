@@ -82,6 +82,9 @@ export const useStyles = makeStyles(theme => ({
     height: "4rem",
     color: "rgba(255, 255, 255, 0.9)",
     background: "linear-gradient(45deg, #33b7c8, 30%, #08e9dff5 90%)",
+    "&:hover": {
+      background: "linear-gradient(45deg, #30acbc, 30%, #08d3caf5 90%)"
+    },
     [theme.breakpoints.up("md")]: {
       bottom: "10rem",
       right: "4rem",
@@ -91,8 +94,8 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("md")]: {
       bottom: "9rem",
       right: "4rem",
-      width: "3rem",
-      height: "3rem"
+      width: "3.5rem",
+      height: "3.5rem"
     },
     [theme.breakpoints.down("sm")]: {
       bottom: "7.5rem",

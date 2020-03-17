@@ -29,7 +29,7 @@ export const Form = styled(Grid)`
   padding: 2rem;
 `;
 
-const SignInForm = ({ history, setOpen, signInWithEmail }) => {
+const SignInForm = ({ setOpen, signInWithEmail }) => {
   const [form, setForm] = React.useState({
     email: "",
     password: ""

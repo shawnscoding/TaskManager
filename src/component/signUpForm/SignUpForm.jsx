@@ -1,13 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { makeStyles } from "@material-ui/styles";
-import {
-  CircularProgress,
-  TextField,
-  Button,
-  Typography,
-  Grid
-} from "@material-ui/core";
+import { TextField, Typography, Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { signUpStart } from "../../redux/auth/auth.actions";

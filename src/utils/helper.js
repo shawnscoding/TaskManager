@@ -100,7 +100,7 @@ export const createRateOfCompletionDataByHour = todos => {
     const total = todos.filter(
       todo => format(todo.date.toDate(), "H") === format(hour, "H")
     );
-    const completed = total.filter(todo => todo.completed !== true);
+    const completed = total.filter(todo => todo.completed === true);
     monthList.push({
       name: format(hour, "hh"),
       completed: completed.length,
@@ -119,7 +119,7 @@ export const createRateOfCompletionDataByCategory = todos => {
   const category = categories;
   for (let i = 0; i < category.length; i++) {
     const total = todos.filter(todo => todo.category === category[i]);
-    const completed = total.filter(todo => todo.completed !== true);
+    const completed = total.filter(todo => todo.completed === true);
     monthList.push({
       name: category[i],
       completed: completed.length,
@@ -134,11 +134,12 @@ export const createRateOfCompletionDataByImportance = todos => {
   const monthList = [];
   if (todos.length === 0) return monthList;
   const importance = [1, 2, 3, 4, 5];
+  const importanceInLetter = ["One", "Two", "Three", "Four", "Five"];
   for (let i = 0; i < importance.length; i++) {
     const total = todos.filter(todo => todo.importance === importance[i]);
-    const completed = total.filter(todo => todo.completed !== true);
+    const completed = total.filter(todo => todo.completed === true);
     monthList.push({
-      name: importance[i].toString(),
+      name: importanceInLetter[i],
       completed: completed.length,
       total: total.length
     });

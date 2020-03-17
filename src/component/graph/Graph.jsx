@@ -3,7 +3,6 @@ import { Grid } from "@material-ui/core";
 import styled, { css } from "styled-components";
 
 import {
-  LineChart,
   ComposedChart,
   Line,
   XAxis,
@@ -67,13 +66,13 @@ const Graph = ({
   useEffect(() => {
     if (todos.length !== 0) {
       if (firleft === "true") {
-        const result = createRateOfCompletionDataByMonth(todos, year);
+        const result = createRateOfCompletionDataByCategory(todos);
         setTodoData(result);
       } else if (firright === "true") {
         const result = createRateOfCompletionDataByHour(todos);
         setTodoData(result);
       } else if (secleft === "true") {
-        const result = createRateOfCompletionDataByCategory(todos);
+        const result = createRateOfCompletionDataByMonth(todos, year);
         setTodoData(result);
       } else if (secright === "true") {
         const result = createRateOfCompletionDataByImportance(todos);

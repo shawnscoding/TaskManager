@@ -48,9 +48,14 @@ export function* updateTodoInFb({ payload }) {
   try {
     yield put(asyncActionStart());
     let todoDocRef = yield firestore.collection("todo_list").doc(payload.id);
+    console.log("object runned! ! !! !! ");
+
     yield todoDocRef.update(payload);
+    console.log("object runned!!! ");
 
     yield put(storeUpdatedTodoFinish(payload));
+
+    console.log("object runned!!! ! !  ");
 
     yield put(asyncActionFinish());
     if (payload.completed === true) {

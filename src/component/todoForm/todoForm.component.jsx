@@ -38,7 +38,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const getSteps = () => {
-  return ["Set your task", "set the date you will work on", "before you add"];
+  return ["Set your task", "set the date ", "before you add"];
 };
 
 const getStepContent = stepIndex => {
@@ -69,7 +69,7 @@ const TodoForm = ({
     title: "",
     description: "",
     category: "",
-    hours: "",
+    hours: "1",
     minutes: "0",
     importance: 3
   });
@@ -158,15 +158,14 @@ const TodoForm = ({
         TransitionComponent={Transition}
         keepMounted
         onClose={handleOpen}
-        fullWidth={true}
         maxWidth="md"
       >
         <Grid
-          style={{ height: "75vh" }}
           container
           direction="column"
           justify="space-around"
           alignItems="center"
+          className={classes.container}
         >
           <Grid
             container
@@ -175,11 +174,13 @@ const TodoForm = ({
             justify="center"
             alignItems="flex-start"
           >
-            <Grid xs={10} item>
+            <Grid style={{ width: "100%" }} item>
               <Stepper activeStep={activeStep} alternativeLabel>
                 {steps.map(label => (
                   <Step key={label}>
-                    <StepLabel>{label}</StepLabel>
+                    <StepLabel>
+                      <Typography>{label}</Typography>
+                    </StepLabel>
                   </Step>
                 ))}
               </Stepper>

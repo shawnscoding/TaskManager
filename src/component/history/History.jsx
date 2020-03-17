@@ -57,11 +57,11 @@ const HistoryContainer = ({ first, todos, year, width }) => {
 
           <TextContainer item>
             {first ? (
-              <Typography gutterBottom>Completion Rate By Month</Typography>
-            ) : (
               <Typography gutterBottom>
                 Completion Rate By Categories
               </Typography>
+            ) : (
+              <Typography gutterBottom>Completion Rate By Month</Typography>
             )}
           </TextContainer>
         </SubContainer>

@@ -74,6 +74,21 @@ theme.typography.h1 = {
   fontFamily: "'Open Sans Condensed', sans-serif"
 };
 
+theme.typography.h2 = {
+  fontSize: "2rem",
+  fontFamily: "'Open Sans Condensed', sans-serif",
+  fontWeight: 400,
+  "@media (max-width:700px)": {
+    fontSize: "1.8rem"
+  },
+  "@media (max-width:600px)": {
+    fontSize: "1.4rem"
+  },
+  "@media (max-width:450px)": {
+    fontSize: "1rem"
+  }
+};
+
 ReactDOM.render(
   <Provider store={store}>
     <Router>

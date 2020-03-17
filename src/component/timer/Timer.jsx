@@ -16,6 +16,8 @@ import { CircleProgress } from "react-gradient-progress";
 import styled from "styled-components";
 import CloseIcon from "@material-ui/icons/Close";
 import { primaryColor } from "../circleProgress/CircleProgress";
+import StopIcon from "@material-ui/icons/Stop";
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -101,6 +103,7 @@ class Timer extends Component {
     const { currentTask, storeUpdatedTodo } = this.props;
     const { task } = currentTask;
     task.timeToComplete = this.state.counter;
+    task.workingHour = task.workingHour + this.state.increment;
     clearInterval(this.myInterval);
     storeUpdatedTodo(task);
     this.setState({
@@ -115,10 +118,11 @@ class Timer extends Component {
   componentDidMount() {
     const { currentTask } = this.props;
     if (currentTask !== null) {
+      console.log(currentTask);
       this.setState({
         ...this.state,
         counter: currentTask.timeToComplete,
-        total: currentTask.timeToComplete
+        total: currentTask.task.totalHour
       });
     }
   }
@@ -131,13 +135,15 @@ class Timer extends Component {
         ...this.state,
         counter: currentTask.timeToComplete,
         started: false,
-        total: currentTask.timeToComplete,
+        total: currentTask.task.totalHour,
         increment: 0
       });
     }
     if (this.state.counter === 1) {
       task.timeToComplete = this.state.counter;
       task.completed = true;
+      task.workingHour = task.workingHour + this.state.increment;
+
       clearInterval(this.myInterval);
       storeUpdatedTodo(task);
       this.setState({
@@ -156,8 +162,10 @@ class Timer extends Component {
     clearInterval(this.myInterval);
     this.props.stoppedWork();
     task.timeToComplete = this.state.counter;
-    task.workingHour = this.state.increment;
-    task.completed = true;
+    task.workingHour = task.workingHour + this.state.increment;
+    if (this.state.counter === 1) {
+      task.completed = true;
+    }
     storeUpdatedTodo(task);
     this.setState({
       counter: 0,
@@ -204,7 +212,7 @@ class Timer extends Component {
 
   render() {
     const { started, stopped, disableFinish } = this.state;
-    const { openTimer, closeTimer } = this.props;
+    const { openTimer, closeTimer, currentTask } = this.props;
     const { classes } = this.props;
     const percent = this.getPercentage();
 
@@ -291,7 +299,7 @@ class Timer extends Component {
                 variant="outlined"
                 className={classes.button}
               >
-                <TimerOffIcon />
+                <StopIcon />
               </Button>
               <Button
                 onClick={this.onClickFinish}
@@ -299,7 +307,7 @@ class Timer extends Component {
                 disabled={disableFinish}
                 className={classes.button}
               >
-                Switch
+                Store
               </Button>
               <Button
                 onClick={this.clickStart}
@@ -307,7 +315,7 @@ class Timer extends Component {
                 disabled={started}
                 className={classes.button}
               >
-                <TimerIcon />
+                <PlayArrowIcon />
               </Button>
             </ButtonContainer>
           </Grid>

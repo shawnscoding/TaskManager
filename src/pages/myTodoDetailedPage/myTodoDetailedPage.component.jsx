@@ -10,7 +10,6 @@ import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { selectCurrentUser } from "../../redux/auth/auth.selectors";
-import { openTimer } from "../../redux/todo/todo.actions";
 import { makeStyles } from "@material-ui/core/styles";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -24,10 +23,8 @@ const useStyles = makeStyles(theme => ({
   },
   name: {
     color: "rgb(89, 205, 208)",
-    padding: "0 10px"
-  },
-  lightGreenText: {
-    color: "rgb(39, 155, 174)"
+    padding: "0 10px",
+    fontSize: "1.3rem"
   }
 }));
 
@@ -55,75 +52,83 @@ const MyTodoDetailedPage = ({
     }
   };
   return (
-    <div>
-      <Dialog
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={() => setOpen(!open)}
-        fullWidth={true}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle id="alert-dialog-slide-title">
-          <Grid container>
-            <Grid item>
-              <DialogContentText id="alert-dialog-slide-description">
-                Hi
-              </DialogContentText>
+    <Dialog
+      open={open}
+      TransitionComponent={Transition}
+      keepMounted
+      onClose={() => setOpen(!open)}
+      fullWidth={true}
+      aria-labelledby="todo-detail-dialog-title"
+      aria-describedby="alert-dialog-slide-description"
+    >
+      <div style={{ padding: "2rem" }}>
+        <div>
+          <DialogTitle>
+            <Grid container>
+              <Grid item>
+                <DialogContentText
+                  style={{ color: "#000", fontSize: "1.3rem" }}
+                  id="todo-detail-dialog-title"
+                >
+                  Hi
+                </DialogContentText>
+              </Grid>
+              <Grid item>
+                <DialogContentText
+                  className={classes.name}
+                  id="todo-detail-dialog-title"
+                >
+                  {user.displayName}
+                </DialogContentText>
+              </Grid>
+              <Grid item>
+                <DialogContentText
+                  style={{ color: "#000", fontSize: "1.3rem" }}
+                  id="todo-detail-dialog-title"
+                >
+                  Are you ready to start?
+                </DialogContentText>
+              </Grid>
             </Grid>
-            <Grid item>
-              <DialogContentText
-                className={classes.name}
-                id="alert-dialog-slide-description"
-              >
-                {user.displayName}
-              </DialogContentText>
+          </DialogTitle>
+          <DialogContent>
+            <Grid container>
+              <Grid item>
+                <DialogContentText
+                  className={classes.greenText}
+                  id="alert-dialog-slide-description"
+                >
+                  Title:
+                </DialogContentText>
+              </Grid>
+              <Grid item>
+                <DialogContentText
+                  style={{ color: "#000" }}
+                  id="alert-dialog-slide-description"
+                >
+                  {todo.title}
+                </DialogContentText>
+              </Grid>
             </Grid>
-            <Grid item>
-              <DialogContentText id="alert-dialog-slide-description">
-                Are you ready to start?
-              </DialogContentText>
-            </Grid>
-          </Grid>
-        </DialogTitle>
 
-        <DialogContent>
-          <Grid container>
-            <Grid item>
-              <DialogContentText
-                className={classes.greenText}
-                id="alert-dialog-slide-description"
-              >
-                Title:
-              </DialogContentText>
+            <Grid container>
+              <Grid item>
+                <DialogContentText
+                  className={classes.greenText}
+                  id="alert-dialog-slide-description"
+                >
+                  Description:
+                </DialogContentText>
+              </Grid>
+              <Grid item>
+                <DialogContentText
+                  style={{ color: "#000" }}
+                  id="alert-dialog-slide-description"
+                >
+                  {todo.description}
+                </DialogContentText>
+              </Grid>
             </Grid>
-            <Grid item>
-              <DialogContentText id="alert-dialog-slide-description">
-                {todo.title}
-              </DialogContentText>
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogContent>
-          <Grid container>
-            <Grid item>
-              <DialogContentText
-                className={classes.greenText}
-                id="alert-dialog-slide-description"
-              >
-                Description:
-              </DialogContentText>
-            </Grid>
-            <Grid item>
-              <DialogContentText id="alert-dialog-slide-description">
-                {todo.description}
-              </DialogContentText>
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
             <Grid container>
               <Grid item>
                 <DialogContentText
@@ -134,13 +139,14 @@ const MyTodoDetailedPage = ({
                 </DialogContentText>
               </Grid>
               <Grid item>
-                <DialogContentText id="alert-dialog-slide-description">
+                <DialogContentText
+                  style={{ color: "#000" }}
+                  id="alert-dialog-slide-description"
+                >
                   {todo.category}
                 </DialogContentText>
               </Grid>
             </Grid>
-          </DialogContentText>
-          <DialogContentText id="alert-dialog-slide-description">
             <Grid container>
               <Grid item>
                 <DialogContentText
@@ -151,16 +157,17 @@ const MyTodoDetailedPage = ({
                 </DialogContentText>
               </Grid>
               <Grid item>
-                <DialogContentText id="alert-dialog-slide-description">
+                <DialogContentText
+                  style={{ color: "#000" }}
+                  id="alert-dialog-slide-description"
+                >
                   {todo.importance.toString()}
                 </DialogContentText>
               </Grid>
             </Grid>
-          </DialogContentText>
-          <DialogContentText id="alert-dialog-slide-description">
             {todo.timeToComplete < 60 ? null : (
               <React.Fragment>
-                <Typography className={classes.lightGreenText}>
+                <Typography style={{ color: "rgb(153, 153, 153)" }}>
                   Expected to take &nbsp;
                   {todo.timeToComplete && hours === 0 ? null : hours === 1 ? (
                     <React.Fragment>{hours} hour &nbsp;</React.Fragment>
@@ -178,32 +185,35 @@ const MyTodoDetailedPage = ({
               </React.Fragment>
             )}
             {todo.timeToComplete <= 60 && todo.timeToComplete !== 1 ? (
-              <Typography className={classes.lightGreenText}>
+              <Typography style={{ color: "rgb(153, 153, 153)" }}>
                 You've got Only 1 min left !
               </Typography>
             ) : null}
 
             {todo.completed && (
-              <Typography className={classes.lightGreenText}>
+              <Typography style={{ color: "rgb(153, 153, 153)" }}>
                 You've completed this task
               </Typography>
             )}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button variant="outlined" color="primary">
-            Edit
-          </Button>
-          <Button
-            variant="outlined"
-            onClick={() => onClickStart(todo)}
-            color="primary"
-          >
-            Start
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+          </DialogContent>
+
+          {todo.completed === true ? null : (
+            <DialogActions>
+              <Button variant="outlined" color="primary">
+                Edit
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={() => onClickStart(todo)}
+                color="primary"
+              >
+                Start
+              </Button>
+            </DialogActions>
+          )}
+        </div>
+      </div>
+    </Dialog>
   );
 };
 

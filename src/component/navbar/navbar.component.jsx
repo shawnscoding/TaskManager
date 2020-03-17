@@ -350,7 +350,7 @@ const mapDispatchToProps = dispatch => ({
   resetTodo: () => dispatch(resetMonthlyTodoOnRoute()),
   fetchFormerTodo: year => dispatch(fecthFormarTodoStart(year)),
   signOut: () => dispatch(signOutStart()),
-  directAfterLogOut: () => dispatch(directUserAfterLogAct())
+  directAfterLogOut: bool => dispatch(directUserAfterLogAct(bool))
 });
 
 export default withWidth()(
