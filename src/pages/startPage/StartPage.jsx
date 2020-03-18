@@ -9,6 +9,7 @@ import { toggleTodoFormOpen } from "../../redux/async/async.actions";
 import { createStructuredSelector } from "reselect";
 import { selectMonthlyTodo } from "../../redux/todo/todo.selectors";
 import LoadingCompoent from "../../component/loader/loadingCompoent";
+import { getMonthAndDay } from "./../../utils/helper";
 const useStyles = makeStyles(theme => ({
   container: {
     height: "100%"
@@ -75,7 +76,7 @@ const useStyles = makeStyles(theme => ({
 }));
 const StartPage = ({ toggleOpen, history, todos }) => {
   const classes = useStyles();
-
+  const monthAndDate = getMonthAndDay(new Date());
   if (todos.length === 0) return <LoadingCompoent />;
   return (
     <React.Fragment>
@@ -145,7 +146,7 @@ const StartPage = ({ toggleOpen, history, todos }) => {
                 size="large"
                 variant="contained"
                 color="primary"
-                onClick={() => history.push(`/`)}
+                onClick={() => history.push(`/todo/dailyTodo/${monthAndDate}`)}
               >
                 view today's task
               </Button>
