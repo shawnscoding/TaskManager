@@ -1,68 +1,42 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Task Manager
 
-## Available Scripts
+Task Management app built in React js, https://my-motivator-db.firebaseapp.com/
 
-In the project directory, you can run:
+### `the features this app has`
 
-### `yarn start`
+I am pretty confident to say that this app is probably the best todo app ever on the internet.
+You can pretty much do anything related to task management.
+I categorized tasks by date, hour, month, week, type, importance, completion and so on.
+Also, There is history page where you can see the rate of your completion in diverse categories as well.
+Plus, It has really beautiful UI which is simple to use
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+I am thinking of adding more features to make this app by far the best todo app ever.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### `tools and libraries I used`
 
-### `yarn test`
+I used react-saga, material ui and a little bit of styled-library to style,
+firebase, date-fns and so on.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### `Things I learned`
 
-### `yarn build`
+Material Ui Library has a quite deep learning curve but is really flexible and easy to customize. I could customize it as much as I want.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### `Challenge I faced`
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+It is feasible to deal with date value without using a library like date-fns but can be a nightmare.
+So I used date-fns, which made development so much easier.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Creating our own graph or chart can be quite tricky. Thus, I picked up a small React Chart library called recharts and made my life so much easier.
 
-### `yarn eject`
+Since there's nothing to do for unauthenticated user on this app, I decided to force user to sign 1n
+before entering to the start page
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### `Q & A`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### `can I copy your app?`
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Of course, I'd be glad to help.
+However, you are required to mention my name Shawn and that you copied my work on your app, if you
+replicate almost everyting on my app.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+If you have any question relevant to my app, you can simply email me. I'd be glad to answer.
