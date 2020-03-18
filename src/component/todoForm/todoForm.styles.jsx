@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core";
-import { green } from "@material-ui/core/colors";
 
 const useStyles = makeStyles(theme => ({
   root: {

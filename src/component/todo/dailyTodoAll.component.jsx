@@ -114,7 +114,7 @@ const DailyTodoAll = ({
                 <Grid item>
                   <Divider />
                 </Grid>
-                <Grid container item>
+                <Grid className={classes.btnContainer} container item>
                   <Grid sm={11} xs={11} style={{ overflow: "hidden" }} item>
                     {dailyTodo
                       .filter(todo => {

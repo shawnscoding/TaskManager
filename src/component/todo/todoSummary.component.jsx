@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Typography, Button, Box } from "@material-ui/core";
+import { Grid, Typography, Button } from "@material-ui/core";
 import { SummaryContainer } from "./dailyTodo.styles";
 import { format } from "date-fns";
 import StarBorderRoundedIcon from "@material-ui/icons/StarBorderRounded";

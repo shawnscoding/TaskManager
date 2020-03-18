@@ -66,7 +66,6 @@ const DailyTodoHeader = ({ history, match, dailyTodo, setAnotherTodo }) => {
   const handleNextMonth = () => {
     const month = format(nextMonth, "MMM");
     setAnotherTodo(month);
-    const day = new Date(preMonthEnd);
 
     setCurrentMonth(nextMonthStart);
     history.push(`/todo/dailyTodo/${nextMonthAndDate}`);

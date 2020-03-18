@@ -26,8 +26,6 @@ const Calendar = ({
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [calendarTodos, setCalendarTodos] = useState([]);
 
-  const [dayOpen, setDayOpen] = useState(null);
-
   useEffect(() => {
     if (todos.length !== 0) {
       setCalendarTodos(todos);
@@ -106,14 +104,12 @@ const Calendar = ({
       let days = [];
       let day = startDate;
       let formattedDate = "";
-      let indexOfRow = 0;
 
       while (day <= endDate) {
-        const index = indexOfRow;
         for (let i = 0; i < 7; i++) {
           formattedDate = format(day, dateFormat);
           const cloneDay = day;
-          const monthAndDate = getMonthAndDay(day);
+          const monthAndDate = getMonthAndDay(cloneDay);
 
           let dailyTodo;
 
@@ -133,7 +129,7 @@ const Calendar = ({
               alignItems="center"
               onClick={() => handleClickDate(monthAndDate)}
               className={`col cell ${
-                !isSameMonth(day, monthStart) ? "disabled" : ""
+                !isSameMonth(cloneDay, monthStart) ? "disabled" : ""
               }`}
               key={day}
             >
@@ -160,15 +156,8 @@ const Calendar = ({
         rows.push(
           <React.Fragment key={day}>
             <div className="row">{days}</div>
-            <Grid hidden={dayOpen === index ? false : true}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Aspernatur vel sit est officiis eos fugit suscipit voluptatum.
-              Fugit distinctio pariatur atque veritatis similique velit,
-              quisquam quidem aut recusandae commodi totam.
-            </Grid>
           </React.Fragment>
         );
-        indexOfRow += 1;
         days = [];
       }
       return <div className="body">{rows}</div>;

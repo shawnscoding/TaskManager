@@ -33,7 +33,6 @@ const ProgressButton = ({
   loading,
   onSubmit,
   onSignIn = false,
-  onSignUp = false,
   onTodo = false
 }) => {
   const classes = useStyles();

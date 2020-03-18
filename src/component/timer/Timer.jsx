@@ -3,7 +3,6 @@ import { Grid, Typography, Dialog, Button, Slide } from "@material-ui/core";
 import {} from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
 import TimerIcon from "@material-ui/icons/Timer";
-import TimerOffIcon from "@material-ui/icons/TimerOff";
 import { connect } from "react-redux";
 import { selectCurrentTask } from "../../redux/todo/todo.selectors";
 import { createStructuredSelector } from "reselect";
@@ -214,7 +213,7 @@ class Timer extends Component {
 
   render() {
     const { started, stopped, disableFinish } = this.state;
-    const { openTimer, closeTimer, currentTask } = this.props;
+    const { openTimer, closeTimer } = this.props;
     const { classes } = this.props;
     const percent = this.getPercentage();
 

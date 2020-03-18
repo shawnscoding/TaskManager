@@ -1,5 +1,5 @@
 import todoActionTypes from "./todo.types";
-import { checkIfTodoExist, isTodoThisWeek } from "./todo.utils";
+import { checkIfTodoExist } from "./todo.utils";
 
 const INITIAL_STATE = {
   monthlyTodo: [],

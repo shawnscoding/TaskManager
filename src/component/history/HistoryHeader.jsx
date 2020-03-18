@@ -2,11 +2,7 @@ import React from "react";
 import { Grid, Typography } from "@material-ui/core";
 import styled from "styled-components";
 import CircleProgress from "./../circleProgress/CircleProgress";
-import {
-  getThisYear,
-  getMostFrequentItem,
-  getLeastFrequentItem
-} from "../../utils/helper";
+import { getThisYear, getMostFrequentItem } from "../../utils/helper";
 import { format } from "date-fns";
 import { getPercentageOfCompletedTodo } from "./../../utils/helper";
 
@@ -74,13 +70,6 @@ const RightTypo = styled(Grid)`
 const GreyText = styled(Typography)`
   color: #999;
 `;
-
-const dummyData = [
-  { timeToComplete: 1111 },
-  { timeToComplete: 1111 },
-  { timeToComplete: 1111 },
-  { timeToComplete: 1111 }
-];
 
 const HistoryHeader = ({ todos }) => {
   const year = getThisYear();

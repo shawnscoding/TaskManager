@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Typography,
-  Button,
-  Dialog,
-  Grid,
-  DialogContent,
-  DialogContentText,
-  DialogTitle
-} from "@material-ui/core";
-import InsertInvitationIcon from "@material-ui/icons/InsertInvitation";
+
 import { makeStyles } from "@material-ui/styles";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
@@ -28,7 +19,6 @@ const useStyles = makeStyles(theme => ({
 
 function Warning({ toggleTimerWarning, timerWarning, openTimer }) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {

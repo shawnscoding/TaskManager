@@ -195,6 +195,13 @@ export const useStyles = makeStyles(theme => ({
       fontSize: "1rem"
     }
   },
+  btnContainer: {
+    zIndex: 100,
+    "&:hover": {
+      transform: "translateY(-3px)",
+      transition: "0.2s ease"
+    }
+  },
   todoAllContainer: {
     height: "3.1rem"
   },

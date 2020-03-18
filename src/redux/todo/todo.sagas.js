@@ -100,10 +100,12 @@ export function* getWeeklyTodoFromFb({ payload }) {
 
 export function* fetchFormerTodoFromFb({ payload }) {
   const user = yield select(selectCurrentUser);
+  const today = new Date();
   try {
     const listsRef = yield firestore.collection("todo_list");
     const query = yield listsRef
       .where("userId", "==", user.id)
+      .where("date", "<=", today)
       .where("year", "==", payload)
       .orderBy("date");
     const snapShot = yield query.get();

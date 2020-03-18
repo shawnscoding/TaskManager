@@ -2,20 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core/styles";
-import {
-  AppBar,
-  Button,
-  Grid,
-  Tabs,
-  Tab,
-  Box,
-  Typography
-} from "@material-ui/core";
+import { AppBar, Grid, Tabs, Tab, Box, Typography } from "@material-ui/core";
 import { useStyles } from "./dailyTodo.styles";
-import {
-  beforeRenderTodo,
-  getPercentageOfCompletedTodo
-} from "../../utils/helper";
+import { beforeRenderTodo } from "../../utils/helper";
 import DailyTodoAll from "./dailyTodoAll.component";
 import TodoByCategory from "./todoByCategory.component";
 import TodoByCompletion from "./todoByCompletion.component";

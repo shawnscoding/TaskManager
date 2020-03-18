@@ -1,7 +1,7 @@
 import React from "react";
-import { Grid, Typography, TextField } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
-const TodoFormThird = ({ onChange, form, onRatingChange, classes }) => {
+const TodoFormThird = ({ form, onRatingChange, classes }) => {
   return (
     <React.Fragment>
       <Grid style={{ padding: "2rem 0 0 1rem" }} justify="center" container>

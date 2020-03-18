@@ -42,7 +42,7 @@ import {
   selectWorking
 } from "./../../redux/todo/todo.selectors";
 import ThisWeekPage from "../../pages/thisWeekPage/thisWeekPage.component";
-import { getThisWeek, getThisYear } from "../../utils/helper";
+import { getThisWeek } from "../../utils/helper";
 import {
   getWeeklyTodoStart,
   openTimer,

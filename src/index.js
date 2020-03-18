@@ -4,15 +4,12 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router } from "react-router-dom";
-import { StylesProvider, responsiveFontSizes } from "@material-ui/core/styles";
+import { StylesProvider } from "@material-ui/core/styles";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core";
 import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import createBreakpoints from "@material-ui/core/styles/createBreakpoints";
-
-const breakpoints = createBreakpoints({});
 
 const theme = createMuiTheme({
   palette: {
@@ -36,10 +33,20 @@ const theme = createMuiTheme({
     fontSize: 14,
     // htmlFontSize: 10,
     fontFamily: "'Open Sans Condensed', sans-serif"
+  },
+  overrides: {
+    // Style sheet name ⚛️
+    MuiInputLabel: {
+      // Name of the rule
+      shrink: {
+        // Some CSS
+        transform: "translate(0, 1.5px) scale(0.85)",
+        transformOrigin: "top left"
+      }
+    }
   }
 });
 
-// theme = responsiveFontSizes(theme);
 theme.typography.body1 = {
   fontSize: "0.9rem",
   [theme.breakpoints.up("md")]: {

@@ -1,18 +1,15 @@
 import React from "react";
 import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
-import DailyTodoHeader from "../../component/dailyTodoHeader/dailyTodoHeader.component";
 import LoadingCompoent from "../../component/loader/loadingCompoent";
 import TodoDashBoard from "../../component/todo/todoDashboard.component";
 import { selectMonthlyTodo } from "../../redux/todo/todo.selectors";
-import { useStyles } from "./todayPage.styles";
 import { format } from "date-fns";
 import { getThisYear } from "../../utils/helper";
 
 const TodayPage = ({ match, todos }) => {
   const [dailyTodo, setDailyTodo] = React.useState([]);
   const withToday = true;
-  const classes = useStyles();
   const monthAndDate = match.params.monthAndDate;
   const year = getThisYear();
   const toDate = new Date(year + monthAndDate);

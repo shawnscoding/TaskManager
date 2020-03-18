@@ -100,7 +100,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const primaryColor = ["#33b7c8", "#08e9dff5"];
-const primaryConlorSecond = ["#00BBFF", "#92d7f1"];
 
 const CcProgressOnCompletion = ({
   todo = [{ date: "0" }],
