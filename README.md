@@ -35,8 +35,8 @@ before entering to the start page
 
 ### `can I copy your app?`
 
-Of course, I'd be glad to help.
+Yes! , I'd be glad to help.
 However, you are required to mention my name Shawn and that you copied my work on your app, if you
 replicate almost everyting on my app.
-
+d
 If you have any question relevant to my app, you can simply email me. I'd be glad to answer.
