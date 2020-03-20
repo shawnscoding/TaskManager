@@ -22,9 +22,16 @@ export const HomePageContainer = styled(Grid)`
 export const Form = styled(Grid)`
   width: 78%;
   height: 67%;
+
   background: #fff;
   border-radius: 10px;
   box-shadow: 0px 6px 7px #4949494f;
+  @media (max-width: 960px) {
+    height: 91%;
+  }
+  @media (max-width: 600px) {
+    height: 91%;
+  }
 `;
 export const FormLeft = styled(Grid)`
   background-image: linear-gradient(60deg, #31cbdf5e, #0ba4bc99),
@@ -32,11 +39,17 @@ export const FormLeft = styled(Grid)`
   background-size: cover;
   overflow: hidden;
   padding: 2rem;
+  @media (max-width: 960px) {
+    padding: 1rem;
+  }
 `;
 
 const Logo = styled(InsertInvitationIcon)`
   font-size: 3rem;
   color: #fff;
+  @media (max-width: 600px) {
+    font-size: 1.8rem;
+  }
 `;
 
 const LogoBox = styled(Grid)`
@@ -46,6 +59,9 @@ const LogoBox = styled(Grid)`
 const HomepageButton = styled(Button)`
   color: #fff;
   margin: 30px 0 0 0;
+  @media (max-width: 600px) {
+    margin: 7px 0 0 0;
+  }
 `;
 
 const HomePage = ({ history, signInWithEmail }) => {
@@ -59,7 +75,7 @@ const HomePage = ({ history, signInWithEmail }) => {
           justify="center"
           alignItems="flex-start"
           container
-          sm={7}
+          sm={12}
           md={7}
           item
         >

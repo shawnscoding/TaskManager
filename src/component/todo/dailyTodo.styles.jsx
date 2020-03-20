@@ -263,6 +263,9 @@ export const useStyles = makeStyles(theme => ({
     },
     [theme.breakpoints.down("sm")]: {
       margin: "21.5rem  1.5rem 0 1.5rem "
+    },
+    [theme.breakpoints.down("xs")]: {
+      margin: "21.5rem  0 0 0"
     }
   },
   twPanelContainer: {
@@ -274,6 +277,9 @@ export const useStyles = makeStyles(theme => ({
     },
     [theme.breakpoints.down("sm")]: {
       padding: "14.5rem  1.5rem 0 1.5rem "
+    },
+    [theme.breakpoints.down("xs")]: {
+      padding: "14.5rem  0 0 0"
     }
   },
   progress: {

@@ -76,9 +76,21 @@ theme.typography.h4 = {
   }
 };
 
+theme.typography.h5 = {
+  fontSize: "1rem",
+  color: "#000",
+  fontFamily: "'Open Sans Condensed', sans-serif",
+  "@media (max-width:1230px)": {
+    fontSize: "0.8rem"
+  }
+};
+
 theme.typography.h1 = {
   fontSize: "2.5rem",
-  fontFamily: "'Open Sans Condensed', sans-serif"
+  fontFamily: "'Open Sans Condensed', sans-serif",
+  "@media (max-width:600px)": {
+    fontSize: "1.5rem"
+  }
 };
 
 theme.typography.h2 = {

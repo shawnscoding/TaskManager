@@ -20,6 +20,12 @@ export const Logo = styled(InsertInvitationIcon)`
 
 export const Form = styled(Grid)`
   padding: 2rem;
+  @media (max-width: 1030px) {
+    padding: 2rem 1rem;
+  }
+  @media (max-width: 600px) {
+    padding: 1rem 1rem;
+  }
 `;
 
 const SignInForm = ({ setOpen, signInWithEmail }) => {
@@ -45,15 +51,15 @@ const SignInForm = ({ setOpen, signInWithEmail }) => {
       alignItems="center"
       container
       md={5}
-      sm={5}
+      sm={12}
       item
     >
       <Grid item>
         <Logo />
       </Grid>
       <Grid item>
-        <Typography style={{ color: "#000" }}>
-          Sign in Now And Let us manage your Task
+        <Typography variant="h5" component="h1">
+          Sign in Now! Let us manage your Task
         </Typography>
       </Grid>
 

@@ -28,6 +28,9 @@ const useStyles = makeStyles(theme => ({
 
     [theme.breakpoints.down("md")]: {
       width: "100%"
+    },
+    [theme.breakpoints.down("sm")]: {
+      padding: "0"
     }
   },
   caSumContainer: {

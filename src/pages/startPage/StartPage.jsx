@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
     height: "100%"
   },
   item: {
+    maxWidth: "24rem",
     padding: "1rem 3rem 1rem 3rem",
     [theme.breakpoints.up("sm")]: {
       padding: "1rem 3rem 1rem 3rem"
@@ -22,29 +23,42 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("sm")]: {
       padding: "1rem 1.5rem 1rem 1.5rem"
     },
+    "@media (max-width:900px)": {
+      maxWidth: "19rem",
+      padding: "1rem 1rem 1rem 1rem"
+    },
     "@media (max-width:800px)": {
       padding: "1rem 1rem 1rem 1rem"
     },
     "@media (max-width:700px)": {
-      padding: "2rem 1rem 1rem 1rem"
+      maxWidth: "unset",
+
+      padding: "1.5rem 13px 1rem 13px"
     }
   },
-  addIconBox: {
-    color: "#399babed"
+  iconBox: {
+    color: "#399babed",
+    padding: "4.5rem 0",
+    [theme.breakpoints.down("sm")]: {
+      padding: "2rem 0"
+    }
   },
-  addIcon: {
+  icon: {
     fontSize: "9rem"
   },
   card: {
     background: "#fff",
     padding: "1.5rem",
-    height: "54vh",
     borderRadius: "8px",
     boxShadow: "0 5px 11px #7d7b7b80",
     transition: "transform 0.2s",
 
     "& button": {
-      background: "#399babed"
+      background: "#399babed",
+      fontSize: "0.9rem",
+      "@media (max-width:700px)": {
+        fontSize: "0.7rem"
+      }
     },
     "&:hover": {
       background: "#399babed",
@@ -58,19 +72,24 @@ const useStyles = makeStyles(theme => ({
         color: "#fff"
       }
     },
-    "@media (max-width:700px)": {
-      minWidth: "260px",
-      height: "48vh"
+    "@media (max-width:960px)": {
+      padding: "1.5rem 0.5rem",
+      border: "2px solid #c6eaf0e3",
+      boxShadow: "unset"
     }
   },
 
   cardTitle: {
     fontSize: "1.5rem",
+    "@media (max-width:900px)": {
+      fontSize: "1.2rem"
+    },
     "@media (max-width:800px)": {
       fontSize: "1.1rem"
     },
-    "@media (max-width:700px)": {
-      fontSize: "1.5rem"
+
+    "@media (max-width:600px)": {
+      fontSize: "0.85rem"
     }
   }
 }));
@@ -87,7 +106,7 @@ const StartPage = ({ toggleOpen, history, todos }) => {
         container
         className={classes.container}
       >
-        <Grid className={classes.item} item>
+        <Grid xs={6} sm={6} className={classes.item} item>
           <Grid
             container
             justify="space-between"
@@ -104,8 +123,8 @@ const StartPage = ({ toggleOpen, history, todos }) => {
                 Create New Task!
               </Typography>
             </Grid>
-            <Grid className={classes.addIconBox} item>
-              <NoteAddIcon className={classes.addIcon} />
+            <Grid className={classes.iconBox} item>
+              <NoteAddIcon className={classes.icon} />
             </Grid>
             <Grid item>
               <Button
@@ -120,7 +139,7 @@ const StartPage = ({ toggleOpen, history, todos }) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid className={classes.item} item>
+        <Grid xs={6} sm={6} className={classes.item} item>
           <Grid
             container
             justify="space-between"
@@ -137,8 +156,8 @@ const StartPage = ({ toggleOpen, history, todos }) => {
                 Check Today's Task
               </Typography>
             </Grid>
-            <Grid className={classes.addIconBox} item>
-              <DateRangeIcon className={classes.addIcon} />
+            <Grid className={classes.iconBox} item>
+              <DateRangeIcon className={classes.icon} />
             </Grid>
             <Grid item>
               <Button
@@ -148,7 +167,7 @@ const StartPage = ({ toggleOpen, history, todos }) => {
                 color="primary"
                 onClick={() => history.push(`/todo/dailyTodo/${monthAndDate}`)}
               >
-                view today's task
+                today's task
               </Button>
             </Grid>
           </Grid>

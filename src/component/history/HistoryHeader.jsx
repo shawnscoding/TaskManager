@@ -56,6 +56,10 @@ const SubContainer = styled(Grid)`
 
   top: -1rem;
   height: 3rem;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const TypoContainer = styled(Grid)`
