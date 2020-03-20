@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Paper,
@@ -64,6 +64,8 @@ import {
 import withWidth from "@material-ui/core/withWidth";
 import InsertInvitationIcon from "@material-ui/icons/InsertInvitation";
 import DateRangeIcon from "@material-ui/icons/DateRange";
+import NotFound from "../notFound/NotFound";
+import LoadingComponent from "./../loader/loadingCompoent";
 
 const Navbar = props => {
   const {
@@ -126,6 +128,12 @@ const Navbar = props => {
   const onClickToday = async () => {
     await resetTodo();
     history.push(`/todo/dailyTodo/${today}`);
+  };
+
+  const test = () => {
+    setTimeout(() => {
+      console.log("object ddd ");
+    }, 10000);
   };
 
   const drawer = (
@@ -285,55 +293,57 @@ const Navbar = props => {
       </nav>
       <Paper className={classes.content}>
         <React.Fragment>
-          {/* {user ? ( */}
-          <React.Fragment>
-            <Switch>
-              <Route exact path="/start" render={() => <StartPage />} />
+          {user ? (
+            <React.Fragment>
+              <Switch>
+                <Route exact path="/start" render={() => <StartPage />} />
 
-              <Route
-                exact
-                path="/todo/thisWeek/:thisWeek"
-                component={ThisWeekPage}
-              />
+                <Route
+                  exact
+                  path="/todo/thisWeek/:thisWeek"
+                  component={ThisWeekPage}
+                />
 
-              <Route exact path="/todo/calendar" component={CalendarPage} />
-              <Route
-                exact
-                path="/todo/dailyTodo/:monthAndDate"
-                component={TodayPage}
+                <Route exact path="/todo/calendar" component={CalendarPage} />
+                <Route
+                  exact
+                  path="/todo/dailyTodo/:monthAndDate"
+                  component={TodayPage}
+                />
+                <Route
+                  exact
+                  path={"/history/:userId"}
+                  render={() => (
+                    <HistoryPage year={year} setYear={setYear} user={user} />
+                  )}
+                />
+              </Switch>
+              <TodoForm />
+              <Warning
+                timerWarning={timerWarning}
+                toggleTimerWarning={toggleTimerWarning}
+                openTimer={openTimer}
               />
-              <Route
-                exact
-                path={"/history/:userId"}
-                render={() => (
-                  <HistoryPage year={year} setYear={setYear} user={user} />
-                )}
-              />
-            </Switch>
-            <TodoForm />
-            <Warning
-              timerWarning={timerWarning}
-              toggleTimerWarning={toggleTimerWarning}
-              openTimer={openTimer}
-            />
-            {currentTask ? (
-              <Timer
-                openTimer={timer}
-                userSignOut={userSignOut}
-                closeTimer={closeTimer}
-              />
-            ) : null}
-            {working && !timer ? (
-              <Fab
-                color="inherit"
-                className={classes.timerContainer}
-                onClick={openTimer}
-              >
-                <TimerIcon style={{ fontSize: "2.7rem" }} />
-              </Fab>
-            ) : null}
-          </React.Fragment>
-          {/* : null}  */}
+              {currentTask ? (
+                <Timer
+                  openTimer={timer}
+                  userSignOut={userSignOut}
+                  closeTimer={closeTimer}
+                />
+              ) : null}
+              {working && !timer ? (
+                <Fab
+                  color="inherit"
+                  className={classes.timerContainer}
+                  onClick={openTimer}
+                >
+                  <TimerIcon style={{ fontSize: "2.7rem" }} />
+                </Fab>
+              ) : null}
+            </React.Fragment>
+          ) : (
+            <LoadingComponent />
+          )}
         </React.Fragment>
       </Paper>
     </div>
