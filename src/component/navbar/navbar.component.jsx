@@ -64,7 +64,6 @@ import {
 import withWidth from "@material-ui/core/withWidth";
 import InsertInvitationIcon from "@material-ui/icons/InsertInvitation";
 import DateRangeIcon from "@material-ui/icons/DateRange";
-import NotFound from "../notFound/NotFound";
 import LoadingComponent from "./../loader/loadingCompoent";
 
 const Navbar = props => {
