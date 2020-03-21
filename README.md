@@ -15,8 +15,8 @@ Task Management 앱 입니다. React js, Redux, firebase 등을 이용하여 Tas
 https://shawnsportfolio.herokuapp.com/
 
 회원가입을 원하지 않을 경우,
-Email: test333@test.com
-Password: tests333 으로 로그인해주십시오.
+이메일: test333@test.com
+비밀번호: tests333 으로 로그인해주십시오.
 
 ## 내가 겪은 문제 & 해결방안
 
