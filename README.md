@@ -18,6 +18,14 @@ https://shawnsportfolio.herokuapp.com/
 이메일: test333@test.com
 비밀번호: tests333 으로 로그인해주십시오.
 
+## 개발 동기
+
+자기개발과 편의성을 위해서 개발한 앱입니다.
+평소 동기부여를 위해 공부할 때, 항상 타이머를 이용해 시간을 재고 노트에 기록을 했었습니다.
+하지만 공부했던 시간이 많아질수록, 노트 보관이 힘들어지고 제 성취도를 한 번에 볼 수 없는 등, 읽고 관리하기가 불편하다는 것을 깨달았습니다.
+그 후, 제가 노트에 적어왔던 것들을 웹으로 디자인하며, 항상 원해왔고 상상했던 기능들을 모두 구현해 저만의 Task Management 앱을 만들자고 다짐했습니다.
+개발 후, 정말 유용하게 사용하고 있으며 가족들과 친구들도 함께 사용하고 있습니다.
+
 ## 내가 겪은 문제 & 해결방안
 
 이번 프로젝트에서 앱 특성상 데이터 필터링을 정말 다양하게 많이 해야 했습니다. 유저의 액션의 따라 많은 UI Component
@@ -32,14 +40,6 @@ https://shawnsportfolio.herokuapp.com/
 물론 Functional Component만으로도 충분히 본 앱과 똑같은 앱을 만들 수 있을 거라고 믿지만,
 최고의 Practice는 Classical 와 Functional Component를 적절한 시기에 함께 사용하는 것이라는 것을 깨닭았습니다.
 
-## 개발 동기
-
-자기개발과 편의성을 위해서 개발한 앱입니다.
-평소 동기부여를 위해 공부할 때, 항상 타이머를 이용해 시간을 재고 노트에 기록을 했었습니다.
-하지만 공부했던 시간이 많아질수록, 노트 보관이 힘들어지고 제 성취도를 한 번에 볼 수 없는 등, 읽고 관리하기가 불편하다는 것을 깨달았습니다.
-그 후, 제가 노트에 적어왔던 것들을 웹으로 디자인하며, 항상 원해왔고 상상했던 기능들을 모두 구현해 저만의 Task Management 앱을 만들자고 다짐했습니다.
-개발 후, 정말 유용하게 사용하고 있으며 가족들과 친구들도 함께 사용하고 있습니다.
-
 ## 배운 점
 
 이번 프로젝트로 배운 점은 크게 3가지입니다.
@@ -49,6 +49,8 @@ https://shawnsportfolio.herokuapp.com/
 두 번째로 스타일 라이브러리의 장단점을 알게 되었습니다. 저는 본 프로젝트에 Material UI를 사용하였습니다. 개발 속도가 초반에 엄청 빠르다는 장점이 있었지만, 커스터마이징 하는데 아무래도 복잡함이 따랐습니다.
 
 마지막으로 파이어베이스과 같은 클라우드 데이터베이스 서비스를 사용함으로써, 얼마나 백엔드 개발이 쉬워지고 시간이 단축되는지 몸소 깨닫게 되었습니다. 물론 백엔드 서비스를 이용함에 따라, 서버에서 많은 컨트롤을 가질 순 없지만, 간단한 앱 개발을 하기에는 최적화라고 생각합니다.
+
+### this is the summary of this app written in English
 
 ### `the features this app has`
 
@@ -67,7 +69,7 @@ firebase, date-fns and so on.
 
 ### `Things I learned`
 
-Material Ui Library has a quite deep learning curve but is really flexible and easy to customize. I could customize it as much as I want.
+Material Ui Library has a quite deep learning curve but is really flexible and easy to customize. there was no problem in customizing material UI component at all.
 
 ### `Challenge I faced`
 
@@ -85,6 +87,6 @@ before entering to the start page
 
 Yes! , I'd be glad to help.
 However, you are required to mention my name Shawn and that you copied my work on your app, if you
-replicate almost everyting on my app.
+replicate almost everything on my app.
 d
 If you have any question relevant to my app, you can simply email me. I'd be glad to answer.
