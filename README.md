@@ -7,7 +7,7 @@ Task Management app built in React js, https://my-motivator-db.firebaseapp.com/
 Task Management 앱 입니다. React js, Redux, firebase 등을 이용하여 Task Management 앱을 만들었습는다. 이름은 Task Manager 입니다.
 개인의 재량으로 구글링과 다큐멘터리를 참조하며 디자인, 프론트엔드, 백엔드 그리고 Data Structure 모두 구상, 구현하였습니다.
 앱의 주요 기능은 유저가 할일을 요일, 주, 달별로 필터링 해주는 것, 그리고 업무 종류, 시간대, 중요도로 분류해주는 것입니다.
-게다가 성취도 그래프를 구현해 카테고리별로 본인 과거 성취도를 한눈에 볼 수 있으며, 타이머 기능과 히스토리페이지도 추가하였습니다.
+게다가 성취도 그래프를 구현해 카테고리별로 본인 과거 성취도를 한눈에 볼 수 있으며, 타이머 기능과 히스토리페이지도 추가하였습니다. 또한 앱 전체를 반응형으로 디자인했으며, Progressive 앱을 활성화시켜 모바일 기기에서도 쉽고 빠르게 사이트에 접속할 수 있습니다.
 
 ### 앱 사용법
 
