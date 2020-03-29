@@ -64,7 +64,7 @@ const HomepageButton = styled(Button)`
   }
 `;
 
-const HomePage = ({ history, signInWithEmail }) => {
+const HomePage = () => {
   const [open, setOpen] = useState(false);
 
   return (
